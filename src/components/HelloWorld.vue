@@ -13,5 +13,5 @@ export default {
 
 <style lang="sass">
 .content
-  padding: 16px
+  padding: .16rem
 </style>

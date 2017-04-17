@@ -95,9 +95,10 @@ git pull upstream dev
 ```
 
 ## 3、开发规范
-1. Vue组件文件名使用首字母大写驼峰形式命名，例如"HelloWorld.vue"；name属性采取小写形式，例如"hello-world"，以满足HTML标签的语法，例如<hello-world></hello-world>
+1. Vue组件文件名使用首字母大写驼峰形式命名，例如"HelloWorld.vue"；name属性采取小写形式，例如"hello-world"，以符合HTML标签的规范，例如<hello-world></hello-world>
 2. 文件夹采用小写短线形式命名，例如"images-for-readme"
 3. 代码缩进为2个空格；语句末尾全部不写分号；其他代码风格细节参考eslint的提示进行修改
 4. 使用pug+sass+es6进行开发
 5. 各个界面在路由中已经引入并写好跳转关系，如果界面中需要用到自定义组件请将组件放置在该界面所在的文件夹里面
 6. 伪数据程程器和伪数据json文件都放置在data文件夹下面。生成器和json文件的命名格式为"xxx-genertor.js"和"xxx.json"，其实"xxx"为上述各个数据模型的英文名称
+7. 样式大小单位使用rem，不适用px。html元素的font-size固定为100px，rem与px之间的换算公式：1rem = 100px
