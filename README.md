@@ -1,5 +1,11 @@
 # MonkeyEye-FE
 > 猿眼电影订票系统前端开发仓库
+```bash
+# 项目启动
+npm run dev
+# 项目构建
+npm run build
+```
 
 ## 1、协作规范
 本仓库有2个分支，master和dev。主要在dev分支上进行开发和测试，功能完善之后再合并到master。
@@ -69,3 +75,29 @@ git push origin dev
 git pull upstream dev
 ```
 严禁通过其他做法拉取更新（例如在GitHub网站上通过网页操作进行更新然后在本地pull origin dev），以免造成不必要的合并冲突以及多余的commit。
+
+## 2、项目结构
+```txt
+├─build：存放构建用到的相关文件
+├─config：存放配置文件
+├─data：存放伪数据以及数据生成器供前端开发使用；也可以存放图片等静态资源
+└─src：前端开发的源码
+    ├─assets：图片等静态资源
+    ├─common：公共样式或js文件
+    │    └─css：样式文件
+    │       ├─font.css：字体文件
+    │       └─icon.css：图标文件
+    ├─components：前端组件
+    ├─router：前端路由
+    ├─store：应用的全局状态管理
+    ├─App.vue：应用的最外层结构
+    └─entry.js：应用的入口文件；第三方组件和公共文件在此引入
+```
+
+## 3、开发规范
+1. Vue组件文件名使用首字母大写驼峰形式命名，例如"HelloWorld.vue"；name属性采取小写形式，例如"hello-world"，以满足HTML标签的语法，例如<hello-world></hello-world>
+2. 文件夹采用小写短线形式命名，例如"images-for-readme"
+3. 代码缩进为2个空格；语句末尾全部不写分号；其他代码风格细节参考eslint的提示进行修改
+4. 使用pug+sass+es6进行开发
+5. 各个界面在路由中已经引入并写好跳转关系，如果界面中需要用到自定义组件请将组件放置在该界面所在的文件夹里面
+6. 伪数据程程器和伪数据json文件都放置在data文件夹下面。生成器和json文件的命名格式为"xxx-genertor.js"和"xxx.json"，其实"xxx"为上述各个数据模型的英文名称
