@@ -12,7 +12,7 @@
 ```bash
 git clone https://github.com/{你的github}/MonkeyEye-FE
 # 上游的源仓库地址只需添加一次
-git add remote upstream https://github.com/SYSUMonkeyEye/MonkeyEye-FE.git
+git remote add upstream https://github.com/SYSUMonkeyEye/MonkeyEye-FE.git
 ```
 
 #### 1.2.1、协作方式-1
