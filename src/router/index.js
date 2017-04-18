@@ -10,8 +10,10 @@ import Movies from '../components/main/Movies'
 import Me from '../components/main/me'
 import MovieDetail from '../components/movie/MovieDetail'
 import MovieSearch from '../components/movie/MovieSearch'
-import Reservation from '../components/order/Reservation'
+import OrderDetail from '../components/order/OrderDetail'
 import OrderPay from '../components/order/OrderPay'
+import Reservation from '../components/order/Reservation'
+import MyOrders from '../components/profile/MyOrders'
 import UserInfo from '../components/profile/UserInfo'
 
 export default new Router({
@@ -29,8 +31,10 @@ export default new Router({
     },
     { path: '/movie-detail', component: MovieDetail },
     { path: '/movie-search', component: MovieSearch },
-    { path: '/reservation', component: Reservation },
+    { path: '/order-detail', component: OrderDetail },
     { path: '/order-pay', component: OrderPay },
+    { path: '/reservation', component: Reservation },
+    { path: '/my-orders', component: MyOrders },
     { path: '/user-info', component: UserInfo },
     { path: '/', redirect: '/main' }
   ]

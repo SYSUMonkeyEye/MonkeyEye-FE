@@ -99,15 +99,19 @@ git pull upstream dev
     │    │   ├─MovieDetail.vue：电影详情界面
     │    │   └─MovieSearch.vue：电影搜索界面
     │    ├─order：订单相关界面
+    │    │   ├─OrderDetail.vue：订单详情界面
     │    │   ├─OrderPay.vue：付款界面
     │    │   └─Reservation.vue：下单界面
     │    └─profile：用户中心相关界面
+    │        ├─MyOrders：观影（购票）历史界面
     │        └─UserInfo.vue：用户个人信息界面
     ├─router：前端路由
     ├─store：应用的全局状态管理
     ├─App.vue：应用的最外层结构
     └─entry.js：应用的入口文件；第三方组件和公共文件在此引入
 ```
+项目模块结构和界面跳转关系
+![pages](./images-for-readme/pages.png)
 
 ## 3、开发规范
 1. Vue组件文件名使用首字母大写驼峰形式命名，例如"HelloWorld.vue"；name属性采取小写形式，例如"hello-world"，以符合HTML标签的规范，例如<hello-world></hello-world>
