@@ -103,7 +103,8 @@ git pull upstream dev
     │    │   ├─OrderPay.vue：付款界面
     │    │   └─Reservation.vue：下单界面
     │    └─profile：用户中心相关界面
-    │        ├─MyOrders：观影（购票）历史界面
+    │        ├─Coupons.vue：我的优惠券界面
+    │        ├─MyOrders.vue：观影（购票）历史界面
     │        └─UserInfo.vue：用户个人信息界面
     ├─router：前端路由
     ├─store：应用的全局状态管理

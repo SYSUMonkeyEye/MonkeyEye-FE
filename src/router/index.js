@@ -13,6 +13,7 @@ import MovieSearch from '../components/movie/MovieSearch'
 import OrderDetail from '../components/order/OrderDetail'
 import OrderPay from '../components/order/OrderPay'
 import Reservation from '../components/order/Reservation'
+import Coupons from '../components/profile/Coupons'
 import MyOrders from '../components/profile/MyOrders'
 import UserInfo from '../components/profile/UserInfo'
 
@@ -34,6 +35,7 @@ export default new Router({
     { path: '/order-detail', component: OrderDetail },
     { path: '/order-pay', component: OrderPay },
     { path: '/reservation', component: Reservation },
+    { path: '/coupons', component: Coupons },
     { path: '/my-orders', component: MyOrders },
     { path: '/user-info', component: UserInfo },
     { path: '/', redirect: '/main' }
