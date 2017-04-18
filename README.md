@@ -88,6 +88,21 @@ git pull upstream dev
     │       ├─font.css：字体文件
     │       └─icon.css：图标文件
     ├─components：前端组件
+    │    ├─auth：登录注册相关界面
+    │    │   ├─Signin.vue：登录界面
+    │    │   └─Signup.vue：注册界面
+    │    ├─main：应用的主体界面
+    │    │   ├─Main.vue：主体界面外层容器
+    │    │   ├─Me.vue：个人中心界面
+    │    │   └─Movies.vue：电影资讯界面
+    │    ├─movie：电影相关界面
+    │    │   ├─MovieDetail.vue：电影详情界面
+    │    │   └─MovieSearch.vue：电影搜索界面
+    │    ├─order：订单相关界面
+    │    │   ├─OrderPay.vue：付款界面
+    │    │   └─Reservation.vue：下单界面
+    │    └─profile：用户中心相关界面
+    │        └─UserInfo.vue：用户个人信息界面
     ├─router：前端路由
     ├─store：应用的全局状态管理
     ├─App.vue：应用的最外层结构
@@ -101,4 +116,4 @@ git pull upstream dev
 4. 使用pug+sass+es6进行开发
 5. 各个界面在路由中已经引入并写好跳转关系，如果界面中需要用到自定义组件请将组件放置在该界面所在的文件夹里面
 6. 伪数据程程器和伪数据json文件都放置在data文件夹下面。生成器和json文件的命名格式为"xxx-genertor.js"和"xxx.json"，其实"xxx"为上述各个数据模型的英文名称
-7. 样式大小单位使用rem，不适用px。html元素的font-size固定为100px，rem与px之间的换算公式：1rem = 100px
+7. 样式大小单位使用rem，不使用px。html元素的font-size固定为100px，rem与px之间的换算公式：1rem = 100px
