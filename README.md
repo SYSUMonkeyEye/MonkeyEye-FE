@@ -99,12 +99,13 @@ git pull upstream dev
     │    │   ├─MovieDetail.vue：电影详情界面
     │    │   └─MovieSearch.vue：电影搜索界面
     │    ├─order：订单相关界面
+    │    │   ├─MyOrders.vue：全部订单/待付款/待取票/待放映/已放映界面
     │    │   ├─OrderDetail.vue：订单详情界面
     │    │   ├─OrderPay.vue：付款界面
-    │    │   └─Reservation.vue：下单界面
+    │    │   └─Reservation.vue：下单选座界面
     │    └─profile：用户中心相关界面
-    │        ├─Coupons.vue：我的优惠券界面
-    │        ├─MyOrders.vue：观影（购票）历史界面
+    │        ├─Coupons.vue：优惠券界面
+    │        ├─MovieCollection.vue：收藏/已看/想看电影界面
     │        └─UserInfo.vue：用户个人信息界面
     ├─router：前端路由
     ├─store：应用的全局状态管理

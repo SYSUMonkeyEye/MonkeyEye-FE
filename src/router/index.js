@@ -10,11 +10,12 @@ import Movies from '../components/main/Movies'
 import Me from '../components/main/me'
 import MovieDetail from '../components/movie/MovieDetail'
 import MovieSearch from '../components/movie/MovieSearch'
+import MyOrders from '../components/order/MyOrders'
 import OrderDetail from '../components/order/OrderDetail'
 import OrderPay from '../components/order/OrderPay'
 import Reservation from '../components/order/Reservation'
 import Coupons from '../components/profile/Coupons'
-import MyOrders from '../components/profile/MyOrders'
+import MovieCollection from '../components/profile/MovieCollection'
 import UserInfo from '../components/profile/UserInfo'
 
 export default new Router({
@@ -32,11 +33,12 @@ export default new Router({
     },
     { path: '/movie-detail/:id', component: MovieDetail },
     { path: '/movie-search', component: MovieSearch },
-    { path: '/order-detail', component: OrderDetail },
-    { path: '/order-pay', component: OrderPay },
+    { path: '/my-orders/:type', component: MyOrders },
+    { path: '/order-detail/:id', component: OrderDetail },
+    { path: '/order-pay/:id', component: OrderPay },
     { path: '/reservation/:id', component: Reservation },
     { path: '/coupons', component: Coupons },
-    { path: '/my-orders/:type', component: MyOrders },
+    { path: '/movie-collection/:type', component: MovieCollection },
     { path: '/user-info', component: UserInfo },
     { path: '/', redirect: '/main' }
   ]
