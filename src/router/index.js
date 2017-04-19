@@ -30,13 +30,13 @@ export default new Router({
         { path: '', redirect: 'movies' }
       ]
     },
-    { path: '/movie-detail', component: MovieDetail },
+    { path: '/movie-detail/:id', component: MovieDetail },
     { path: '/movie-search', component: MovieSearch },
     { path: '/order-detail', component: OrderDetail },
     { path: '/order-pay', component: OrderPay },
-    { path: '/reservation', component: Reservation },
+    { path: '/reservation/:id', component: Reservation },
     { path: '/coupons', component: Coupons },
-    { path: '/my-orders', component: MyOrders },
+    { path: '/my-orders/:type', component: MyOrders },
     { path: '/user-info', component: UserInfo },
     { path: '/', redirect: '/main' }
   ]

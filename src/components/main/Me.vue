@@ -1,7 +1,7 @@
 <template lang="pug">
 div#me
   md-whiteframe
-    div.user
+    div.user(@click="$router.push('/user-info')")
       md-ink-ripple
       img(:src="user.image")
       div.user-info
@@ -11,7 +11,7 @@ div#me
   md-whiteframe
     div.coupons-and-money
       md-ink-ripple
-      div.coupons
+      div.coupons(@click="$router.push('/coupons')")
         p {{ couponsAndMoney.coupons }}
         p 优惠券
       div.divide-line
@@ -20,9 +20,44 @@ div#me
         p 账户余额
   md-whiteframe
     div.orders
-      div.title
+      div.title(@click="$router.push('/my-orders/all')")
         span 我的订单
         span 全部订单
+      div.order-type
+        div.type(@click="$router.push('/my-orders/unpay')")
+          md-button.md-icon-button.md-accent
+            md-icon shopping_cart
+          p 待付款
+        div.type(@click="$router.push('/my-orders/unpick')")
+          md-button.md-icon-button.md-warn
+            md-icon shopping_cart
+          p 待取票
+        div.type(@click="$router.push('/my-orders/unplay')")
+          md-button.md-icon-button.md-primary
+            md-icon shopping_cart
+          p 未放映
+        div.type(@click="$router.push('/my-orders/played')")
+          md-button.md-icon-button
+            md-icon shopping_cart
+          p 已放映
+  md-whiteframe
+    div.collection
+      div.collection-type
+        md-ink-ripple
+        span 我的收藏
+        md-icon keyboard_arrow_right
+      div.collection-type
+        md-ink-ripple
+        span 上映倒计时
+        md-icon keyboard_arrow_right
+      div.collection-type
+        md-ink-ripple
+        span 想看的电影
+        md-icon keyboard_arrow_right
+      div.collection-type
+        md-ink-ripple
+        span 看过的电影
+        md-icon keyboard_arrow_right
 </template>
 
 <script>
@@ -83,13 +118,40 @@ export default {
       width: .01rem
       height: .5rem
       background: #717171
-  .orders
+  .orders, .collection
     background: white
     padding: .1rem
     margin: .08rem 0
+  .orders
     .title
       font-size: .16rem
       font-weight: 200
+      border-bottom: .01rem solid #e1e1e1
+      padding: .08rem
       span:last-child
         float: right
+    .order-type
+      display: flex
+      justify-content: space-around
+      .type
+        text-align: center
+        p
+          margin: 0
+          font-size: .15rem
+          font-weight: 200
+  .collection
+    padding: 0
+    .collection-type
+      display: flex
+      align-items: center
+      padding: .15rem
+      border-bottom: .01rem solid #e1e1e1
+      position: relative
+      &:last-child
+        border-bottom: none
+        margin-bottom: 0
+      span
+        flex-grow: 1
+        font-size: .2rem
+        font-weight: 300
 </style>

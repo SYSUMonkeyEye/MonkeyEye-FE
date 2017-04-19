@@ -3,9 +3,9 @@ div#main
   md-toolbar
     div.md-toolbar-container
       md-button.md-icon-button(v-if="isMoviesPage")
-        md-icon menu
+        md-icon
       h2.md-title {{ isMoviesPage ? '电影资讯' : '个人中心' }}
-      md-button.md-icon-button(v-if="isMoviesPage" @click.native="$router.replace('/movie-search')")
+      md-button.md-icon-button(v-if="isMoviesPage" @click.native="$router.push('/movie-search')")
         md-icon search
   transition(name="slide")
     router-view.body
@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     goto (where) {
-      this.$router.replace('/main/' + where)
+      this.$router.push('/main/' + where)
       this.isMoviesPage = (where === 'movies')
     }
   }

@@ -2,7 +2,7 @@
 div#my-orders
   md-toolbar
     div.md-toolbar-container
-      h2.md-title 下单历史
+      h2.md-title 订单列表
 </template>
 
 <script>

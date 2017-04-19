@@ -4,7 +4,7 @@ div#movies
     md-tab(v-for="(movies, key) in tabs", :md-label="key")
       div.hot-movies
         img(:src="movies[0].image")
-      div.movie-item(v-for="(movie, index) in movies")
+      div.movie-item(v-for="(movie, index) in movies", @click="$router.push('/movie-detail/' + index)")
         md-ink-ripple
         img(:src="movie.image")
         div.movie-info
@@ -14,7 +14,7 @@ div#movies
           div
             md-chip {{ movie.movieType }}
             md-chip {{ movie.time }}
-        md-button.md-warn.md-icon-button.md-raised(@click.native="$router.replace('/movie-detail')")
+        md-button.md-warn.md-icon-button.md-raised(@click.native="$router.push('/reservation/' + index)")
           md-icon add_shopping_cart
 </template>
 
