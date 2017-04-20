@@ -6,6 +6,17 @@ import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.css'
 
 Vue.use(VueMaterial)
+Vue.material.registerTheme({
+  default: {
+    primary: 'red',
+    accent: 'teal',
+    warn: 'orange',
+    background: 'white'
+  },
+  white: {
+    primary: 'white'
+  }
+})
 
 import App from './App'
 import router from './router'
