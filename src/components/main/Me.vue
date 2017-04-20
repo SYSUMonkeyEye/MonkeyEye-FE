@@ -2,7 +2,6 @@
 div#me
   md-whiteframe
     div.user(@click="$router.push('/user-info')")
-      md-ink-ripple
       img(:src="user.image")
       div.user-info
         div.name {{ user.name }}
@@ -10,7 +9,6 @@ div#me
       md-icon keyboard_arrow_right
   md-whiteframe
     div.coupons-and-money
-      md-ink-ripple
       div.coupons(@click="$router.push('/coupons')")
         p {{ couponsAndMoney.coupons }}
         p 优惠券
@@ -42,20 +40,16 @@ div#me
           p 已放映
   md-whiteframe
     div.collection
-      div.collection-type
-        md-ink-ripple
+      div.collection-type(@click="$router.push('/movie-collection/my-collection')")
         span 我的收藏
         md-icon keyboard_arrow_right
-      div.collection-type
-        md-ink-ripple
+      div.collection-type(@click="$router.push('/movie-collection/countdown')")
         span 上映倒计时
         md-icon keyboard_arrow_right
-      div.collection-type
-        md-ink-ripple
+      div.collection-type(@click="$router.push('/movie-collection/want')")
         span 想看的电影
         md-icon keyboard_arrow_right
-      div.collection-type
-        md-ink-ripple
+      div.collection-type(@click="$router.push('/movie-collection/watched')")
         span 看过的电影
         md-icon keyboard_arrow_right
 </template>

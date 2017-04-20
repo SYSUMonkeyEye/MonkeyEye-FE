@@ -5,7 +5,6 @@ div#movies
       div.hot-movies
         img(:src="movies[0].image")
       div.movie-item(v-for="(movie, index) in movies", @click="$router.push('/movie-detail/' + index)")
-        md-ink-ripple
         img(:src="movie.image")
         div.movie-info
           div
