@@ -104,10 +104,10 @@ export default {
         height: 1rem
         .name
           margin: 0 0 .03rem 0
-          font-size: .2rem
+          font-size: .16rem
           font-weight: 400
         .playing-type
-          font-size: .18rem
+          font-size: .16rem
           float: right
           color: #ff6500
         .md-chip:first-child
