@@ -2,32 +2,21 @@
 div#main
   md-toolbar
     div.md-toolbar-container
-      md-button.md-icon-button(v-if="isMoviesPage")
+      md-button.md-icon-button(v-if="$route.path === '/main/movies'")
         md-icon
-      h2.md-title {{ isMoviesPage ? '电影资讯' : '个人中心' }}
-      md-button.md-icon-button(v-if="isMoviesPage" @click.native="$router.push('/movie-search')")
+      h2.md-title {{ $route.path === '/main/movies' ? '电影资讯' : '个人中心' }}
+      md-button.md-icon-button(v-if="$route.path === '/main/movies'", @click.native="$router.push('/movie-search')")
         md-icon search
   transition(name="slide")
     router-view.body
   md-bottom-bar(md-shift)
-    md-bottom-bar-item(md-icon="ondemand_video" @click.native="goto('movies')" md-active) 电影
-    md-bottom-bar-item(md-icon="person" @click.native="goto('me')") 我的
+    md-bottom-bar-item(md-icon="ondemand_video", @click.native="$router.push('/main/movies')", :md-active="$route.path === '/main/movies'") 电影
+    md-bottom-bar-item(md-icon="person", @click.native="$router.push('/main/me')", :md-active="$route.path === '/main/me'") 我的
 </template>
 
 <script>
 export default {
-  name: 'main',
-  data () {
-    return {
-      isMoviesPage: true
-    }
-  },
-  methods: {
-    goto (where) {
-      this.$router.push('/main/' + where)
-      this.isMoviesPage = (where === 'movies')
-    }
-  }
+  name: 'main'
 }
 </script>
 

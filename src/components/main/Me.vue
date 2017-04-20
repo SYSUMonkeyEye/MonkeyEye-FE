@@ -30,15 +30,15 @@ div#me
           p 待付款
         div.type(@click="$router.push('/my-orders/unpick')")
           md-button.md-icon-button.md-warn
-            md-icon shopping_cart
+            md-icon local_movies
           p 待取票
         div.type(@click="$router.push('/my-orders/unplay')")
           md-button.md-icon-button.md-primary
-            md-icon shopping_cart
+            md-icon slideshow
           p 未放映
         div.type(@click="$router.push('/my-orders/played')")
           md-button.md-icon-button
-            md-icon shopping_cart
+            md-icon event_available
           p 已放映
   md-whiteframe
     div.collection
