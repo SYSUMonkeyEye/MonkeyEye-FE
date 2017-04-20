@@ -1,11 +1,10 @@
 <template lang="pug">
 div#movies
-  md-tabs(md-centered)
+  md-tabs(md-centered, md-theme="white")
     md-tab(v-for="(movies, key) in tabs", :md-label="key")
       div.hot-movies
         img(:src="movies[0].image")
       div.movie-item(v-for="(movie, index) in movies", @click="$router.push('/movie-detail/' + index)")
-        md-ink-ripple
         img(:src="movie.image")
         div.movie-info
           div
