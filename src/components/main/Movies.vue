@@ -1,6 +1,6 @@
 <template lang="pug">
 div#movies
-  md-tabs(md-centered)
+  md-tabs(md-centered, md-theme="white")
     md-tab(v-for="(movies, key) in tabs", :md-label="key")
       div.hot-movies
         img(:src="movies[0].image")
