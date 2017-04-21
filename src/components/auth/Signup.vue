@@ -1,5 +1,5 @@
 <template lang="pug">
-div#signup(@click="getCode")
+div#signup
   md-toolbar
     div.md-toolbar-container
       h2.md-title 免费注册
@@ -16,7 +16,7 @@ div#signup(@click="getCode")
         label 验证码
         md-input(type='text')
         span.md-error Validation message
-      md-button.md-raised.md-primary#get-code(@click="getCode") {{msg}}
+      md-button.md-raised.md-primary#get-code(@click.native="getCode") {{msg}}
     md-list-item
       md-input-container
         md-icon vpn_key
@@ -30,9 +30,9 @@ div#signup(@click="getCode")
         md-input(type='text')
         span.md-error Validation message
     div#read-box
-      md-checkbox.md-primary
+      md-checkbox.md-primary(v-model="canNext")
         span#read 已阅读并同意《猿眼电影服务协议》,愿意同步创建猿眼电影账号
-    md-button.md-raised.md-primary#next 下一步
+    md-button.md-raised.md-primary(@click.native="next", :class="canNext ? '': 'inActive'")#next 下一步
 </template>
 
 <script>
@@ -40,12 +40,41 @@ export default {
   name: 'signup',
   data () {
     return {
-      msg: '获取验证码'
+      msg: '获取验证码',
+      canNext: false,
+      time: 60,
+      timer: null
     }
+  },
+  mounted () {
+    this.getCodeBox = document.getElementById('get-code')
+    this.nextBox = document.getElementById('next')
   },
   methods: {
     getCode () {
-      console.log('2312')
+      if (!this.timer) {
+        this.msg = this.time + 's后重新获取'
+        this.timer = setInterval(() => {
+          this.time--
+          this.msg = this.time + 's后重新获取'
+          if (this.time === 0) {
+            this.time = 60
+            this.msg = '获取验证码'
+            clearInterval(this.timer)
+            this.timer = null
+            this.getCodeBox.style.backgroundColor = '#f44336'
+          }
+        }, 1000)
+        this.getCodeBox.style.backgroundColor = 'gray'
+      }
+    },
+    changeStyle () {
+
+    },
+    next () {
+      if (this.canNext) {
+        console.log('下一步')
+      }
     }
   }
 }
@@ -57,7 +86,7 @@ export default {
     flex: 1
     text-align: center
   #get-code
-    z-index: 999
+    z-index: 9999999
     width: 50%
     text-align: center
   #read-box
@@ -72,4 +101,6 @@ export default {
     display: block
     margin: 0.3rem auto
     width: 90%
+.inActive
+  background-color: gray !important
 </style>

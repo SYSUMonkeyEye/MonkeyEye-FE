@@ -14,7 +14,7 @@ div#signin
       label 输入密码
       md-input(type='password' required)
       span.md-error Validation message
-  md-button.md-raised.md-primary#login 登录
+  md-button.md-raised.md-primary#login(@click.native="signIn") 登录
   p.forget(@click="forget")   忘记密码
   p.sign-up(@click="signUp") 还没有账号？立即注册
 
@@ -24,6 +24,9 @@ div#signin
 export default {
   name: 'signin',
   methods: {
+    signIn () {
+      console.log('登录')
+    },
     forget () {
       console.log('忘记密码')
     },
