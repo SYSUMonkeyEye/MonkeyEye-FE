@@ -68,9 +68,6 @@ export default {
         this.getCodeBox.style.backgroundColor = 'gray'
       }
     },
-    changeStyle () {
-
-    },
     next () {
       if (this.canNext) {
         console.log('下一步')
@@ -80,7 +77,7 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
 #signup
   .md-toolbar .md-toolbar-container .md-title
     flex: 1
@@ -94,7 +91,7 @@ export default {
     padding-right: 0.2rem
     #read
       text-align: center
-    .md-checkbox-container
+  .md-checkbox-container
       width: 24px !important
       height: 20px !important
   #next
@@ -103,4 +100,8 @@ export default {
     width: 90%
 .inActive
   background-color: gray !important
+.md-error
+  padding-top: 0.1rem
+  color: red
+  opacity: 1 !important
 </style>

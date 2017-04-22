@@ -7,13 +7,13 @@ div#signin
     md-input-container
       md-icon phone
       label 手机号
-      md-input(type='text' required)
-      span.md-error Validation message
+      md-input(type='text', required, v-model="formData.phone")
+      span.md-error {{err.phone}}
     md-input-container
       md-icon vpn_key
       label 输入密码
-      md-input(type='password' required)
-      span.md-error Validation message
+      md-input(type='password', required, v-model="formData.password")
+      span.md-error {{err.password}}
   md-button.md-raised.md-primary#login(@click.native="signIn") 登录
   p.forget(@click="forget")   忘记密码
   p.sign-up(@click="signUp") 还没有账号？立即注册
@@ -23,9 +23,41 @@ div#signin
 <script>
 export default {
   name: 'signin',
+  data () {
+    return {
+      formData: {
+        phone: '',
+        password: ''
+      },
+      err: {
+        phone: '',
+        password: ''
+      }
+    }
+  },
   methods: {
     signIn () {
-      console.log('登录')
+      this.err.phone = this.err.password = ''
+      if (!this.formData.phone) {
+        this.err.phone = '电话不能为空'
+      } else if (this.formData.phone.length !== 11) {
+        this.err.phone = '电话格式不正确'
+      } else if (!this.formData.password) {
+        this.err.password = '密码不能为空'
+      } else {
+        // 登录请求
+        let err = {
+          phone: '用户名不存在',
+          password: '密码错误，请重试'
+        }
+        if (!err) {
+          this.err.phone = err.phone
+          this.err.password = err.password
+        } else {
+          // 登录成功
+          this.$router.push('/main')
+        }
+      }
     },
     forget () {
       console.log('忘记密码')
@@ -37,7 +69,7 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
 #signin
   .md-toolbar .md-toolbar-container .md-title
     flex: 1
@@ -56,4 +88,8 @@ export default {
     text-align: center
     text-decoration: underline
     color: #3f51b5
+.md-error
+  padding-top: 0.1rem
+  color: red
+  opacity: 1 !important
 </style>
