@@ -193,13 +193,15 @@ git pull upstream dev
         "id": "uid",
         "movieId": "uid",
         "price": "double",
-        "ticketNum": "integer"
+        "ticketNum": "integer",
+        "time": "date"
     },
     "example": {
         "id": "dheusidewhxj289f74gswsu8",
         "movieId": "dheusidewhxj289f74gsuc78",
         "price": "48",
-        "ticketNum": "120"
+        "ticketNum": "120",
+        "time": "1493001432820"
     }
 }
 ```
