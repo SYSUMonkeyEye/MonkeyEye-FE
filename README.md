@@ -129,22 +129,23 @@ git pull upstream dev
 ```json
 {
     "movie": {
-        "id": "integer",
+        "id": "uid",
         "name": "string",
         "poster": "string",
         "movieType": "string",
         "playingType": "string",
-        "playingTime": "string",
+        "playingTime": "date",
         "duration": "integer",
         "rating": "integer",
         "description": "string"
     },
     "example": {
-        "id": "1",
+        "id": "dheusidewhxj289f74gsuc78",
         "name": "速度与激情8",
-        "poster": "/static/images/poster/1.png",
+        "poster": "/static/images/poster/dheusidewhxj289f74gsuc78.png",
         "movieType": "冒险 动作",
         "playingType": "3D|MAX",
+        "playingTime": "1493001432820",
         "duration": "136",
         "rating": "5",
         "description": "这是一段很长很长的简介..."
@@ -155,14 +156,14 @@ git pull upstream dev
 ```json
 {
     "recommand": {
-        "id": "integer",
-        "movieId": "integer",
+        "id": "uid",
+        "movieId": "uid",
         "poster": "string"
     },
     "example": {
-        "id": "1",
-        "movieId": "1",
-        "poster": "/static/images/poster/1.png"
+        "id": "dheusidewhxj289f74gsuc58",
+        "movieId": "dheusidewhxj289f74gsuc78",
+        "poster": "/static/images/poster/dheusidewhxj289f74gsuc78.png"
     }
 }
 ```
@@ -170,7 +171,6 @@ git pull upstream dev
 ```json
 {
     "user": {
-        "id": "integer",
         "username": "string",
         "password": "string",
         "nickname": "string",
@@ -178,11 +178,10 @@ git pull upstream dev
         "description": "string"
     },
     "example": {
-        "id": "1",
         "username": "18819212345",
         "password": "xxxxxxxx",
         "nickname": "风不定，人初静",
-        "image": "/static/images/user/1.png",
+        "image": "/static/images/user/18819253798.png",
         "description": "风不定，人初静，明日落红应满径。"
     }
 }
@@ -191,14 +190,14 @@ git pull upstream dev
 ```json
 {
     "screen": {
-        "id": "integer",
-        "movieId": "integer",
+        "id": "uid",
+        "movieId": "uid",
         "price": "double",
         "ticketNum": "integer"
     },
     "example": {
-        "id": "1",
-        "movieId": "1",
+        "id": "dheusidewhxj289f74gswsu8",
+        "movieId": "dheusidewhxj289f74gsuc78",
         "price": "48",
         "ticketNum": "120"
     }
@@ -208,21 +207,21 @@ git pull upstream dev
 ```json
 {
     "order": {
-        "id": "integer",
-        "movieId": "integer",
-        "screenId": "integer",
-        "seat": "integer",
+        "id": "uid",
+        "movieId": "uid",
+        "screenId": "uid",
+        "seat": "uid",
         "price": "double",
-        "userId": "integer",
+        "username": "string",
         "type": "integer"
     },
     "example": {
-        "id": "1",
-        "movieId": "1",
-        "screenId": "1",
+        "id": "dheusidewhxj89if74gsuc78",
+        "movieId": "dheusidewhxsud9f74gsuc78",
+        "screenId": "dheusi8uwhxj289f74gsuc78",
         "seat": "36",
         "price": "45.8",
-        "userId": "1",
+        "username": "18819212345",
         "type": "0"
     }
 }
@@ -231,14 +230,16 @@ git pull upstream dev
 ```json
 {
     "coupons": {
-        "id": "integer",
+        "id": "uid",
         "discount": "double",
-        "conditions": "double"
+        "conditions": "double",
+        "username": "string"
     },
     "example": {
-        "id": "1",
+        "id": "d8uqsidewhxj289io4gsuc78",
         "discount": "0.1",
-        "conditions": "36"
+        "conditions": "36",
+        "username": "18819212345"
     }
 }
 ```
