@@ -215,7 +215,8 @@ git pull upstream dev
         "seat": "uid",
         "price": "double",
         "username": "string",
-        "type": "integer"
+        "type": "integer",
+        "createTime": "date"
     },
     "example": {
         "id": "dheusidewhxj89if74gsuc78",
@@ -224,7 +225,8 @@ git pull upstream dev
         "seat": "36",
         "price": "45.8",
         "username": "18819212345",
-        "type": "0"
+        "type": "0",
+        "createTime": "1493001432820"
     }
 }
 ```
@@ -235,13 +237,15 @@ git pull upstream dev
         "id": "uid",
         "discount": "double",
         "conditions": "double",
-        "username": "string"
+        "username": "string",
+        "createTime": "date"
     },
     "example": {
         "id": "d8uqsidewhxj289io4gsuc78",
         "discount": "0.1",
         "conditions": "36",
-        "username": "18819212345"
+        "username": "18819212345",
+        "createTime": "1493001432820"
     }
 }
 ```
