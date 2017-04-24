@@ -123,3 +123,122 @@ git pull upstream dev
 5. 各个界面在路由中已经引入并写好跳转关系，如果界面中需要用到自定义组件请将组件放置在该界面所在的文件夹里面
 6. 伪数据程程器和伪数据json文件都放置在data文件夹下面。生成器和json文件的命名格式为"xxx-genertor.js"和"xxx.json"，其实"xxx"为上述各个数据模型的英文名称
 7. 样式大小单位使用rem，不使用px。html元素的font-size固定为100px，rem与px之间的换算公式：1rem = 100px
+
+## 4、数据模型
+电影数据模型
+```json
+{
+    "movie": {
+        "id": "integer",
+        "name": "string",
+        "poster": "string",
+        "movieType": "string",
+        "playingType": "string",
+        "playingTime": "string",
+        "duration": "integer",
+        "rating": "integer",
+        "description": "string"
+    },
+    "example": {
+        "id": "1",
+        "name": "速度与激情8",
+        "poster": "/static/images/poster/1.png",
+        "movieType": "冒险 动作",
+        "playingType": "3D|MAX",
+        "duration": "136",
+        "rating": "5",
+        "description": "这是一段很长很长的简介..."
+    }
+}
+```
+推荐电影数据模型
+```json
+{
+    "recommand": {
+        "id": "integer",
+        "movieId": "integer",
+        "poster": "string"
+    },
+    "example": {
+        "id": "1",
+        "movieId": "1",
+        "poster": "/static/images/poster/1.png"
+    }
+}
+```
+用户数据模型
+```json
+{
+    "user": {
+        "id": "integer",
+        "username": "string",
+        "password": "string",
+        "nickname": "string",
+        "image": "string",
+        "description": "string"
+    },
+    "example": {
+        "id": "1",
+        "username": "18819212345",
+        "password": "xxxxxxxx",
+        "nickname": "风不定，人初静",
+        "image": "/static/images/user/1.png",
+        "description": "风不定，人初静，明日落红应满径。"
+    }
+}
+```
+场次数据模型
+```json
+{
+    "screen": {
+        "id": "integer",
+        "movieId": "integer",
+        "price": "double",
+        "ticketNum": "integer"
+    },
+    "example": {
+        "id": "1",
+        "movieId": "1",
+        "price": "48",
+        "ticketNum": "120"
+    }
+}
+```
+订单数据模型
+```json
+{
+    "order": {
+        "id": "integer",
+        "movieId": "integer",
+        "screenId": "integer",
+        "seat": "integer",
+        "price": "double",
+        "userId": "integer",
+        "type": "integer"
+    },
+    "example": {
+        "id": "1",
+        "movieId": "1",
+        "screenId": "1",
+        "seat": "36",
+        "price": "45.8",
+        "userId": "1",
+        "type": "0"
+    }
+}
+```
+优惠券数据模型
+```json
+{
+    "coupons": {
+        "id": "integer",
+        "discount": "double",
+        "conditions": "double"
+    },
+    "example": {
+        "id": "1",
+        "discount": "0.1",
+        "conditions": "36"
+    }
+}
+```
