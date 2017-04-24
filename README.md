@@ -158,12 +158,14 @@ git pull upstream dev
     "recommand": {
         "id": "uid",
         "movieId": "uid",
-        "poster": "string"
+        "poster": "string",
+        "type": "integer"
     },
     "example": {
         "id": "dheusidewhxj289f74gsuc58",
         "movieId": "dheusidewhxj289f74gsuc78",
-        "poster": "/static/images/poster/dheusidewhxj289f74gsuc78.png"
+        "poster": "/static/images/poster/dheusidewhxj289f74gsuc78.png",
+        "integer": "0"
     }
 }
 ```
@@ -216,6 +218,7 @@ git pull upstream dev
         "price": "double",
         "username": "string",
         "type": "integer",
+        "couponsId": "uid",
         "createTime": "date"
     },
     "example": {
@@ -226,6 +229,7 @@ git pull upstream dev
         "price": "45.8",
         "username": "18819212345",
         "type": "0",
+        "couponsId": "dheusidewhxsud9f74gsuc78",
         "createTime": "1493001432820"
     }
 }
@@ -249,3 +253,5 @@ git pull upstream dev
     }
 }
 ```
+
+![DBModel](images-for-readme/DBModel.png)
