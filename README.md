@@ -158,13 +158,11 @@ git pull upstream dev
     "recommand": {
         "id": "uid",
         "movieId": "uid",
-        "poster": "string",
         "type": "integer"
     },
     "example": {
         "id": "dheusidewhxj289f74gsuc58",
         "movieId": "dheusidewhxj289f74gsuc78",
-        "poster": "/static/images/poster/dheusidewhxj289f74gsuc78.png",
         "integer": "0"
     }
 }
@@ -250,6 +248,40 @@ git pull upstream dev
         "conditions": "36",
         "username": "18819212345",
         "createTime": "1493001432820"
+    }
+}
+```
+收藏(想看)电影数据模型
+```json
+{
+    "favorite": {
+        "id": "uid",
+        "username": "string",
+        "movieId": "uid"
+    },
+    "example": {
+        "id": "d8uqsidewhxj289io4gsuc78",
+        "username": "18819212345",
+        "movieId": "d8isuoq1whxj289io4gsuc78"
+    }
+}
+```
+评论数据模型
+```json
+{
+    "comment": {
+        "id": "uid",
+        "username": "string",
+        "movieId": "uid",
+        "rating": "integer",
+        "content": "string"
+    },
+    "example": {
+        "id": "asow9sidewhxj289io4gsuc78",
+        "username": "18819212345",
+        "movieId": "d8uqsidewhxj289io4gsuc78",
+        "rating": "5",
+        "content": "很好看，很刺激！！！"
     }
 }
 ```
