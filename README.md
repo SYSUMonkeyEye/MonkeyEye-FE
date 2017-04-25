@@ -157,7 +157,7 @@ git pull upstream dev
 推荐电影数据模型
 ```json
 {
-    "recommand": {
+    "recommend": {
         "id": "uid",
         "movieId": "uid",
         "type": "integer"
