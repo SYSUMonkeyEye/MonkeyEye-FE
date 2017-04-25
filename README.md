@@ -91,6 +91,8 @@ git pull upstream dev
     │    ├─auth：登录注册相关界面
     │    │   ├─Signin.vue：登录界面
     │    │   └─Signup.vue：注册界面
+    │    ├─comment：电影评论评分相关界面
+    │    │   └─MovieComment.vue：对电影进行评论评分界面
     │    ├─main：应用的主体界面
     │    │   ├─Main.vue：主体界面外层容器
     │    │   ├─Me.vue：个人中心界面
