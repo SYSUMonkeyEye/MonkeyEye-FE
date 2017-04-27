@@ -2,8 +2,8 @@
 div#movie-comment
   md-toolbar
     div.md-toolbar-container
-      md-button.md-icon-button
-        md-icon arrow_left
+      md-button.md-icon-button(@click.native="$router.back()")
+        md-icon keyboard_arrow_left
       h2.md-title 速度与激情8
       md-button.md-icon-button(@click.native="submit")
         md-icon check
@@ -32,6 +32,8 @@ export default {
     },
     submit () {
       console.log(this.rating, this.content)
+      // TODO: 提交数据到服务器
+      this.$router.replace('/main/me')
     }
   }
 }
