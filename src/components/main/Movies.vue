@@ -3,7 +3,7 @@ div#movies
   md-tabs(md-centered, md-theme="white")
     md-tab(v-for="(movies, key) in tabs", :md-label="key")
       div.hot-movies
-        img(:src="movies[0].image")
+        img(:src="recommend[0].image", @click="goToMovieDetail")
       div.movie-item(v-for="(movie, index) in movies", @click="$router.push('/movie-detail/' + index)")
         img(:src="movie.image")
         div.movie-info
@@ -22,6 +22,20 @@ export default {
   name: 'movies',
   data () {
     return {
+      activeSlide: 0,
+      recommend: [{
+        movieId: 0,
+        image: '/data/images/movie-cover.jpg'
+      }, {
+        movieId: 1,
+        image: '/data/images/movie-cover2.jpg'
+      }, {
+        movieId: 2,
+        image: '/data/images/movie-cover.jpg'
+      }, {
+        movieId: 3,
+        image: '/data/images/movie-cover2.jpg'
+      }],
       tabs: {
         '正在热映': [{
           'name': '速度与激情7',
@@ -69,6 +83,26 @@ export default {
         }]
       }
     }
+  },
+  mounted () {
+    setTimeout(() => {
+      this.slide()
+    }, 3000)
+  },
+  methods: {
+    goToMovieDetail () {
+      this.$router.push('/reservation/' + this.recommend[this.activeSlide].movieId)
+    },
+    slide () {
+      this.activeSlide = (this.activeSlide + 1) % this.recommend.length
+      let imgs = document.querySelectorAll('.hot-movies img')
+      for (let i = 0; i < imgs.length; ++i) {
+        imgs[i].src = this.recommend[this.activeSlide].image
+      }
+      setTimeout(() => {
+        this.slide()
+      }, 3000)
+    }
   }
 }
 </script>
@@ -79,9 +113,12 @@ export default {
     padding: 0
     .hot-movies
       position: relative
+      width: 100%
+      height: 2.5rem
       img
         width: 100%
-        height: 2.5rem
+        height: 100%
+        transition: all 1s
     .movie-item
       display: flex
       align-items: center

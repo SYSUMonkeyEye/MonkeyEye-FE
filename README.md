@@ -91,6 +91,8 @@ git pull upstream dev
     │    ├─auth：登录注册相关界面
     │    │   ├─Signin.vue：登录界面
     │    │   └─Signup.vue：注册界面
+    │    ├─comment：电影评论评分相关界面
+    │    │   └─MovieComment.vue：对电影进行评论评分界面
     │    ├─main：应用的主体界面
     │    │   ├─Main.vue：主体界面外层容器
     │    │   ├─Me.vue：个人中心界面
@@ -123,3 +125,167 @@ git pull upstream dev
 5. 各个界面在路由中已经引入并写好跳转关系，如果界面中需要用到自定义组件请将组件放置在该界面所在的文件夹里面
 6. 伪数据程程器和伪数据json文件都放置在data文件夹下面。生成器和json文件的命名格式为"xxx-genertor.js"和"xxx.json"，其实"xxx"为上述各个数据模型的英文名称
 7. 样式大小单位使用rem，不使用px。html元素的font-size固定为100px，rem与px之间的换算公式：1rem = 100px
+
+## 4、数据模型
+电影数据模型
+```json
+{
+    "movie": {
+        "id": "uid",
+        "name": "string",
+        "poster": "string",
+        "movieType": "string",
+        "playingType": "string",
+        "playingTime": "date",
+        "duration": "integer",
+        "rating": "integer",
+        "description": "string"
+    },
+    "example": {
+        "id": "dheusidewhxj289f74gsuc78",
+        "name": "速度与激情8",
+        "poster": "/static/images/poster/dheusidewhxj289f74gsuc78.png",
+        "movieType": "冒险 动作",
+        "playingType": "3D|MAX",
+        "playingTime": "1493001432820",
+        "duration": "136",
+        "rating": "5",
+        "description": "这是一段很长很长的简介..."
+    }
+}
+```
+推荐电影数据模型
+```json
+{
+    "recommend": {
+        "id": "uid",
+        "movieId": "uid",
+        "type": "integer"
+    },
+    "example": {
+        "id": "dheusidewhxj289f74gsuc58",
+        "movieId": "dheusidewhxj289f74gsuc78",
+        "integer": "0"
+    }
+}
+```
+用户数据模型
+```json
+{
+    "user": {
+        "username": "string",
+        "password": "string",
+        "nickname": "string",
+        "image": "string",
+        "description": "string"
+    },
+    "example": {
+        "username": "18819212345",
+        "password": "xxxxxxxx",
+        "nickname": "风不定，人初静",
+        "image": "/static/images/user/18819253798.png",
+        "description": "风不定，人初静，明日落红应满径。"
+    }
+}
+```
+场次数据模型
+```json
+{
+    "screen": {
+        "id": "uid",
+        "movieId": "uid",
+        "price": "double",
+        "ticketNum": "integer",
+        "time": "date"
+    },
+    "example": {
+        "id": "dheusidewhxj289f74gswsu8",
+        "movieId": "dheusidewhxj289f74gsuc78",
+        "price": "48",
+        "ticketNum": "120",
+        "time": "1493001432820"
+    }
+}
+```
+订单数据模型
+```json
+{
+    "order": {
+        "id": "uid",
+        "movieId": "uid",
+        "screenId": "uid",
+        "seat": "uid",
+        "price": "double",
+        "username": "string",
+        "type": "integer",
+        "couponsId": "uid",
+        "createTime": "date"
+    },
+    "example": {
+        "id": "dheusidewhxj89if74gsuc78",
+        "movieId": "dheusidewhxsud9f74gsuc78",
+        "screenId": "dheusi8uwhxj289f74gsuc78",
+        "seat": "36",
+        "price": "45.8",
+        "username": "18819212345",
+        "type": "0",
+        "couponsId": "dheusidewhxsud9f74gsuc78",
+        "createTime": "1493001432820"
+    }
+}
+```
+优惠券数据模型
+```json
+{
+    "coupons": {
+        "id": "uid",
+        "discount": "double",
+        "conditions": "double",
+        "username": "string",
+        "createTime": "date"
+    },
+    "example": {
+        "id": "d8uqsidewhxj289io4gsuc78",
+        "discount": "0.1",
+        "conditions": "36",
+        "username": "18819212345",
+        "createTime": "1493001432820"
+    }
+}
+```
+收藏(想看)电影数据模型
+```json
+{
+    "favorite": {
+        "id": "uid",
+        "username": "string",
+        "movieId": "uid"
+    },
+    "example": {
+        "id": "d8uqsidewhxj289io4gsuc78",
+        "username": "18819212345",
+        "movieId": "d8isuoq1whxj289io4gsuc78"
+    }
+}
+```
+评论数据模型
+```json
+{
+    "comment": {
+        "id": "uid",
+        "username": "string",
+        "movieId": "uid",
+        "rating": "integer",
+        "content": "string"
+    },
+    "example": {
+        "id": "asow9sidewhxj289io4gsuc78",
+        "username": "18819212345",
+        "movieId": "d8uqsidewhxj289io4gsuc78",
+        "rating": "5",
+        "content": "很好看，很刺激！！！"
+    }
+}
+```
+
+![DBModel](images-for-readme/DBModel.png)
