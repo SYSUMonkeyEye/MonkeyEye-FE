@@ -21,13 +21,13 @@ div#signup
       md-input-container
         md-icon vpn_key
         label 密码
-        md-input(type='text' v-model="formData.password")
+        md-input(type='password' v-model="formData.password")
         span.md-error {{err.password}}
     md-list-item
       md-input-container
         md-icon vpn_key
         label 重复密码
-        md-input(type='text' v-model="formData.repeat")
+        md-input(type='password' v-model="formData.repeat")
         span.md-error {{err.repeat}}
     div#read-box
       md-checkbox.md-primary#check(v-model="canNext")
