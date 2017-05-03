@@ -13,7 +13,7 @@ div#movies
           div
             md-chip {{ movie.movieType }}
             md-chip {{ movie.time }}
-        md-button.md-warn.md-icon-button.md-raised(@click.native="$router.push('/reservation/' + index)")
+        md-button.md-warn.md-icon-button.md-raised(@click.native.stop="$router.push('/select-session/' + index)")
           md-icon add_shopping_cart
 </template>
 
@@ -91,7 +91,7 @@ export default {
   },
   methods: {
     goToMovieDetail () {
-      this.$router.push('/reservation/' + this.recommend[this.activeSlide].movieId)
+      this.$router.push('/movie-detail/' + this.recommend[this.activeSlide].movieId)
     },
     slide () {
       this.activeSlide = (this.activeSlide + 1) % this.recommend.length
