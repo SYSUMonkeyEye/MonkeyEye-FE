@@ -64,8 +64,8 @@ export default {
     formatTime (time) {
       time = new Date(time)
       let str = '' + time.getFullYear()
-      str += (time.getMonth() < 9) ? (time.getMonth() + 1) : time.getMonth()
-      str += (time.getDate() < 10) ? (time.getDate() + 1) : time.getDate()
+      str += (time.getMonth() < 9) ? '-0' + (time.getMonth() + 1) : '-' + (time.getMonth() + 1)
+      str += (time.getDate() < 10) ? '-0' + (time.getDate() + 1) : '-' + (time.getDate() + 1)
       return str
     }
   }

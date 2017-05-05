@@ -9,40 +9,37 @@ div#movie-detail
         md-icon favorite
   md-whiteframe
     div.main-info
-      img.poster(:src="movie.image")
+      img.poster(:src="$store.state.movie.detail.poster")
       div.info
         div.name-and-type
-          span {{ movie.name }}
-          span {{ movie.playingType }}
+          span {{ $store.state.movie.detail.name }}
+          span {{ $store.state.movie.detail.playingType }}
         div.rating
           span 评分:
-          img(src="../../assets/images/star-on.png", v-for="i in movie.rating")
-          img(src="../../assets/images/star-off.png", v-for="i in (5 - movie.rating)")
+          img(src="../../assets/images/star-on.png", v-for="i in $store.state.movie.detail.rating")
+          img(src="../../assets/images/star-off.png", v-for="i in (5 - $store.state.movie.detail.rating)")
         div.type-and-time
-          span {{ movie.movieType }}
-          span {{ movie.duration + '分钟' }}
-        div.playing-time {{ movie.playingTime + ' 上映' }}
+          span {{ $store.state.movie.detail.movieType }}
+          span {{ $store.state.movie.detail.duration + '分钟' }}
+        div.playing-time {{ formatTime($store.state.movie.detail.playingTime) + ' 上映' }}
   md-whiteframe
-    div.description {{ movie.description }}
-  md-button.md-raised.md-primary.buy-ticket(@click.native="$router.push('/reservation/' + movie.id)") 立即购票
+    div.description {{ $store.state.movie.detail.description }}
+  md-button.md-raised.md-primary.buy-ticket(@click.native="$router.push('/reservation/' + $store.state.movie.detail.id)") 立即购票
 </template>
 
 <script>
 export default {
   name: 'movie-detail',
-  data () {
-    return {
-      movie: {
-        id: '2333',
-        name: '速度与激情8',
-        image: '/data/images/movie-cover.jpg',
-        movieType: '冒险 动作',
-        playingType: '3D|MAX',
-        playingTime: '2014-08-09',
-        duration: '136',
-        rating: 5,
-        description: '这是一段很长很长的简介...这是一段很长很长的简介...这是一段很长很长的简介...这是一段很长很长的简介...这是一段很长很长的简介...这是一段很长很长的简介...'
-      }
+  created () {
+    this.$store.dispatch('GET_MOVIE_DETAIL', this.$route.params.id)
+  },
+  methods: {
+    formatTime (time) {
+      time = new Date(time)
+      let str = '' + time.getFullYear()
+      str += (time.getMonth() < 9) ? '-0' + (time.getMonth() + 1) : '-' + (time.getMonth() + 1)
+      str += (time.getDate() < 10) ? '-0' + (time.getDate() + 1) : '-' + (time.getDate() + 1)
+      return str
     }
   }
 }
