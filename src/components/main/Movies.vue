@@ -1,20 +1,32 @@
 <template lang="pug">
 div#movies
   md-tabs(md-centered, md-theme="white")
-    md-tab(v-for="(movies, key) in tabs", :md-label="key")
+    md-tab(md-label="正在热映")
       div.hot-movies
-        img(:src="recommend[0].image", @click="goToMovieDetail")
-      div.movie-item(v-for="(movie, index) in movies", @click="$router.push('/movie-detail/' + index)")
-        img(:src="movie.image")
+        img(:src="$store.state.movie.recommend[0].image", @click="goToMovieDetail")
+      div.movie-item(v-for="(movie, index) in $store.state.movie.playing", @click="$router.push('/movie-detail/' + movie.id)")
+        img(:src="movie.poster")
         div.movie-info
           div
             span.name {{ movie.name }}
             span.playing-type {{ movie.playingType }}
           div
             md-chip {{ movie.movieType }}
-            md-chip {{ movie.time }}
-        md-button.md-warn.md-icon-button.md-raised(@click.native.stop="$router.push('/select-session/' + index)")
+            md-chip {{ formatTime(movie.playingTime) }}
+        md-button.md-warn.md-icon-button.md-raised(@click.native.stop="$router.push('/select-session/' + movie.id)")
           md-icon add_shopping_cart
+    md-tab(md-label="即将上映")
+      div.hot-movies
+        img(:src="$store.state.movie.recommend[0].image", @click="goToMovieDetail")
+      div.movie-item(v-for="(movie, index) in $store.state.movie.toBePlayed", @click="$router.push('/movie-detail/' + movie.id)")
+        img(:src="movie.poster")
+        div.movie-info
+          div
+            span.name {{ movie.name }}
+            span.playing-type {{ movie.playingType }}
+          div
+            md-chip {{ movie.movieType }}
+            md-chip {{ formatTime(movie.playingTime) }}
 </template>
 
 <script>
@@ -22,66 +34,12 @@ export default {
   name: 'movies',
   data () {
     return {
-      activeSlide: 0,
-      recommend: [{
-        movieId: 0,
-        image: '/data/images/movie-cover.jpg'
-      }, {
-        movieId: 1,
-        image: '/data/images/movie-cover2.jpg'
-      }, {
-        movieId: 2,
-        image: '/data/images/movie-cover.jpg'
-      }, {
-        movieId: 3,
-        image: '/data/images/movie-cover2.jpg'
-      }],
-      tabs: {
-        '正在热映': [{
-          'name': '速度与激情7',
-          'image': '/data/images/movie-cover.jpg',
-          'movieType': '冒险 动作',
-          'playingType': '3D|MAX',
-          'time': '2014-08-09'
-        }, {
-          'name': '速度与激情8',
-          'image': '/data/images/movie-cover.jpg',
-          'movieType': '冒险 动作',
-          'playingType': '3D|MAX',
-          'time': '2014-08-09'
-        }, {
-          'name': '金刚狼3',
-          'image': '/data/images/movie-cover.jpg',
-          'movieType': '冒险 动作',
-          'playingType': '3D|MAX',
-          'time': '2014-08-09'
-        }, {
-          'name': '攻壳机动队',
-          'image': '/data/images/movie-cover.jpg',
-          'movieType': '冒险 动作',
-          'playingType': '3D|MAX',
-          'time': '2014-08-09'
-        }],
-        '即将上映': [{
-          'name': '速度与激情10',
-          'image': '/data/images/movie-cover.jpg',
-          'movieType': '冒险 动作',
-          'playingType': '3D|MAX',
-          'time': '2014-08-09'
-        }, {
-          'name': '速度与激情11',
-          'image': '/data/images/movie-cover.jpg',
-          'movieType': '冒险 动作',
-          'playingType': '3D|MAX',
-          'time': '2014-08-09'
-        }, {
-          'name': '速度与激情12',
-          'image': '/data/images/movie-cover.jpg',
-          'movieType': '冒险 动作',
-          'playingType': '3D|MAX',
-          'time': '2014-08-09'
-        }]
-      }
+      activeSlide: 0
+    }
+  },
+  created () {
+    if (!this.$store.state.movie.playing.length || !this.$store.state.movie.toBePlayed.length) {
+      this.$store.dispatch('GET_ALL_MOVIES')
     }
   },
   mounted () {
@@ -91,17 +49,24 @@ export default {
   },
   methods: {
     goToMovieDetail () {
-      this.$router.push('/movie-detail/' + this.recommend[this.activeSlide].movieId)
+      this.$router.push('/movie-detail/' + this.$store.state.movie.recommend[this.activeSlide].movieId)
     },
     slide () {
-      this.activeSlide = (this.activeSlide + 1) % this.recommend.length
+      this.activeSlide = (this.activeSlide + 1) % this.$store.state.movie.recommend.length
       let imgs = document.querySelectorAll('.hot-movies img')
       for (let i = 0; i < imgs.length; ++i) {
-        imgs[i].src = this.recommend[this.activeSlide].image
+        imgs[i].src = this.$store.state.movie.recommend[this.activeSlide].image
       }
       setTimeout(() => {
         this.slide()
       }, 3000)
+    },
+    formatTime (time) {
+      time = new Date(time)
+      let str = '' + time.getFullYear()
+      str += (time.getMonth() < 9) ? (time.getMonth() + 1) : time.getMonth()
+      str += (time.getDate() < 10) ? (time.getDate() + 1) : time.getDate()
+      return str
     }
   }
 }
