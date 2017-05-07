@@ -36,6 +36,8 @@ div#movies
 </template>
 
 <script>
+import { formatDate } from '../../utils/DateUtils'
+
 export default {
   name: 'movies',
   data () {
@@ -79,11 +81,7 @@ export default {
       }, 3000)
     },
     formatTime (time) {
-      time = new Date(time)
-      let str = '' + time.getFullYear()
-      str += (time.getMonth() < 9) ? '-0' + (time.getMonth() + 1) : '-' + (time.getMonth() + 1)
-      str += (time.getDate() < 10) ? '-0' + (time.getDate() + 1) : '-' + (time.getDate() + 1)
-      return str
+      return formatDate(time)
     }
   }
 }

@@ -1,10 +1,13 @@
 /**
- * @param {Date} date - 日期
+ * @param {Number} time - 时间戳
  * @returns {Date} 当天零点
  */
-function formatDate (date) {
-  return new Date(date.getFullYear() + '-' +
-    (date.getMonth() + 1) + '-' + date.getDate())
+function formatDate (time) {
+  const date = new Date(time)
+  let str = '' + date.getFullYear()
+  str += (date.getMonth() < 9) ? '-0' + (date.getMonth() + 1) : '-' + (date.getMonth() + 1)
+  str += (date.getDate() < 10) ? '-0' + (date.getDate() + 1) : '-' + (date.getDate() + 1)
+  return str
 }
 
 /**
