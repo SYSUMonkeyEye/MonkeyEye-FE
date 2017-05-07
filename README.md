@@ -180,7 +180,8 @@ git pull upstream dev
         "payPassword": "string, 支付密码",
         "nickname": "string, 昵称",
         "image": "string, 头像链接",
-        "description": "string, 个签"
+        "description": "string, 个签",
+        "money": "double, 用户账户余额"
     },
     "example": {
         "username": "18819212345",
@@ -188,7 +189,8 @@ git pull upstream dev
         "payPassword": "xxxxxxx",
         "nickname": "风不定，人初静",
         "image": "/static/images/user/18819253798.png",
-        "description": "风不定，人初静，明日落红应满径。"
+        "description": "风不定，人初静，明日落红应满径。",
+        "money": "1234.56"
     }
 }
 ```
