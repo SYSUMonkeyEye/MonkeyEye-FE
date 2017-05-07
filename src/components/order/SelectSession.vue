@@ -11,7 +11,7 @@ div#select-session
     md-tabs.md-transparent
       md-tab(v-for="(sessionsOfDay, offset) in sessions",
         :md-label="dateMap[offset] + ' ' + dates[offset]")
-        div.no-ticket(v-show="sessionsOfDay.length === 0") 抱歉，暂时没有当天可出售的电影票
+        div.no-ticket(v-show="sessionsOfDay.length === 0") 抱歉，当天暂时没有可出售的电影票
         div.session-container(v-for="session in sessionsOfDay")
           div.time
             span.start-time {{ formatStartTime(session.startTime) }}
@@ -21,14 +21,13 @@ div#select-session
             span.playing-place {{ session.playingPlace }}
           div.money
             span.price ￥{{ session.price }}
-          md-button.md-dense.md-primary.select-seat 选座
-
-
+          md-button.md-dense.md-primary.md-raised.select-seat(@click.native="$router.push(`/select-seat/${movie.id}/${session.id}`)") 选座
 
 </template>
 
 <script>
 import axios from 'axios'
+import * as DateUtils from '../../utils/DateUtils'
 
 export default {
   data () {
@@ -59,12 +58,11 @@ export default {
      * @param {Object[]} sessions - 电影场次
      */
     initSessions (sessions) {
-      let now = this.formatDate(new Date())
+      let now = new Date()
 
       for (let i = 0; i < sessions.length; i++) {
-        let date = this.formatDate(new Date(parseInt(sessions[i].startTime, 10)))
-        let diff = date.getTime() - now.getTime()
-        let days = parseInt(diff / (1000 * 60 * 60 * 24), 10)
+        let date = new Date(parseInt(sessions[i].startTime, 10))
+        let days = DateUtils.daysBetween(now, date)
 
         if (days >= 0 && days < 3) {
           this.sessions[days].push(sessions[i])
@@ -76,61 +74,15 @@ export default {
      */
     initDates () {
       for (let offset = 0; offset < 3; offset++) {
-        this.dates.push(this.getDate(offset))
+        this.dates.push(DateUtils.getDate(offset))
       }
     },
-    /**
-     * @param {number} offset - 偏离天数
-     * @returns {string} 与当前日期偏离offset的日期
-     */
-    getDate (offset) {
-      let now = new Date()
-      now.setDate(now.getDate() + offset)
-      let m = now.getMonth() + 1
-      let d = now.getDay()
-      return m + '月' + d + '日'
-    },
-    /**
-     * 为小于10的数字前面添加0
-     * @param n
-     * @returns {string}
-     */
-    addZero (n) {
-      if (n < 10) {
-        return '0' + n
-      }
-      return '' + n
-    },
-    /**
-     * 格式化时间
-     * @param {number} time - 时间戳
-     * @returns {string} 格式为HH:mm的时间
-     */
     formatStartTime (time) {
-      let t = new Date(parseInt(time, 10))
-      let h = this.addZero(t.getHours())
-      let m = this.addZero(t.getMinutes())
-      return h + ':' + m
+      return DateUtils.getTime(parseInt(time, 10))
     },
-    /**
-     * 格式化结束时间（加上电影时长）
-     * @param {number} time - 时间戳
-     * @returns {string} 格式为HH:mm的时间
-     */
     formatEndTime (time) {
-      let t = new Date(parseInt(time, 10))
-      t.setMinutes(t.getMinutes() + parseInt(this.movie.duration, 10))
-      let h = this.addZero(t.getHours())
-      let m = this.addZero(t.getMinutes())
-      return h + ':' + m
-    },
-    /**
-     * @param {Date} date - 日期
-     * @returns {Date} 当天零点
-     */
-    formatDate (date) {
-      return new Date(date.getFullYear() + '-' +
-        (date.getMonth() + 1) + '-' + date.getDate())
+      return DateUtils.getTime(parseInt(time, 10),
+        parseInt(this.movie.duration, 10))
     }
   }
 }
@@ -191,8 +143,4 @@ export default {
           min-width: .5rem
           padding: 0 .08rem
           font-size: .14rem
-
-
-
-
 </style>
