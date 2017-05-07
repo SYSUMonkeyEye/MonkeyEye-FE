@@ -1,20 +1,38 @@
 <template lang="pug">
 div#movies
   md-tabs(md-centered, md-theme="white")
-    md-tab(v-for="(movies, key) in tabs", :md-label="key")
+    md-tab(md-label="正在热映")
       div.hot-movies
-        img(:src="recommend[0].image", @click="goToMovieDetail")
-      div.movie-item(v-for="(movie, index) in movies", @click="$router.push('/movie-detail/' + index)")
-        img(:src="movie.image")
+        img#playing(v-if="$store.state.movie.recommendPlaying.length > 0",
+          :src="$store.state.movie.recommendPlaying[0].poster",
+          @click="goToMovieDetail($event)")
+      div.movie-item(v-for="(movie, index) in $store.state.movie.playing",
+        @click="$router.push('/movie-detail/' + movie.id)")
+        img(:src="movie.poster")
         div.movie-info
           div
             span.name {{ movie.name }}
             span.playing-type {{ movie.playingType }}
           div
-            md-chip {{ movie.movieType }}
-            md-chip {{ movie.time }}
-        md-button.md-warn.md-icon-button.md-raised(@click.native.stop="$router.push('/select-session/' + index)")
+            p {{ movie.movieType }}
+            p {{ formatTime(movie.playingTime) }}
+        md-button.md-warn.md-icon-button.md-raised(@click.native.stop="$router.push('/select-session/' + movie.id)")
           md-icon add_shopping_cart
+    md-tab(md-label="即将上映")
+      div.hot-movies
+        img#toBePlayed(v-if="$store.state.movie.recommendToBePlayed.length > 0",
+          :src="$store.state.movie.recommendToBePlayed[0].poster",
+          @click="goToMovieDetail($event)")
+      div.movie-item(v-for="(movie, index) in $store.state.movie.toBePlayed",
+        @click="$router.push('/movie-detail/' + movie.id)")
+        img(:src="movie.poster")
+        div.movie-info
+          div
+            span.name {{ movie.name }}
+            span.playing-type {{ movie.playingType }}
+          div
+            p {{ movie.movieType }}
+            p {{ formatTime(movie.playingTime) }}
 </template>
 
 <script>
@@ -22,86 +40,50 @@ export default {
   name: 'movies',
   data () {
     return {
-      activeSlide: 0,
-      recommend: [{
-        movieId: 0,
-        image: '/data/images/movie-cover.jpg'
-      }, {
-        movieId: 1,
-        image: '/data/images/movie-cover2.jpg'
-      }, {
-        movieId: 2,
-        image: '/data/images/movie-cover.jpg'
-      }, {
-        movieId: 3,
-        image: '/data/images/movie-cover2.jpg'
-      }],
-      tabs: {
-        '正在热映': [{
-          'name': '速度与激情7',
-          'image': '/data/images/movie-cover.jpg',
-          'movieType': '冒险 动作',
-          'playingType': '3D|MAX',
-          'time': '2014-08-09'
-        }, {
-          'name': '速度与激情8',
-          'image': '/data/images/movie-cover.jpg',
-          'movieType': '冒险 动作',
-          'playingType': '3D|MAX',
-          'time': '2014-08-09'
-        }, {
-          'name': '金刚狼3',
-          'image': '/data/images/movie-cover.jpg',
-          'movieType': '冒险 动作',
-          'playingType': '3D|MAX',
-          'time': '2014-08-09'
-        }, {
-          'name': '攻壳机动队',
-          'image': '/data/images/movie-cover.jpg',
-          'movieType': '冒险 动作',
-          'playingType': '3D|MAX',
-          'time': '2014-08-09'
-        }],
-        '即将上映': [{
-          'name': '速度与激情10',
-          'image': '/data/images/movie-cover.jpg',
-          'movieType': '冒险 动作',
-          'playingType': '3D|MAX',
-          'time': '2014-08-09'
-        }, {
-          'name': '速度与激情11',
-          'image': '/data/images/movie-cover.jpg',
-          'movieType': '冒险 动作',
-          'playingType': '3D|MAX',
-          'time': '2014-08-09'
-        }, {
-          'name': '速度与激情12',
-          'image': '/data/images/movie-cover.jpg',
-          'movieType': '冒险 动作',
-          'playingType': '3D|MAX',
-          'time': '2014-08-09'
-        }]
-      }
+      activeSlideForTab1: 0,
+      activeSlideForTab2: 0,
+      sliderTimeout: null
+    }
+  },
+  created () {
+    if (!this.$store.state.movie.playing.length || !this.$store.state.movie.toBePlayed.length) {
+      this.$store.dispatch('GET_ALL_MOVIES')
+    }
+    if (!this.$store.state.movie.recommendPlaying.length || !this.$store.state.movie.recommendToBePlayed.length) {
+      this.$store.dispatch('RECOMMEND_MOVIE')
     }
   },
   mounted () {
-    setTimeout(() => {
+    this.sliderTimeout = setTimeout(() => {
       this.slide()
     }, 3000)
   },
   methods: {
-    goToMovieDetail () {
-      this.$router.push('/movie-detail/' + this.recommend[this.activeSlide].movieId)
+    goToMovieDetail (event) {
+      const movieId = (
+        event.target.id === 'playing'
+        ? this.$store.state.movie.recommendPlaying[this.activeSlideForTab1].movieId
+        : this.$store.state.movie.recommendToBePlayed[this.activeSlideForTab2].movieId
+      )
+      clearTimeout(this.sliderTimeout)
+      this.$router.push('/movie-detail/' + movieId)
     },
     slide () {
-      this.activeSlide = (this.activeSlide + 1) % this.recommend.length
+      this.activeSlideForTab1 = (this.activeSlideForTab1 + 1) % this.$store.state.movie.recommendPlaying.length
+      this.activeSlideForTab2 = (this.activeSlideForTab2 + 1) % this.$store.state.movie.recommendToBePlayed.length
       let imgs = document.querySelectorAll('.hot-movies img')
-      for (let i = 0; i < imgs.length; ++i) {
-        imgs[i].src = this.recommend[this.activeSlide].image
-      }
-      setTimeout(() => {
+      imgs[0] ? imgs[0].src = this.$store.state.movie.recommendPlaying[this.activeSlideForTab1].poster : ''
+      imgs[1] ? imgs[1].src = this.$store.state.movie.recommendToBePlayed[this.activeSlideForTab2].poster : ''
+      this.sliderTimeout = setTimeout(() => {
         this.slide()
       }, 3000)
+    },
+    formatTime (time) {
+      time = new Date(time)
+      let str = '' + time.getFullYear()
+      str += (time.getMonth() < 9) ? '-0' + (time.getMonth() + 1) : '-' + (time.getMonth() + 1)
+      str += (time.getDate() < 10) ? '-0' + (time.getDate() + 1) : '-' + (time.getDate() + 1)
+      return str
     }
   }
 }
@@ -146,6 +128,6 @@ export default {
           font-size: .16rem
           float: right
           color: #ff6500
-        .md-chip:first-child
-          margin-right: .1rem
+        div p
+          margin: 0
 </style>

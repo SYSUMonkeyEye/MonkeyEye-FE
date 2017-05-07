@@ -20,6 +20,7 @@ Vue.material.registerTheme({
 
 import App from './App'
 import router from './router'
+import store from './store'
 
 /* eslint-disable no-new */
 new Vue({
@@ -27,5 +28,6 @@ new Vue({
   template: '<App/>',
   components: { App },
   render: h => h(App),
-  router
+  router,
+  store
 })

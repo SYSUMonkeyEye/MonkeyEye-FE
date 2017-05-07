@@ -131,15 +131,15 @@ git pull upstream dev
 ```json
 {
     "movie": {
-        "id": "uid",
-        "name": "string",
-        "poster": "string",
-        "movieType": "string",
-        "playingType": "string",
-        "playingTime": "date",
-        "duration": "integer",
-        "rating": "integer",
-        "description": "string"
+        "id": "uid, 数据库ID",
+        "name": "string, 电影名称",
+        "poster": "string, 海报链接",
+        "movieType": "string, 电影类型, 动作/冒险/爱情/喜剧等",
+        "playingType": "string, 播放类型, 2D/3D/国语/外语等",
+        "playingTime": "date, 上映日期",
+        "duration": "integer, 电影时长",
+        "rating": "integer, 电影评分, 取值范围0-5",
+        "description": "string, 电影简介"
     },
     "example": {
         "id": "dheusidewhxj289f74gsuc78",
@@ -158,14 +158,16 @@ git pull upstream dev
 ```json
 {
     "recommend": {
-        "id": "uid",
-        "movieId": "uid",
-        "type": "integer"
+        "id": "uid, 数据库ID",
+        "movieId": "uid, 数据库ID",
+        "poster": "string, 海报链接",
+        "playingTime": "date, 上映日期"
     },
     "example": {
         "id": "dheusidewhxj289f74gsuc58",
         "movieId": "dheusidewhxj289f74gsuc78",
-        "integer": "0"
+        "poster": "/static/images/poster/adadhehudhadhwkudhcbfei.png",
+        "playingTime": "1493001432820"
     }
 }
 ```
@@ -173,18 +175,22 @@ git pull upstream dev
 ```json
 {
     "user": {
-        "username": "string",
-        "password": "string",
-        "nickname": "string",
-        "image": "string",
-        "description": "string"
+        "username": "string, 用户名/账号",
+        "password": "string, 登录密码",
+        "payPassword": "string, 支付密码",
+        "nickname": "string, 昵称",
+        "image": "string, 头像链接",
+        "description": "string, 个签",
+        "money": "double, 用户账户余额"
     },
     "example": {
         "username": "18819212345",
         "password": "xxxxxxxx",
+        "payPassword": "xxxxxxx",
         "nickname": "风不定，人初静",
         "image": "/static/images/user/18819253798.png",
-        "description": "风不定，人初静，明日落红应满径。"
+        "description": "风不定，人初静，明日落红应满径。",
+        "money": "1234.56"
     }
 }
 ```
@@ -192,11 +198,11 @@ git pull upstream dev
 ```json
 {
     "screen": {
-        "id": "uid",
-        "movieId": "uid",
-        "price": "double",
-        "ticketNum": "integer",
-        "time": "date"
+        "id": "uid, 数据库ID",
+        "movieId": "uid, 数据库ID",
+        "price": "double, 本场次电影票价格",
+        "ticketNum": "integer, 本场次售票数量",
+        "time": "date, 开始放映的时间"
     },
     "example": {
         "id": "dheusidewhxj289f74gswsu8",
@@ -211,22 +217,22 @@ git pull upstream dev
 ```json
 {
     "order": {
-        "id": "uid",
-        "movieId": "uid",
-        "screenId": "uid",
-        "seat": "uid",
-        "price": "double",
-        "username": "string",
-        "type": "integer",
-        "couponsId": "uid",
-        "createTime": "date"
+        "id": "uid, 数据库ID",
+        "movieId": "uid, 电影的数据库ID",
+        "screenId": "uid, 场次的数据库ID",
+        "seat": "string, 座位",
+        "price": "double, 订单总额",
+        "username": "string, 用户名",
+        "type": "integer, 订单类型, 0:未支付, 1:待取票, 2:未上映, 3:待评价",
+        "couponsId": "uid, 优惠券的数据库ID",
+        "createTime": "date, 订单创建时间"
     },
     "example": {
         "id": "dheusidewhxj89if74gsuc78",
         "movieId": "dheusidewhxsud9f74gsuc78",
         "screenId": "dheusi8uwhxj289f74gsuc78",
-        "seat": "36",
-        "price": "45.8",
+        "seat": "36,37",
+        "price": "80",
         "username": "18819212345",
         "type": "0",
         "couponsId": "dheusidewhxsud9f74gsuc78",
@@ -238,11 +244,11 @@ git pull upstream dev
 ```json
 {
     "coupons": {
-        "id": "uid",
-        "discount": "double",
-        "conditions": "double",
-        "username": "string",
-        "createTime": "date"
+        "id": "uid, 数据库ID",
+        "discount": "double, 折扣, 5%、10%等",
+        "conditions": "double, 使用条件, 例如满60元可用",
+        "username": "string, 用户名",
+        "createTime": "date, 创建时间"
     },
     "example": {
         "id": "d8uqsidewhxj289io4gsuc78",
@@ -257,9 +263,9 @@ git pull upstream dev
 ```json
 {
     "favorite": {
-        "id": "uid",
-        "username": "string",
-        "movieId": "uid"
+        "id": "uid, 数据库ID",
+        "username": "string, 用户名",
+        "movieId": "uid, 电影的数据库ID"
     },
     "example": {
         "id": "d8uqsidewhxj289io4gsuc78",
@@ -272,11 +278,11 @@ git pull upstream dev
 ```json
 {
     "comment": {
-        "id": "uid",
-        "username": "string",
-        "movieId": "uid",
-        "rating": "integer",
-        "content": "string"
+        "id": "uid, 数据库ID",
+        "username": "string, 用户名",
+        "movieId": "uid, 电影的数据库ID",
+        "rating": "integer, 评分, 取值范围0-5",
+        "content": "string, 评价内容"
     },
     "example": {
         "id": "asow9sidewhxj289io4gsuc78",

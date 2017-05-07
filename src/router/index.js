@@ -32,7 +32,7 @@ export default new Router({
       children: [
         { path: 'movies', component: Movies },
         { path: 'me', component: Me },
-        { path: '', redirect: 'movies' }
+        { path: '*', redirect: 'movies' }
       ]
     },
     { path: '/movie-detail/:id', component: MovieDetail },
@@ -46,6 +46,6 @@ export default new Router({
     { path: '/coupons', component: Coupons },
     { path: '/movie-collection/:type', component: MovieCollection },
     { path: '/user-info', component: UserInfo },
-    { path: '/', redirect: '/main' }
+    { path: '*', redirect: '/main/' }
   ]
 })
