@@ -110,7 +110,13 @@ git pull upstream dev
     │        ├─MovieCollection.vue：收藏/已看/想看电影界面
     │        └─UserInfo.vue：用户个人信息界面
     ├─router：前端路由
-    ├─store：应用的全局状态管理
+    │    └─index.js：前端路由信息文件
+    ├─store：应用的全局数据状态管理
+    │    ├─modules：数据状态模块
+    │    │   └─movies.js：电影数据状态
+    │    └─index.js：数据状态模块配置文件
+    ├─utils：工具函数库
+    │    └─DateUtils.js：日期时间工具函数
     ├─App.vue：应用的最外层结构
     └─entry.js：应用的入口文件；第三方组件和公共文件在此引入
 ```
