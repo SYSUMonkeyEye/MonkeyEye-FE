@@ -6,7 +6,7 @@ function formatDate (time) {
   const date = new Date(time)
   let str = '' + date.getFullYear()
   str += (date.getMonth() < 9) ? '-0' + (date.getMonth() + 1) : '-' + (date.getMonth() + 1)
-  str += (date.getDate() < 10) ? '-0' + (date.getDate() + 1) : '-' + (date.getDate() + 1)
+  str += (date.getDate() < 10) ? '-0' + date.getDate() : '-' + date.getDate()
   return str
 }
 
