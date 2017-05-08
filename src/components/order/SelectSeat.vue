@@ -4,11 +4,11 @@ div#select-seat
     div.md-toolbar-container
       md-button.md-icon-button(@click.native="$router.back()")
         md-icon keyboard_arrow_left
-      h2.md-title 速度与激情8
+      h2.md-title {{ movie.name }}
   div.info
-    span {{ playingTime }}
-    span {{ playingDate }}
-    span {{ session.playingType }}
+    span {{ screen.playingTime }}
+    span {{ screen.playingDate }}
+    span {{ screen.playingType }}
   div.head-seat 正厅银幕
   div.seat-container
     div.seat-row(v-for="i in rows")
@@ -38,47 +38,40 @@ div#select-seat
 </template>
 
 <script>
-import axios from 'axios'
-import * as DateUtils from '../../utils/DateUtils'
-
 const SEATS_LIMIT = 4
 
 export default {
   data () {
     return {
-      session: {},
-      playingTime: '',
-      playingDate: '',
       rows: 10,
       columns: 12,
-      seatsSelected: [],
-      seatsLocked: [12, 13],
-      dateMap: ['今天', '明天', '后天']
+      seatsSelected: []
     }
   },
   created () {
-    axios.get('/data/sessions.json').then((res) => {
-      if (res.status === 200) {
-        let sessionId = this.$route.params.sessionId
-        this.session = res.data[sessionId - 1]
-        this.init()
-      }
-    })
+    let movieId = this.$route.params.movieId
+    let screenId = this.$route.params.screenId
+
+    this.$store.dispatch('GET_MOVIE_DETAIL', movieId)
+    this.$store.dispatch('GET_ONE_SCREEN', screenId)
+    this.$store.dispatch('GET_ONE_SCREEN_SEATS', screenId)
   },
   computed: {
     isDisabled () {
       return this.seatsSelected.length <= 0 ||
           this.seatsSelected.length > SEATS_LIMIT
+    },
+    screen () {
+      return this.$store.state.screen.screen
+    },
+    movie () {
+      return this.$store.state.movie.detail
+    },
+    seatsLocked () {
+      return this.$store.state.screen.seatsLocked
     }
   },
   methods: {
-    init () {
-      let now = new Date()
-      let date = new Date(parseInt(this.session.startTime, 10))
-      let days = DateUtils.daysBetween(now, date)
-      this.playingTime = this.dateMap[days] + DateUtils.getDate(days)
-      this.playingDate = DateUtils.getTime(parseInt(this.session.startTime, 10))
-    },
     isSelected (row, column) {
       let num = (row - 1) * this.columns + column
       let index = this.seatsSelected.indexOf(num)

@@ -1,74 +1,55 @@
 <template lang="pug">
-div#select-session
+div#select-screen
   md-toolbar
     div.md-toolbar-container
       md-button.md-icon-button(@click.native="$router.back()")
         md-icon keyboard_arrow_left
-      h2.md-title 速度与激情8
+      h2.md-title {{ movie.name }}
   div.banner
-    img(:src="movie.image")
-  div.sessions-container
+    img(:src="movie.poster")
+  div.screens-container
     md-tabs.md-transparent
-      md-tab(v-for="(sessionsOfDay, offset) in sessions",
+      md-tab(v-for="(screensOfDay, offset) in screens",
         :md-label="dateMap[offset] + ' ' + dates[offset]")
-        div.no-ticket(v-show="sessionsOfDay.length === 0") 抱歉，当天暂时没有可出售的电影票
-        div.session-container(v-for="session in sessionsOfDay")
+        div.no-ticket(v-show="screensOfDay.length === 0") 抱歉，当天暂时没有可出售的电影票
+        div.screen-container(v-for="screen in screensOfDay")
           div.time
-            span.start-time {{ formatStartTime(session.startTime) }}
-            span.end-time {{ formatEndTime(session.startTime) }}散场
+            span.start-time {{ formatStartTime(screen.time) }}
+            span.end-time {{ formatEndTime(screen.time) }}散场
           div.info
-            span.playing-type {{ session.playingType }}
-            span.playing-place {{ session.playingPlace }}
+            span.playing-type {{ screen.playingType }}
+            span.playing-place {{ screen.hallNum }}号厅
           div.money
-            span.price ￥{{ session.price }}
-          md-button.md-dense.md-primary.md-raised.select-seat(@click.native="$router.push(`/select-seat/${movie.id}/${session.id}`)") 选座
+            span.price ￥{{ screen.price }}
+          md-button.md-dense.md-primary.md-raised.select-seat(@click.native="$router.push(`/select-seat/${movie.id}/${screen.id}`)") 选座
 
 </template>
 
 <script>
-import axios from 'axios'
 import * as DateUtils from '../../utils/DateUtils'
 
 export default {
   data () {
     return {
-      movie: {},
-      sessions: [[], [], []],
       dates: [],
       dateMap: ['今天', '明天', '后天']
     }
   },
   created () {
-    axios.get('/data/movies.json').then((res) => {
-      if (res.status === 200) {
-        this.movie = res.data[0]
-      }
-    })
-    axios.get('/data/sessions.json').then((res) => {
-      if (res.status === 200) {
-        let sessions = res.data
-        this.initSessions(sessions)
-      }
-    })
+    let movieId = this.$route.params.movieId
+    this.$store.dispatch('GET_MOVIE_DETAIL', movieId)
+    this.$store.dispatch('GET_ALL_SCREENS', movieId)
     this.initDates()
   },
-  methods: {
-    /**
-     * 将电影场次划分为今天、明天和后天
-     * @param {Object[]} sessions - 电影场次
-     */
-    initSessions (sessions) {
-      let now = new Date()
-
-      for (let i = 0; i < sessions.length; i++) {
-        let date = new Date(parseInt(sessions[i].startTime, 10))
-        let days = DateUtils.daysBetween(now, date)
-
-        if (days >= 0 && days < 3) {
-          this.sessions[days].push(sessions[i])
-        }
-      }
+  computed: {
+    movie () {
+      return this.$store.state.movie.detail
     },
+    screens () {
+      return this.$store.state.screen.screens
+    }
+  },
+  methods: {
     /**
      * 获取今天、明天和后天的日期
      */
@@ -78,18 +59,17 @@ export default {
       }
     },
     formatStartTime (time) {
-      return DateUtils.getTime(parseInt(time, 10))
+      return DateUtils.getTime(time)
     },
     formatEndTime (time) {
-      return DateUtils.getTime(parseInt(time, 10),
-        parseInt(this.movie.duration, 10))
+      return DateUtils.getTime(time, this.movie.duration)
     }
   }
 }
 </script>
 
 <style lang="sass">
-#select-session
+#select-screen
   position: relative
   height: 100%
   background: #eee
@@ -97,7 +77,7 @@ export default {
     img
       width: 100%
       height: 2.5rem
-  .sessions-container
+  .screens-container
     margin-top: .15rem
     background: #ffffff
     .md-tab
@@ -105,7 +85,7 @@ export default {
       .no-ticket
         padding: .1rem 0
         text-align: center
-      .session-container
+      .screen-container
         display: flex
         align-items: center
         padding: .08rem .06rem
