@@ -16,7 +16,7 @@ import OrderDetail from '../components/order/OrderDetail'
 import OrderPay from '../components/order/OrderPay'
 import Reservation from '../components/order/Reservation'
 import SelectSeat from '../components/order/SelectSeat'
-import SelectSession from '../components/order/SelectSession'
+import SelectScreen from '../components/order/SelectScreen'
 import Coupons from '../components/profile/Coupons'
 import MovieCollection from '../components/profile/MovieCollection'
 import UserInfo from '../components/profile/UserInfo'
@@ -41,8 +41,8 @@ export default new Router({
     { path: '/order-detail/:id', component: OrderDetail },
     { path: '/order-pay/:id', component: OrderPay },
     { path: '/reservation/:id', component: Reservation },
-    { path: '/select-seat/:movieId/:sessionId', component: SelectSeat },
-    { path: '/select-session/:movieId', component: SelectSession },
+    { path: '/select-seat/:movieId/:screenId', component: SelectSeat },
+    { path: '/select-screen/:movieId', component: SelectScreen },
     { path: '/coupons', component: Coupons },
     { path: '/movie-collection/:type', component: MovieCollection },
     { path: '/user-info', component: UserInfo },

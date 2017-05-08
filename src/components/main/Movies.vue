@@ -16,7 +16,7 @@ div#movies
           div
             p {{ movie.movieType }}
             p {{ formatTime(movie.playingTime) }}
-        md-button.md-warn.md-icon-button.md-raised(@click.native.stop="$router.push('/select-session/' + movie.id)")
+        md-button.md-warn.md-icon-button.md-raised(@click.native.stop="$router.push('/select-screen/' + movie.id)")
           md-icon add_shopping_cart
     md-tab(md-label="即将上映")
       div.hot-movies

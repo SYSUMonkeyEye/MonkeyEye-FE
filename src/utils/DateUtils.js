@@ -1,24 +1,24 @@
 /**
- * @param {Number} time - 时间戳
- * @returns {Date} 当天零点
+ * @param {number} time - 时间戳
+ * @returns {string} 当天零点
  */
 function formatDate (time) {
   const date = new Date(time)
-  let str = '' + date.getFullYear()
-  str += (date.getMonth() < 9) ? '-0' + (date.getMonth() + 1) : '-' + (date.getMonth() + 1)
-  str += (date.getDate() < 10) ? '-0' + date.getDate() : '-' + date.getDate()
-  return str
+  let _date = date.getFullYear() + '-'
+  _date += addZero(date.getMonth() + 1) + '-'
+  _date += addZero(date.getDate())
+  return _date
 }
 
 /**
  * 计算两天相差天数
  * @param {Date} dateOne
  * @param {Date} dateTwo
- * @returns {Number}
+ * @returns {number}
  */
 function daysBetween (dateOne, dateTwo) {
-  let _dateOne = formatDate(dateOne)
-  let _dateTwo = formatDate(dateTwo)
+  let _dateOne = new Date(formatDate(dateOne.getTime()))
+  let _dateTwo = new Date(formatDate(dateTwo.getTime()))
 
   let diff = _dateTwo.getTime() - _dateOne.getTime()
   let days = parseInt(diff / (1000 * 60 * 60 * 24), 10)
