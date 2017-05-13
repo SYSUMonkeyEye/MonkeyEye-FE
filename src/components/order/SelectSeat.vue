@@ -32,9 +32,9 @@ div#select-seat
   div.footer
     md-button.md-primary.md-raised(:disabled="isDisabled",
       @click.native="$router.push(`/order-pay/${$route.params.screenId}`)") 确认选座
-  md-snackbar(md-position="bottom center" md-duration="2000" ref="seatLimitHook")
+  md-snackbar(md-position="bottom center" md-duration="2000" ref="seatLimit")
     span 您最多只能购买四张票
-    md-button(@click.native="$refs.seatLimitHook.close()") 确定
+    md-button(@click.native="$refs.seatLimit.close()") 确定
 
 </template>
 
@@ -94,7 +94,7 @@ export default {
         this.seatsSelected.splice(index, 1)
       } else {
         if (this.seatsSelected.length === SEATS_LIMIT) {
-          this.$refs.seatLimitHook.open()
+          this.$refs.seatLimit.open()
           return
         }
         this.seatsSelected.push(num)
