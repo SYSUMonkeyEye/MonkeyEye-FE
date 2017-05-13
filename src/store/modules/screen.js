@@ -3,9 +3,12 @@ import * as DateUtils from '../../utils/DateUtils'
 
 export default {
   state: {
-    screen: {},
+    screen: {
+      movie: {}
+    },
     screens: [[], [], []],
-    seatsLocked: []
+    seatsLocked: [],
+    seatsSelected: []
   },
 
   mutations: {
@@ -39,6 +42,9 @@ export default {
     },
     SET_MOVIE_SCREEN_SEATS (state, seatsLocked) {
       state.seatsLocked = seatsLocked
+    },
+    SET_SEATS_SELECTED (state, seatsSelected) {
+      state.seatsSelected = seatsSelected
     }
   },
 
@@ -54,7 +60,7 @@ export default {
         }
       })
     },
-    GET_ONE_SCREEN ({ commit }, screenId) {
+    GET_ONE_SCREEN ({ commit, dispatch }, screenId) {
       return axios.get(`/api/screens/${screenId}`).then(res => {
         if (res.status === 200) {
           commit('SET_MOVIE_SCREEN', res.data)
@@ -67,6 +73,9 @@ export default {
           commit('SET_MOVIE_SCREEN_SEATS', res.data)
         }
       })
+    },
+    RESET_SEATS_SELECTED ({ commit }) {
+      commit('SET_SEATS_SELECTED', [])
     }
   }
 }

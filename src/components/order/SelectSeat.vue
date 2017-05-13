@@ -30,7 +30,8 @@ div#select-seat
   div.seats-selected
     md-chip(v-for="seat in seatsSelected") {{ convert2D(seat).row }}排{{ convert2D(seat).column }}座
   div.footer
-    md-button.md-primary.md-raised(:disabled="isDisabled") 确认选座
+    md-button.md-primary.md-raised(:disabled="isDisabled",
+      @click.native="$router.push(`/order-pay/${$route.params.screenId}`)") 确认选座
   md-snackbar(md-position="bottom center" md-duration="2000" ref="seatLimitHook")
     span 您最多只能购买四张票
     md-button(@click.native="$refs.seatLimitHook.close()") 确定
@@ -44,17 +45,15 @@ export default {
   data () {
     return {
       rows: 10,
-      columns: 12,
-      seatsSelected: []
+      columns: 12
     }
   },
   created () {
-    let movieId = this.$route.params.movieId
     let screenId = this.$route.params.screenId
 
-    this.$store.dispatch('GET_MOVIE_DETAIL', movieId)
     this.$store.dispatch('GET_ONE_SCREEN', screenId)
     this.$store.dispatch('GET_ONE_SCREEN_SEATS', screenId)
+    this.$store.dispatch('RESET_SEATS_SELECTED')
   },
   computed: {
     isDisabled () {
@@ -65,10 +64,13 @@ export default {
       return this.$store.state.screen.screen
     },
     movie () {
-      return this.$store.state.movie.detail
+      return this.$store.state.screen.screen.movie
     },
     seatsLocked () {
       return this.$store.state.screen.seatsLocked
+    },
+    seatsSelected () {
+      return this.$store.state.screen.seatsSelected
     }
   },
   methods: {
@@ -99,8 +101,8 @@ export default {
       }
     },
     convert2D (num) {
-      let row = Math.floor(num / this.columns) + 1
-      let column = num % this.columns
+      let row = Math.floor((num - 1) / this.columns) + 1
+      let column = (num - 1) % this.columns + 1
       return {
         row,
         column
@@ -169,7 +171,11 @@ export default {
     display: flex
     justify-content: center
     .md-chip
+      height: 26px
+      padding: 5px 12px
       margin: 0 .05rem
+      font-size: .12rem
+      border-radius: .05rem
   .footer
     position: fixed
     bottom: 0
@@ -181,4 +187,6 @@ export default {
       display: block
       width: 100%
       margin: 0
+      padding: .02rem .16rem
+      font-size: .16rem
 </style>

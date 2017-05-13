@@ -21,7 +21,7 @@ div#select-screen
             span.playing-place {{ screen.hallNum }}号厅
           div.money
             span.price ￥{{ screen.price }}
-          md-button.md-dense.md-primary.md-raised.select-seat(@click.native="$router.push(`/select-seat/${movie.id}/${screen.id}`)") 选座
+          md-button.md-dense.md-primary.md-raised.select-seat(@click.native="$router.push(`/select-seat/${screen.id}`)") 选座
 
 </template>
 
