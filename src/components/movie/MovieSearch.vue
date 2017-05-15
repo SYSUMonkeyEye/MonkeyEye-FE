@@ -21,7 +21,7 @@ div#movie-search
 </template>
 
 <script>
-import { formatDate } from '../../utils/DateUtils'
+import { formatDate } from '../../common/utils/DateUtils'
 
 export default {
   name: 'movie-search',
