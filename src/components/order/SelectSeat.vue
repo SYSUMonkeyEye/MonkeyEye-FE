@@ -113,20 +113,22 @@ export default {
 </script>
 
 <style lang="sass">
+@import "../../common/sass/footer"
+@import "../../common/sass/chip"
+
 #select-seat
-  position: relative
   height: 100%
   background: #eee
+
   .info
     padding: .1rem 0
     text-align: center
-    font-size: .14rem
-    color: #f44336
+    color: #e53935
     background: #fff
-    border-bottom: .01rem solid #ddd
     span
       display: inline-block
       margin: 0 .08rem
+
   .head-seat
     width: 2rem
     margin: .15rem auto .2rem
@@ -135,6 +137,7 @@ export default {
     background: #fff
     color: #666
     border-radius: .05rem
+
   .seat-container
     .seat
       margin: .01rem
@@ -144,7 +147,7 @@ export default {
       &.checked
         background: #9ccc65
       &.locked
-        background: #e84e40
+        background: #e53935
     .cell
       width: .20rem
       height: .20rem
@@ -165,28 +168,18 @@ export default {
         display: flex
         .text
           line-height: .22rem
+
   .seats-selected
     margin-top: .1rem
     padding: 0 .1rem
     display: flex
     justify-content: center
     .md-chip
-      height: 26px
-      padding: 5px 12px
-      margin: 0 .05rem
-      font-size: .12rem
-      border-radius: .05rem
+      @include chip
+
   .footer
-    position: fixed
-    bottom: 0
-    left: 0
-    width: 100%
-    padding: .1rem
-    text-align: center
+    @include footer
     button
-      display: block
-      width: 100%
-      margin: 0
-      padding: .02rem .16rem
+      @include footer-btn
       font-size: .16rem
 </style>

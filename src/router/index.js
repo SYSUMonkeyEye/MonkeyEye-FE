@@ -38,7 +38,7 @@ export default new Router({
     { path: '/movie-detail/:id', component: MovieDetail },
     { path: '/movie-search', component: MovieSearch },
     { path: '/my-orders/:type', component: MyOrders },
-    { path: '/order-detail/:id', component: OrderDetail },
+    { path: '/order-detail/:orderId', component: OrderDetail },
     { path: '/order-pay/:orderId', component: OrderPay },
     { path: '/reservation/:screenId', component: Reservation },
     { path: '/select-seat/:screenId', component: SelectSeat },

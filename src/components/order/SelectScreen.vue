@@ -26,7 +26,7 @@ div#select-screen
 </template>
 
 <script>
-import * as DateUtils from '../../utils/DateUtils'
+import * as DateUtils from '../../common/utils/DateUtils'
 
 export default {
   data () {

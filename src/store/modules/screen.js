@@ -1,5 +1,5 @@
 import axios from 'axios'
-import * as DateUtils from '../../utils/DateUtils'
+import * as DateUtils from '../../common/utils/DateUtils'
 
 export default {
   state: {
