@@ -7,10 +7,7 @@ export default {
     recommendPlaying: [],
     recommendToBePlayed: [],
     searchResult: [],
-    keyword: '',
-    detail: {
-      rating: 0
-    }
+    keyword: ''
   },
 
   mutations: {
@@ -26,11 +23,6 @@ export default {
           state.playing.push(movies[i])
         }
       }
-    },
-
-    // 设置电影详情
-    SET_MOVIE_DETAIL (state, detail) {
-      state.detail = detail
     },
 
     // 设置"即将上映"和"正在热映"的电影推荐
@@ -71,7 +63,11 @@ export default {
     // 查询某部电影的详情
     GET_MOVIE_DETAIL ({ commit }, movieId) {
       return axios.get('/api/movies/' + movieId).then(res => {
-        res.status === 200 ? commit('SET_MOVIE_DETAIL', res.data) : ''
+        if (res.status === 200) {
+          return res.data
+        } else {
+          return { rating: 0 }
+        }
       })
     },
 
