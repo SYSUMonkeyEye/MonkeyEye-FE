@@ -4,41 +4,22 @@ div#order-pay
     div.md-toolbar-container
       md-button.md-icon-button(@click.native="$router.back()")
         md-icon keyboard_arrow_left
-      h2.md-title 确认订单
-  div.group.movie-detail-container
-    div.movie-detail
-      div.name 拆弹专家 粤语2D
-      div.time 今天 5月8日 18:20
-      div.place 广州金逸珠江国际影城 7号厅
-    div.seats-selected
-      md-chip 7排3座
-      md-chip 7排3座
-      md-chip 7排3座
-      md-chip 7排3座
-  div.pay-info-container.group
+      h2.md-title 订单支付
+  div.group.timer-container
+    md-icon.icon-payment watch_later
+    div.info
+      span 订单为你保留
+      span.time 15:01
+      span ，超时将自动取消
+  div.order-info-container.group
     div.group-item
-      span 手机
-      span.user-phone 15521146027
-    div.group-item
-      span 票价总计
-      span.total-price ￥39
-    div.group-item
-      span 可用优惠券
-      div.group-item-right.available-coupon
-        span.coupon-count 3张
+      span.order-detail 订单详情
+      div.group-item-right
         md-icon keyboard_arrow_right
-  div.group.notice-container
-    div.notice-title 购票需知
-    div.notice-content
-      ol
-        li 请确认场次和时间无误，购买成功后将不予退换。
-        li 由于影院系统不稳定等因素，存在出票失败的情况，会进行退票退款。
-        li 下单即代表你同意
-          span.service 《猿眼电影服务协议》
-          |。
+    div.group-item
+      span 订单金额
+      span.total-price.group-item-right ￥29
   div.footer
-    div.actual-price 实际支付：
-      span.price ￥29
     md-button.md-primary.md-raised(@click.native="openPayDialog") 立即支付
   md-dialog#pay-dialog(ref="payDialog")
     md-dialog-title 请输入支付密码
@@ -55,7 +36,6 @@ div#order-pay
       span.info 支付密码错误，请重试
     md-dialog-actions
       md-button.md-primary(@click.native="repay") 重试
-
 </template>
 
 <script>
@@ -94,7 +74,7 @@ export default {
 </script>
 
 <style lang="sass">
-$inline-border-color: #e0e0e0
+$inline-border-color: #eeeeee
 $outline-border-color: #cccccc
 
 #order-pay
@@ -102,71 +82,43 @@ $outline-border-color: #cccccc
   overflow: scroll
   background: #eee
   .group
-    margin-top: .12rem
+    margin-top: .16rem
     background: #ffffff
-    border-top: .01rem solid $outline-border-color
-    border-bottom: .01rem solid $outline-border-color
-  .movie-detail-container
-    .movie-detail
-      display: flex
-      align-items: center
-      flex-direction: column
-      border-bottom: .01rem dashed $outline-border-color
-      .name
-        padding: .08rem 0 0
-        color: #e53935
-        font-size: .16rem
-      .time
-        padding: .06rem 0 0
-      .place
-        padding: .06rem 0 .10rem
-    .seats-selected
-      display: flex
-      justify-content: center
-      padding: .1rem 0
-      .md-chip
-        height: 26px
-        padding: 5px 12px
-        margin: 0 .05rem
-        font-size: .12rem
-        border-radius: .05rem
-  .pay-info-container
-    padding: 0 .16rem
+    padding: .14rem
+  .timer-container
+    margin-top: 0
+    display: flex
+    align-items: center
+    .icon-payment
+      color: #aaaaaa
+    .info
+      flex: 1
+      padding-left: .12rem
+      font-size: .16rem
+    .time
+      color: #e53935
+  .order-info-container
+    padding-left: 0
+    padding-right: 0
     .group-item
       display: flex
-      padding: .12rem 0
-      border-bottom: .01rem solid $outline-border-color
+      font-size: .16rem
+      padding: .14rem
+      border-bottom: .01rem solid $inline-border-color
+      &:first-child
+        padding-top: 0
       &:last-child
         border: none
-      .user-phone, .total-price, .group-item-right
+        padding-bottom: 0
+      .group-item-right
         flex: 1
         text-align: right
-      .user-phone
-        color: #666666
       .total-price
         color: #e53935
-      .available-coupon
+      span
+        height: .24rem
+        line-height: .24rem
         color: #666666
-        i
-          vertical-align: top
-        .coupon-count
-          display: inline-block
-          line-height: .24rem
-          height: .24rem
-  .notice-container
-    padding: .16rem
-    margin-bottom: 1.2rem
-    .notice-title
-      font-size: .16rem
-      padding-bottom: .1rem
-      border-bottom: .01rem solid $inline-border-color
-    ol
-      margin: 0
-      padding: .06rem 0 0 .16rem
-      li
-        padding: .04rem 0 0
-      .service
-        color: #e53935
   .footer
     position: fixed
     bottom: 0

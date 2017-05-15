@@ -31,7 +31,7 @@ div#select-seat
     md-chip(v-for="seat in seatsSelected") {{ convert2D(seat).row }}排{{ convert2D(seat).column }}座
   div.footer
     md-button.md-primary.md-raised(:disabled="isDisabled",
-      @click.native="$router.push(`/order-pay/${$route.params.screenId}`)") 确认选座
+      @click.native="$router.push(`/reservation/${$route.params.screenId}`)") 确认选座
   md-snackbar(md-position="bottom center" md-duration="2000" ref="seatLimit")
     span 您最多只能购买四张票
     md-button(@click.native="$refs.seatLimit.close()") 确定
