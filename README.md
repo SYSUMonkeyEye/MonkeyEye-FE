@@ -254,14 +254,16 @@ git pull upstream dev
         "discount": "double, 折扣, 5%、10%等",
         "conditions": "double, 使用条件, 例如满60元可用",
         "username": "string, 用户名",
-        "createTime": "date, 创建时间"
+        "createTime": "date, 创建时间",
+        "type": "integer, 优惠券状态, 0: 未使用, 1: 已使用, 2: 已失效"
     },
     "example": {
         "id": "d8uqsidewhxj289io4gsuc78",
         "discount": "0.1",
         "conditions": "36",
         "username": "18819212345",
-        "createTime": "1493001432820"
+        "createTime": "1493001432820",
+        "type": "0"
     }
 }
 ```
