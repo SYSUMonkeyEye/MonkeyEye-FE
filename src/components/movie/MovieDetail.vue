@@ -28,7 +28,7 @@ div#movie-detail
 </template>
 
 <script>
-import { formatDate } from '../../utils/DateUtils'
+import { formatDate } from '../../common/utils/DateUtils'
 
 export default {
   name: 'movie-detail',
