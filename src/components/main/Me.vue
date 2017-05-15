@@ -18,18 +18,17 @@ div#me
         p 账户余额
   md-whiteframe
     div.orders
-      div.title(@click="$router.push('/my-orders/all')")
+      div.title
         span 我的订单
-        span 全部订单
       div.order-type
+        div.type(@click="$router.push('/my-orders/all')")
+          md-button.md-icon-button.md-warn
+            md-icon local_movies
+          p 全部
         div.type(@click="$router.push('/my-orders/unpay')")
           md-button.md-icon-button.md-accent
             md-icon shopping_cart
           p 待付款
-        div.type(@click="$router.push('/my-orders/unpick')")
-          md-button.md-icon-button.md-warn
-            md-icon local_movies
-          p 待取票
         div.type(@click="$router.push('/my-orders/unplay')")
           md-button.md-icon-button.md-primary
             md-icon slideshow
@@ -122,8 +121,6 @@ export default {
       font-weight: 200
       border-bottom: .01rem solid #e1e1e1
       padding: .08rem
-      span:last-child
-        float: right
     .order-type
       display: flex
       justify-content: space-around

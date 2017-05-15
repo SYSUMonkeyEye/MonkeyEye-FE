@@ -6,9 +6,8 @@ export default {
     toBePlayed: [],
     recommendPlaying: [],
     recommendToBePlayed: [],
-    detail: {
-      rating: 0
-    }
+    searchResult: [],
+    keyword: ''
   },
 
   mutations: {
@@ -26,11 +25,6 @@ export default {
       }
     },
 
-    // 设置电影详情
-    SET_MOVIE_DETAIL (state, detail) {
-      state.detail = detail
-    },
-
     // 设置"即将上映"和"正在热映"的电影推荐
     SET_RECOMMEND (state, recommend) {
       state.recommendPlaying = []
@@ -43,6 +37,18 @@ export default {
           state.recommendPlaying.push(recommend[i])
         }
       }
+    },
+
+    // 设置搜索结果
+    SET_SEARCH_RESULT (state, data) {
+      state.keyword = data.keyword
+      state.searchResult = data.result
+    },
+
+    // 清空搜索记录
+    CLEAR_SEARCH_RESULT (state) {
+      state.searchResult = []
+      state.keyword = ''
     }
   },
 
@@ -57,7 +63,11 @@ export default {
     // 查询某部电影的详情
     GET_MOVIE_DETAIL ({ commit }, movieId) {
       return axios.get('/api/movies/' + movieId).then(res => {
-        res.status === 200 ? commit('SET_MOVIE_DETAIL', res.data) : ''
+        if (res.status === 200) {
+          return res.data
+        } else {
+          return { rating: 0 }
+        }
       })
     },
 
@@ -65,6 +75,16 @@ export default {
     RECOMMEND_MOVIE ({ commit }) {
       return axios.get('/api/movies/recommendation').then(res => {
         res.status === 200 ? commit('SET_RECOMMEND', res.data) : ''
+      })
+    },
+
+    // 搜索电影
+    SEARCH_MOVIE ({commit}, keyword) {
+      return axios.get('/api/movies/?query=' + keyword).then(res => {
+        res.status === 200 ? commit('SET_SEARCH_RESULT', {
+          keyword,
+          result: res.data
+        }) : ''
       })
     }
   }

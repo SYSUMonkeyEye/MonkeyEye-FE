@@ -9,22 +9,22 @@ div#movie-detail
         md-icon favorite
   md-whiteframe
     div.main-info
-      img.poster(:src="$store.state.movie.detail.poster")
+      img.poster(:src="detail.poster")
       div.info
         div.name-and-type
-          span {{ $store.state.movie.detail.name }}
-          span {{ $store.state.movie.detail.playingType }}
+          span {{ detail.name }}
+          span {{ detail.playingType }}
         div.rating
           span 评分:
-          img(src="../../assets/images/star-on.png", v-for="i in $store.state.movie.detail.rating")
-          img(src="../../assets/images/star-off.png", v-for="i in (5 - $store.state.movie.detail.rating)")
+          img(src="../../assets/images/star-on.png", v-for="i in detail.rating")
+          img(src="../../assets/images/star-off.png", v-for="i in (5 - detail.rating)")
         div.type-and-time
-          span {{ $store.state.movie.detail.movieType }}
-          span {{ $store.state.movie.detail.duration + '分钟' }}
-        div.playing-time {{ formatTime($store.state.movie.detail.playingTime) + ' 上映' }}
+          span {{ detail.movieType }}
+          span {{ detail.duration + '分钟' }}
+        div.playing-time {{ formatTime(detail.playingTime) + ' 上映' }}
   md-whiteframe
-    div.description {{ $store.state.movie.detail.description }}
-  md-button.md-raised.md-primary.buy-ticket(@click.native="$router.push('/reservation/' + $store.state.movie.detail.id)") 立即购票
+    div.description {{ detail.description }}
+  md-button.md-raised.md-primary.buy-ticket(@click.native="$router.push('/reservation/' + detail.id)") 立即购票
 </template>
 
 <script>
@@ -34,10 +34,26 @@ export default {
   name: 'movie-detail',
   created () {
     this.$store.dispatch('GET_MOVIE_DETAIL', this.$route.params.id)
+    .then(detail => {
+      this.detail = detail
+    })
   },
   methods: {
     formatTime (time) {
       return formatDate(time)
+    }
+  },
+  data () {
+    return {
+      detail: {
+        name: 'loading ...',
+        playingType: 'loading ...',
+        movieType: 'loading ...',
+        duration: 0,
+        playingTime: Date.now(),
+        description: 'loading ...',
+        rating: 0
+      }
     }
   }
 }
