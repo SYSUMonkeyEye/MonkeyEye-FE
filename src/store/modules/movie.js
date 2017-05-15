@@ -6,6 +6,8 @@ export default {
     toBePlayed: [],
     recommendPlaying: [],
     recommendToBePlayed: [],
+    searchResult: [],
+    keyword: '',
     detail: {
       rating: 0
     }
@@ -43,6 +45,18 @@ export default {
           state.recommendPlaying.push(recommend[i])
         }
       }
+    },
+
+    // 设置搜索结果
+    SET_SEARCH_RESULT (state, data) {
+      state.keyword = data.keyword
+      state.searchResult = data.result
+    },
+
+    // 清空搜索记录
+    CLEAR_SEARCH_RESULT (state) {
+      state.searchResult = []
+      state.keyword = ''
     }
   },
 
@@ -65,6 +79,16 @@ export default {
     RECOMMEND_MOVIE ({ commit }) {
       return axios.get('/api/movies/recommendation').then(res => {
         res.status === 200 ? commit('SET_RECOMMEND', res.data) : ''
+      })
+    },
+
+    // 搜索电影
+    SEARCH_MOVIE ({commit}, keyword) {
+      return axios.get('/api/movies/?query=' + keyword).then(res => {
+        res.status === 200 ? commit('SET_SEARCH_RESULT', {
+          keyword,
+          result: res.data
+        }) : ''
       })
     }
   }

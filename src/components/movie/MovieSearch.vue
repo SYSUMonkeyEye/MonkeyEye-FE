@@ -2,54 +2,45 @@
 div#movie-search
   md-toolbar(md-theme="white")
     div.md-toolbar-container
-      md-button.md-icon-button
+      md-button.md-icon-button(@click.native="search")
         md-icon search
       md-input-container(md-inline)
         label Search ...
-        md-input(type="text")
-      md-button.md-icon-button
+        md-input(type="text", v-model="keyword")
+      md-button.md-icon-button(v-show="keyword.length > 0", @click.native="clear")
         md-icon cancel
-  div.result-item(v-for="(movie, index) in result", @click="$router.push('/movie-detail/' + index)")
-    img(:src="movie.image")
+  div.result-item(v-for="(movie, index) in $store.state.movie.searchResult", @click="$router.push('/movie-detail/' + movie.id)")
+    img(:src="movie.poster")
     div.movie-info
       div
         span.name {{ movie.name }}
         span.playing-type {{ movie.playingType }}
       div
-        md-chip {{ movie.movieType }}
-        md-chip {{ movie.time }}
+        p {{ movie.movieType }}
+        p {{ formatTime(movie.playingTime) }}
 </template>
 
 <script>
+import { formatDate } from '../../utils/DateUtils'
+
 export default {
   name: 'movie-search',
   data () {
     return {
-      result: [{
-        'name': '速度与激情7',
-        'image': '/data/images/movie-cover.jpg',
-        'movieType': '冒险 动作',
-        'playingType': '3D|MAX',
-        'time': '2014-08-09'
-      }, {
-        'name': '速度与激情8',
-        'image': '/data/images/movie-cover.jpg',
-        'movieType': '冒险 动作',
-        'playingType': '3D|MAX',
-        'time': '2014-08-09'
-      }, {
-        'name': '金刚狼3',
-        'image': '/data/images/movie-cover.jpg',
-        'movieType': '冒险 动作',
-        'playingType': '3D|MAX',
-        'time': '2014-08-09'
-      }, {
-        'name': '攻壳机动队',
-        'image': '/data/images/movie-cover.jpg',
-        'movieType': '冒险 动作',
-        'playingType': '3D|MAX',
-        'time': '2014-08-09'
-      }]
+      keyword: this.$store.state.movie.keyword
+    }
+  },
+  methods: {
+    search () {
+      if (this.keyword.length === 0) return
+      this.$store.dispatch('SEARCH_MOVIE', this.keyword)
+    },
+    clear () {
+      this.keyword = ''
+      this.$store.commit('CLEAR_SEARCH_RESULT')
+    },
+    formatTime (time) {
+      return formatDate(time)
     }
   }
 }
@@ -84,6 +75,6 @@ export default {
         font-size: .16rem
         float: right
         color: #ff6500
-      .md-chip:first-child
-        margin-right: .1rem
+      div p
+        margin: 0
 </style>
