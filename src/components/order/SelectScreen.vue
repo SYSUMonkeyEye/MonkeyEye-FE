@@ -32,12 +32,24 @@ export default {
   data () {
     return {
       dates: [],
-      dateMap: ['今天', '明天', '后天']
+      dateMap: ['今天', '明天', '后天'],
+      movie: {
+        name: 'loading ...',
+        playingType: 'loading ...',
+        movieType: 'loading ...',
+        duration: 0,
+        playingTime: Date.now(),
+        description: 'loading ...',
+        rating: 0
+      }
     }
   },
   created () {
     let movieId = this.$route.params.movieId
     this.$store.dispatch('GET_MOVIE_DETAIL', movieId)
+      .then(movie => {
+        this.movie = movie
+      })
     this.$store.dispatch('GET_ALL_SCREENS', movieId)
     this.initDates()
   },
