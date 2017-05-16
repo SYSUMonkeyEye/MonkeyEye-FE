@@ -53,10 +53,10 @@ export default {
     }
   },
   created () {
-    if (!this.$store.state.movie.playing.length || !this.$store.state.movie.toBePlayed.length) {
+    if (!this.$store.state.movie.allMovieGot) {
       this.$store.dispatch('GET_ALL_MOVIES')
     }
-    if (!this.$store.state.movie.recommendPlaying.length || !this.$store.state.movie.recommendToBePlayed.length) {
+    if (!this.$store.state.movie.recommendGot) {
       this.$store.dispatch('RECOMMEND_MOVIE')
     }
   },
@@ -65,6 +65,9 @@ export default {
       this.slide()
     }, 3000)
   },
+  beforeDestroy () {
+    this.sliderTimeout ? clearTimeout(this.sliderTimeout) : ''
+  },
   methods: {
     goToMovieDetail (event) {
       const movieId = (
@@ -72,7 +75,7 @@ export default {
         ? this.$store.state.movie.recommendPlaying[this.activeSlideForTab1].movieId
         : this.$store.state.movie.recommendToBePlayed[this.activeSlideForTab2].movieId
       )
-      clearTimeout(this.sliderTimeout)
+      this.sliderTimeout ? clearTimeout(this.sliderTimeout) : ''
       this.$router.push('/movie-detail/' + movieId)
     },
     slide () {
@@ -86,7 +89,7 @@ export default {
           imgs[0].style.opacity = 1
         }, 500)
       }
-      if (this.activeTab === 0 && imgs[1]) {
+      if (this.activeTab === 1 && imgs[1]) {
         imgs[1].style.opacity = 0
         setTimeout(() => {
           imgs[1].src = this.$store.state.movie.recommendToBePlayed[this.activeSlideForTab2].poster
@@ -151,7 +154,7 @@ export default {
       .md-icon
         font-size: 1rem
         height: auto
-        width: autp
+        width: auto
       p
         font-size: .2rem
 </style>
