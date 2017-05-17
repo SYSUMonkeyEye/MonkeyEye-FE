@@ -7,8 +7,8 @@ div#signin
     md-input-container
       md-icon phone
       label 手机号
-      md-input(type='text', required, v-model="formData.phone")
-      span.md-error {{err.phone}}
+      md-input(type='text', required, v-model="formData.id")
+      span.md-error {{err.id}}
     md-input-container
       md-icon vpn_key
       label 输入密码
@@ -25,38 +25,26 @@ export default {
   name: 'signin',
   data () {
     return {
-      formData: {
-        phone: '',
-        password: ''
-      },
-      err: {
-        phone: '',
-        password: ''
-      }
+      test: '123',
+      err: this.$store.state.auth.signInErr,
+      formData: this.$store.state.auth.signInData
     }
   },
   methods: {
     signIn () {
-      this.err.phone = this.err.password = ''
-      if (!this.formData.phone) {
-        this.err.phone = '电话不能为空'
-      } else if (this.formData.phone.length !== 11) {
-        this.err.phone = '电话格式不正确'
+      if (!this.formData.id) {
+        this.err.id = '电话不能为空'
+      } else if (this.formData.id.length !== 11) {
+        this.err.id = '电话格式不正确'
       } else if (!this.formData.password) {
         this.err.password = '密码不能为空'
       } else {
         // 登录请求
-        let err = {
-          phone: '用户名不存在',
-          password: '密码错误，请重试'
-        }
-        if (!err) {
-          this.err.phone = err.phone
-          this.err.password = err.password
-        } else {
-          // 登录成功
-          this.$router.push('/main')
-        }
+        this.$store.dispatch('SIGN_IN', this.formData).then(() => {
+          if (!this.err.password && !this.err.id) {
+            this.$router.push('/main/me')
+          }
+        })
       }
     },
     forget () {
