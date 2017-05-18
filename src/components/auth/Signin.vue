@@ -48,7 +48,13 @@ export default {
       }
     },
     forget () {
-      console.log('忘记密码')
+      this.$router.push({
+        path: '/password',
+        query: {
+          action: 'forget',
+          type: 'login'
+        }
+      })
     },
     signUp () {
       this.$router.push('/signUp')

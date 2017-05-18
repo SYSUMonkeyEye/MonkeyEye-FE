@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="d0fab929-c49c-4437-9d78-916f03c9fdfc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/auth/Signin.vue" afterPath="$PROJECT_DIR$/src/components/auth/Signin.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/auth/Signup.vue" afterPath="$PROJECT_DIR$/src/components/auth/Signup.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/store/index.js" afterPath="$PROJECT_DIR$/src/store/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/router/index.js" afterPath="$PROJECT_DIR$/src/router/index.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -27,7 +25,7 @@
             <entry file="file://$PROJECT_DIR$/src/utils/DateUtils.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="238">
-                  <caret line="14" column="24" lean-forward="true" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
+                  <caret line="14" column="24" lean-forward="false" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
                   <folding />
                 </state>
               </provider>
@@ -36,11 +34,10 @@
           <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/store/index.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="306">
-                  <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+                <state relative-caret-position="102">
+                  <caret line="6" column="37" lean-forward="false" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
                   <folding>
                     <element signature="e#0#21#0" expanded="true" />
-                    <element signature="e#62#97#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -58,12 +55,37 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Signin.vue" pinned="false" current-in-tab="true">
+          <file leaf-file-name="Signin.vue" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/components/auth/Signin.vue">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="593">
-                  <caret line="50" column="25" lean-forward="true" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="25" />
+                <state relative-caret-position="180">
+                  <caret line="10" column="30" lean-forward="false" selection-start-line="6" selection-start-column="4" selection-end-line="10" selection-end-column="30" />
                   <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Password.vue" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/components/auth/Password.vue">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="374">
+                  <caret line="22" column="19" lean-forward="true" selection-start-line="22" selection-start-column="19" selection-end-line="22" selection-end-column="19" />
+                  <folding>
+                    <element signature="e#662#687#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="password.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/store/modules/password.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="578">
+                  <caret line="34" column="6" lean-forward="false" selection-start-line="34" selection-start-column="6" selection-end-line="34" selection-end-column="6" />
+                  <folding>
+                    <element signature="e#0#25#0" expanded="true" />
+                    <marker date="1495084762000" expanded="true" signature="331:651" ph="{...}" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -72,17 +94,7 @@
             <entry file="file://$PROJECT_DIR$/src/components/auth/Signup.vue">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="58">
-                  <caret line="8" column="21" lean-forward="true" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Me.vue" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/components/main/Me.vue">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="289">
-                  <caret line="17" column="14" lean-forward="false" selection-start-line="17" selection-start-column="14" selection-end-line="17" selection-end-column="14" />
+                  <caret line="8" column="21" lean-forward="false" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
                   <folding />
                 </state>
               </provider>
@@ -115,8 +127,8 @@
           <file leaf-file-name="Movies.vue" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/components/main/Movies.vue">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="34">
-                  <caret line="2" column="2" lean-forward="false" selection-start-line="2" selection-start-column="2" selection-end-line="2" selection-end-column="2" />
+                <state relative-caret-position="578">
+                  <caret line="34" column="49" lean-forward="false" selection-start-line="34" selection-start-column="49" selection-end-line="34" selection-end-column="49" />
                   <folding />
                 </state>
               </provider>
@@ -125,8 +137,8 @@
           <file leaf-file-name="movie.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/store/modules/movie.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="359">
-                  <caret line="55" column="13" lean-forward="true" selection-start-line="55" selection-start-column="13" selection-end-line="55" selection-end-column="13" />
+                <state relative-caret-position="935">
+                  <caret line="55" column="13" lean-forward="false" selection-start-line="55" selection-start-column="13" selection-end-line="55" selection-end-column="13" />
                   <folding />
                 </state>
               </provider>
@@ -135,8 +147,8 @@
           <file leaf-file-name="auth.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/store/modules/auth.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="751">
-                  <caret line="51" column="6" lean-forward="true" selection-start-line="51" selection-start-column="6" selection-end-line="51" selection-end-column="6" />
+                <state relative-caret-position="1037">
+                  <caret line="61" column="5" lean-forward="false" selection-start-line="61" selection-start-column="5" selection-end-line="61" selection-end-column="5" />
                   <folding>
                     <element signature="e#0#25#0" expanded="true" />
                   </folding>
@@ -179,8 +191,12 @@
         <option value="$PROJECT_DIR$/src/store/index.js" />
         <option value="$PROJECT_DIR$/src/utils/formData.js" />
         <option value="$PROJECT_DIR$/src/utils/Form.js" />
+        <option value="$PROJECT_DIR$/src/components/auth/Forget.vue" />
         <option value="$PROJECT_DIR$/src/store/modules/auth.js" />
+        <option value="$PROJECT_DIR$/src/store/modules/password.js" />
+        <option value="$PROJECT_DIR$/src/router/index.js" />
         <option value="$PROJECT_DIR$/src/components/auth/Signin.vue" />
+        <option value="$PROJECT_DIR$/src/components/auth/Password.vue" />
       </list>
     </option>
   </component>
@@ -330,6 +346,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MonkeyEye-FE" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MonkeyEye-FE" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="router" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -553,12 +587,12 @@
       <updated>1494829147352</updated>
       <workItem from="1494829148721" duration="20123000" />
       <workItem from="1494927299441" duration="17000" />
-      <workItem from="1494986190104" duration="7745000" />
+      <workItem from="1494986190104" duration="15522000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27885000" />
+    <option name="totallyTimeSpent" value="35662000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-461" y="-1418" width="2556" height="1418" extended-state="6" />
@@ -601,7 +635,6 @@
           <caret line="7" column="30" lean-forward="false" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
-            <element signature="e#62#97#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -680,16 +713,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="279">
-            <caret line="33" column="3" lean-forward="false" selection-start-line="33" selection-start-column="3" selection-end-line="33" selection-end-column="3" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/main/Main.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-8">
@@ -749,37 +772,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/main/Movies.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="2" lean-forward="false" selection-start-line="2" selection-start-column="2" selection-end-line="2" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/store/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-            <element signature="e#62#97#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/utils/DateUtils.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
-          <caret line="14" column="24" lean-forward="true" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/store/modules/movie.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="55" column="13" lean-forward="true" selection-start-line="55" selection-start-column="13" selection-end-line="55" selection-end-column="13" />
+          <caret line="14" column="24" lean-forward="false" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
           <folding />
         </state>
       </provider>
@@ -787,7 +783,7 @@
     <entry file="file://$PROJECT_DIR$/src/components/auth/Signup.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="58">
-          <caret line="8" column="21" lean-forward="true" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+          <caret line="8" column="21" lean-forward="false" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
           <folding />
         </state>
       </provider>
@@ -802,21 +798,122 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="235">
+            <caret line="33" column="3" lean-forward="false" selection-start-line="33" selection-start-column="3" selection-end-line="33" selection-end-column="3" />
+            <folding>
+              <marker date="1494829561000" expanded="true" signature="3419:4154" ph="{...}" />
+              <marker date="1494829561000" expanded="true" signature="3434:3795" ph="{&quot;id&quot;: &quot;uid, 数据库ID&quot;...}" />
+              <marker date="1494829561000" expanded="true" signature="3812:4152" ph="{&quot;id&quot;: &quot;dheusidewhxj289f74gsuc78&quot;...}" />
+              <marker date="1494829561000" expanded="true" signature="4176:4558" ph="{...}" />
+              <marker date="1494829561000" expanded="true" signature="4195:4333" ph="{&quot;id&quot;: &quot;uid, 数据库ID&quot;...}" />
+              <marker date="1494829561000" expanded="true" signature="4350:4556" ph="{&quot;id&quot;: &quot;dheusidewhxj289f74gsuc58&quot;...}" />
+              <marker date="1494829561000" expanded="true" signature="4578:5134" ph="{...}" />
+              <marker date="1494829561000" expanded="true" signature="4592:4850" ph="{&quot;username&quot;: &quot;string, 用户名/账号&quot;...}" />
+              <marker date="1494829561000" expanded="true" signature="4867:5132" ph="{&quot;username&quot;: &quot;18819212345&quot;...}" />
+              <marker date="1494829561000" expanded="true" signature="5154:5546" ph="{...}" />
+              <marker date="1494829561000" expanded="true" signature="5170:5348" ph="{&quot;id&quot;: &quot;uid, 数据库ID&quot;...}" />
+              <marker date="1494829561000" expanded="true" signature="5365:5544" ph="{&quot;id&quot;: &quot;dheusidewhxj289f74gswsu8&quot;...}" />
+              <marker date="1494829561000" expanded="true" signature="5566:6278" ph="{...}" />
+              <marker date="1494829561000" expanded="true" signature="5581:5924" ph="{&quot;id&quot;: &quot;uid, 数据库ID&quot;...}" />
+              <marker date="1494829561000" expanded="true" signature="5941:6276" ph="{&quot;id&quot;: &quot;dheusidewhxj89if74gsuc78&quot;...}" />
+              <marker date="1494829561000" expanded="true" signature="6299:6787" ph="{...}" />
+              <marker date="1494829561000" expanded="true" signature="6316:6570" ph="{&quot;id&quot;: &quot;uid, 数据库ID&quot;...}" />
+              <marker date="1494829561000" expanded="true" signature="6587:6785" ph="{&quot;id&quot;: &quot;d8uqsidewhxj289io4gsuc78&quot;...}" />
+              <marker date="1494829561000" expanded="true" signature="6813:7085" ph="{...}" />
+              <marker date="1494829561000" expanded="true" signature="6831:6936" ph="{&quot;id&quot;: &quot;uid, 数据库ID&quot;...}" />
+              <marker date="1494829561000" expanded="true" signature="6953:7083" ph="{&quot;id&quot;: &quot;d8uqsidewhxj289io4gsuc78&quot;...}" />
+              <marker date="1494829561000" expanded="true" signature="7105:7510" ph="{...}" />
+              <marker date="1494829561000" expanded="true" signature="7122:7304" ph="{&quot;id&quot;: &quot;uid, 数据库ID&quot;...}" />
+              <marker date="1494829561000" expanded="true" signature="7321:7508" ph="{&quot;id&quot;: &quot;asow9sidewhxj289io4gsuc78&quot;...}" />
+            </folding>
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/store/modules/movie.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="935">
+          <caret line="55" column="13" lean-forward="false" selection-start-line="55" selection-start-column="13" selection-end-line="55" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/main/Movies.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="34" column="49" lean-forward="false" selection-start-line="34" selection-start-column="49" selection-end-line="34" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/store/modules/auth.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="751">
-          <caret line="51" column="6" lean-forward="true" selection-start-line="51" selection-start-column="6" selection-end-line="51" selection-end-column="6" />
+        <state relative-caret-position="1037">
+          <caret line="61" column="5" lean-forward="false" selection-start-line="61" selection-start-column="5" selection-end-line="61" selection-end-column="5" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/router/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="23" lean-forward="false" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#21#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/store/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="37" lean-forward="false" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/store/modules/password.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="34" column="6" lean-forward="false" selection-start-line="34" selection-start-column="6" selection-end-line="34" selection-end-column="6" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+            <marker date="1495084762000" expanded="true" signature="331:651" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/auth/Signin.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="593">
-          <caret line="50" column="25" lean-forward="true" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="25" />
+        <state relative-caret-position="180">
+          <caret line="10" column="30" lean-forward="false" selection-start-line="6" selection-start-column="4" selection-end-line="10" selection-end-column="30" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/profile/MovieCollection.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/auth/Password.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="19" lean-forward="true" selection-start-line="22" selection-start-column="19" selection-end-line="22" selection-end-column="19" />
+          <folding>
+            <element signature="e#662#687#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
