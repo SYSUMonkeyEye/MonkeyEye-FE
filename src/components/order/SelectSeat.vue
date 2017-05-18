@@ -30,10 +30,11 @@ div#select-seat
   div.seats-selected
     md-chip(v-for="seat in seatsSelected") {{ convert2D(seat).row }}排{{ convert2D(seat).column }}座
   div.footer
-    md-button.md-primary.md-raised(:disabled="isDisabled") 确认选座
-  md-snackbar(md-position="bottom center" md-duration="2000" ref="seatLimitHook")
+    md-button.md-primary.md-raised(:disabled="isDisabled",
+      @click.native="$router.push(`/reservation/${$route.params.screenId}`)") 确认选座
+  md-snackbar(md-position="bottom center" md-duration="2000" ref="seatLimit")
     span 您最多只能购买四张票
-    md-button(@click.native="$refs.seatLimitHook.close()") 确定
+    md-button(@click.native="$refs.seatLimit.close()") 确定
 
 </template>
 
@@ -44,17 +45,15 @@ export default {
   data () {
     return {
       rows: 10,
-      columns: 12,
-      seatsSelected: []
+      columns: 12
     }
   },
   created () {
-    let movieId = this.$route.params.movieId
     let screenId = this.$route.params.screenId
 
-    this.$store.dispatch('GET_MOVIE_DETAIL', movieId)
     this.$store.dispatch('GET_ONE_SCREEN', screenId)
     this.$store.dispatch('GET_ONE_SCREEN_SEATS', screenId)
+    this.$store.dispatch('RESET_SEATS_SELECTED')
   },
   computed: {
     isDisabled () {
@@ -65,10 +64,13 @@ export default {
       return this.$store.state.screen.screen
     },
     movie () {
-      return this.$store.state.movie.detail
+      return this.$store.state.screen.screen.movie
     },
     seatsLocked () {
       return this.$store.state.screen.seatsLocked
+    },
+    seatsSelected () {
+      return this.$store.state.screen.seatsSelected
     }
   },
   methods: {
@@ -92,15 +94,15 @@ export default {
         this.seatsSelected.splice(index, 1)
       } else {
         if (this.seatsSelected.length === SEATS_LIMIT) {
-          this.$refs.seatLimitHook.open()
+          this.$refs.seatLimit.open()
           return
         }
         this.seatsSelected.push(num)
       }
     },
     convert2D (num) {
-      let row = Math.floor(num / this.columns) + 1
-      let column = num % this.columns
+      let row = Math.floor((num - 1) / this.columns) + 1
+      let column = (num - 1) % this.columns + 1
       return {
         row,
         column
@@ -111,20 +113,22 @@ export default {
 </script>
 
 <style lang="sass">
+@import "../../common/sass/footer"
+@import "../../common/sass/chip"
+
 #select-seat
-  position: relative
   height: 100%
   background: #eee
+
   .info
     padding: .1rem 0
     text-align: center
-    font-size: .14rem
-    color: #f44336
+    color: #e53935
     background: #fff
-    border-bottom: .01rem solid #ddd
     span
       display: inline-block
       margin: 0 .08rem
+
   .head-seat
     width: 2rem
     margin: .15rem auto .2rem
@@ -133,6 +137,7 @@ export default {
     background: #fff
     color: #666
     border-radius: .05rem
+
   .seat-container
     .seat
       margin: .01rem
@@ -142,7 +147,7 @@ export default {
       &.checked
         background: #9ccc65
       &.locked
-        background: #e84e40
+        background: #e53935
     .cell
       width: .20rem
       height: .20rem
@@ -163,22 +168,18 @@ export default {
         display: flex
         .text
           line-height: .22rem
+
   .seats-selected
     margin-top: .1rem
     padding: 0 .1rem
     display: flex
     justify-content: center
     .md-chip
-      margin: 0 .05rem
+      @include chip
+
   .footer
-    position: fixed
-    bottom: 0
-    left: 0
-    width: 100%
-    padding: .1rem
-    text-align: center
+    @include footer
     button
-      display: block
-      width: 100%
-      margin: 0
+      @include footer-btn
+      font-size: .16rem
 </style>
