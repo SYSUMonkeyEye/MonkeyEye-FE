@@ -5,6 +5,7 @@ Vue.use(Router)
 
 import Signin from '../components/auth/Signin'
 import Signup from '../components/auth/Signup'
+import Password from '../components/auth/Password'
 import MovieComment from '../components/comment/MovieComment'
 import Main from '../components/main/Main'
 import Movies from '../components/main/Movies'
@@ -26,6 +27,7 @@ export default new Router({
   routes: [
     { path: '/signin', component: Signin },
     { path: '/signup', component: Signup },
+    { path: '/password', component: Password },
     { path: '/movie-comment', component: MovieComment },
     { path: '/main',
       component: Main,

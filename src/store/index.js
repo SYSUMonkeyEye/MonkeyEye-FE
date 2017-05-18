@@ -5,11 +5,13 @@ Vue.use(Vuex)
 
 import movie from './modules/movie'
 import screen from './modules/screen'
+import auth from './modules/auth'
 
 const store = new Vuex.Store({
   modules: {
     movie: movie,
-    screen: screen
+    screen: screen,
+    auth: auth
   }
 })
 
