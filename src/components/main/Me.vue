@@ -39,17 +39,14 @@ div#me
           p 已放映
   md-whiteframe
     div.collection
-      div.collection-type(@click="$router.push('/movie-collection/my-collection')")
+      div.collection-type(@click="$router.push('/movie-collection/favorites')")
         span 我的收藏
         md-icon keyboard_arrow_right
-      div.collection-type(@click="$router.push('/movie-collection/countdown')")
-        span 上映倒计时
-        md-icon keyboard_arrow_right
-      div.collection-type(@click="$router.push('/movie-collection/want')")
-        span 想看的电影
+      div.collection-type(@click="$router.push('/movie-collection/wanna')")
+        span 期待上映
         md-icon keyboard_arrow_right
       div.collection-type(@click="$router.push('/movie-collection/watched')")
-        span 看过的电影
+        span 观影历史
         md-icon keyboard_arrow_right
 </template>
 
@@ -79,7 +76,7 @@ export default {
     display: flex
     align-items: center
     padding: .1rem
-    margin: .08rem 0
+    margin: .1rem 0
   .user
     img
       width: .65rem
@@ -114,7 +111,7 @@ export default {
   .orders, .collection
     background: white
     padding: .1rem
-    margin: .08rem 0
+    margin: .1rem 0
   .orders
     .title
       font-size: .16rem
