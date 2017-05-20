@@ -21,6 +21,7 @@ import SelectScreen from '../components/order/SelectScreen'
 import Coupons from '../components/profile/Coupons'
 import MovieCollection from '../components/profile/MovieCollection'
 import UserInfo from '../components/profile/UserInfo'
+import ChangeInfo from '../components/profile/ChangeInfo'
 
 export default new Router({
   mode: 'history',
@@ -48,6 +49,7 @@ export default new Router({
     { path: '/coupons', component: Coupons },
     { path: '/movie-collection/:type', component: MovieCollection },
     { path: '/user-info', component: UserInfo },
+    {path: '/change-info', component: ChangeInfo},
     { path: '*', redirect: '/main/' }
   ]
 })
