@@ -84,11 +84,16 @@ git pull upstream dev
 └─src：前端开发的源码
     ├─assets：图片等静态资源
     ├─common：公共样式或js文件
-    │    └─css：样式文件
-    │       ├─font.css：字体文件
-    │       └─icon.css：图标文件
+    │    ├─css：字体和图标文件
+    │    │  ├─font.css：字体文件
+    │    │  └─icon.css：图标文件
+    │    ├─sass：公共样式文件
+    │    └─utils：公共工具函数库
+    │       ├─DateUtils.js：处理时间日期的工具函数
+    │       └─Form.js：表单工具函数
     ├─components：前端组件
     │    ├─auth：登录注册相关界面
+    │    │   ├─Password.vue：修改密码界面
     │    │   ├─Signin.vue：登录界面
     │    │   └─Signup.vue：注册界面
     │    ├─comment：电影评论评分相关界面
@@ -109,17 +114,20 @@ git pull upstream dev
     │    │   ├─SelectScreen.vue：选场次界面
     │    │   └─SelectSeat.vue：选座位界面
     │    └─profile：用户中心相关界面
-    │        ├─Coupons.vue：优惠券界面
-    │        ├─MovieCollection.vue：收藏/已看/想看电影界面
+    │        ├─ChangeInfo.vue：修改个人信息界面
+    │        ├─Coupon.vue：优惠券组件
+    │        ├─Coupons.vue：优惠券列表界面
+    │        ├─MovieCollection.vue：收藏/想看/已看电影列表界面
     │        └─UserInfo.vue：用户个人信息界面
     ├─router：前端路由
     │    └─index.js：前端路由信息文件
     ├─store：应用的全局数据状态管理
     │    ├─modules：数据状态模块
-    │    │   └─movies.js：电影数据状态
+    │    │   ├─auth.js：登录注册相关接口与数据状态
+    │    │   ├─movies.js：电影相关接口与数据状态
+    │    │   ├─password.js：改密相关接口与数据状态
+    │    │   └─screen.js：场次相关接口与数据状态
     │    └─index.js：数据状态模块配置文件
-    ├─utils：工具函数库
-    │    └─DateUtils.js：日期时间工具函数
     ├─App.vue：应用的最外层结构
     └─entry.js：应用的入口文件；第三方组件和公共文件在此引入
 ```

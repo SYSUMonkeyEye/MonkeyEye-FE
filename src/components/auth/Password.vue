@@ -18,7 +18,7 @@ div#signin
 </template>
 <script>
   import axios from 'axios'
-  import Form from '../../utils/Form'
+  import Form from '../../common/utils/Form'
   export default {
     name: 'forget',
     data () {
