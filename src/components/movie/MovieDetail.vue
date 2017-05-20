@@ -24,7 +24,7 @@ div#movie-detail
         div.playing-time {{ formatTime(detail.playingTime) + ' 上映' }}
   md-whiteframe
     div.description {{ detail.description }}
-  md-button.md-raised.md-primary.buy-ticket(@click.native="$router.push('/reservation/' + detail.id)") 立即购票
+  md-button.md-raised.md-primary.buy-ticket(@click.native="$router.push('/select-screen/' + detail.id)") 立即购票
 </template>
 
 <script>
