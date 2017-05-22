@@ -3,7 +3,7 @@ div#movie-collection
   md-toolbar
     div.md-toolbar-container
       h2.md-title {{ title }}
-  div.movie-item(v-for="(movie, index) in $store.state.movie.playing",
+  div.movie-item(v-for="(movie, index) in movieList",
     @click="$router.push('/movie-detail/' + movie.id)")
     img(:src="movie.poster")
     div.movie-info
@@ -13,9 +13,9 @@ div#movie-collection
       div
         p {{ movie.movieType }}
         p {{ formatTime(movie.playingTime) }}
-  div.no-data(v-if="$store.state.movie.recommendPlaying.length === 0")
+  div.no-data(v-if="movieList.length === 0")
     md-icon sentiment_neutral
-    p 暂无相关资讯
+    p {{ noDataTip }}
 </template>
 
 <script>
@@ -28,6 +28,14 @@ export default {
       title: (this.$route.params.type === 'favorites' ? '我的收藏'
         : this.$route.params.type === 'wanna' ? '期待上映'
         : this.$route.params.type === 'watched' ? '观影历史' : ''
+      ),
+      noDataTip: (this.$route.params.type === 'favorites' ? '还没有收藏'
+        : this.$route.params.type === 'wanna' ? '还没有期待'
+        : this.$route.params.type === 'watched' ? '还没有历史' : ''
+      ),
+      movieList: (this.$route.params.type === 'favorites' ? this.$store.state.favorite.favoriteMovies
+        : this.$route.params.type === 'wanna' ? this.$store.state.favorite.wannaMovies
+        : this.$route.params.type === 'watched' ? this.$store.state.favorite.historyMovies : []
       )
     }
   },
@@ -73,4 +81,14 @@ export default {
         color: #ff6500
       div p
         margin: 0
+  .no-data
+    text-align: center
+    margin-top: 1.5rem
+    color: #888
+    .md-icon
+      font-size: 1rem
+      height: auto
+      width: auto
+    p
+      font-size: .2rem
 </style>
