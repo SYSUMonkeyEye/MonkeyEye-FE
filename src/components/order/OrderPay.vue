@@ -16,10 +16,17 @@ div#order-pay
       span.order-detail 订单详情
       div.group-item-right(@click="$router.push(`/order-detail/1`)")
         md-icon keyboard_arrow_right
+    div.group-item.available-coupon-container
+      span 可用优惠券
+      div.group-item-right.available-coupon
+        span.coupon-count 3张可用
+        md-icon keyboard_arrow_right
     div.group-item
       span 订单金额
       span.total-price.group-item-right ￥29
   div.footer
+    div.actual-price 实际支付：
+      span.price ￥29
     md-button.md-primary.md-raised(@click.native="openPayDialog") 立即支付
   md-dialog#pay-dialog(ref="payDialog")
     md-dialog-title 请输入支付密码
@@ -105,19 +112,29 @@ $primary-color: #e53935
   .order-info-container
     .group-item
       @include group-item
-      .group-item-right
-        flex: 1
-        text-align: right
-      .total-price
-        color: $primary-color
       span
         height: .24rem
         line-height: .24rem
       .md-icon
         color: #666666
+      .group-item-right
+        flex: 1
+        text-align: right
+      .total-price
+        color: $primary-color
+      .coupon-count
+        display: inline-block
+        vertical-align: top
 
   .footer
     @include footer
+    background: #ffffff
+    .actual-price
+      line-height: .22rem
+      margin: 0 0 .1rem
+    .price
+      font-size: .20rem
+      color: #e53935
     button
       @include footer-btn
 
