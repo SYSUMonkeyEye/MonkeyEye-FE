@@ -18,10 +18,10 @@ import OrderPay from '../components/order/OrderPay'
 import Reservation from '../components/order/Reservation'
 import SelectSeat from '../components/order/SelectSeat'
 import SelectScreen from '../components/order/SelectScreen'
+import ChangeInfo from '../components/profile/ChangeInfo'
 import Coupons from '../components/profile/Coupons'
 import MovieCollection from '../components/profile/MovieCollection'
 import UserInfo from '../components/profile/UserInfo'
-import ChangeInfo from '../components/profile/ChangeInfo'
 
 export default new Router({
   mode: 'history',
@@ -46,10 +46,10 @@ export default new Router({
     { path: '/reservation/:screenId', component: Reservation },
     { path: '/select-seat/:screenId', component: SelectSeat },
     { path: '/select-screen/:movieId', component: SelectScreen },
+    { path: '/change-info', component: ChangeInfo },
     { path: '/coupons', component: Coupons },
     { path: '/movie-collection/:type', component: MovieCollection },
     { path: '/user-info', component: UserInfo },
-    {path: '/change-info', component: ChangeInfo},
     { path: '*', redirect: '/main/' }
   ]
 })
