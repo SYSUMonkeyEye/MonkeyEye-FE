@@ -61,7 +61,10 @@ export default {
 
     // favorite 电影
     FAVORITE_MOVIE ({ commit }, movie) {
-      return axios.post('/api/favorites', { movieId: movie.id }).then(res => {
+      /* eslint-disable no-undef */
+      let formData = new FormData()
+      formData.append('movieId', movie.id)
+      return axios.post('/api/favorites', formData).then(res => {
         res.status === 200 ? commit('ADD_FAVORITE', movie) : ''
       })
     },

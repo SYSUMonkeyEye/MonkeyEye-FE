@@ -5,7 +5,7 @@ div#movie-detail
       md-button.md-icon-button
         md-icon
       h2.md-title 电影详情界面
-      md-button.md-icon-button(@click="favoriteOrNot")
+      md-button.md-icon-button(@click.native="favoriteOrNot")
         md-icon {{ hasFavorited ? 'favorite' : 'favorite_border' }}
   md-whiteframe
     div.main-info
