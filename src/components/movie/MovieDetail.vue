@@ -24,6 +24,14 @@ div#movie-detail
         div.playing-time {{ formatTime(detail.playingTime) + ' 上映' }}
   md-whiteframe
     div.description {{ detail.description }}
+  md-whiteframe
+    div.comment(v-for="i in 3")
+      div.comment-header
+        img.user-avatar(src="/data/images/head-img.jpg")
+        div.rating
+          img.rating-star(src="../../assets/images/star-on.png", v-for="i in 5")
+          span 5分
+      p.comment-content 这是很长很长一段评价~
   md-button.md-raised.md-primary.buy-ticket(@click.native="$router.push('/select-screen/' + detail.id)") 立即购票
 </template>
 
@@ -97,11 +105,50 @@ export default {
     background: white
     color: #888
     padding: .1rem
+    margin-bottom: .1rem
   .buy-ticket
     width: 100%
     height: .5rem
     font-size: .18rem
-    position: absolute
+    position: fixed
     bottom: 0
     margin: 0
+    z-index: 99
+  .comment
+    background: white
+    padding: .1rem
+    position: relative
+    border-bottom: .01rem solid #f1f1f1
+    &:last-child
+      margin-bottom: .5rem
+    .comment-header
+      display: flex
+      align-items: center
+      .user-avatar
+        width: .4rem
+        height: .4rem
+        border-radius: 50%
+      .rating
+        flex-grow: 1
+        text-align: right
+        .rating-star
+          width: .2rem
+          height: .2rem
+        span
+          margin-left: .1rem
+    .comment-content
+      background: #f1f1f1
+      padding: .1rem
+      border-radius: .1rem
+      margin-top: .25rem
+      &:before
+        content: ''
+        width: 0
+        height: 0
+        border-left: .15rem solid transparent
+        border-right: .15rem solid transparent
+        border-bottom: .3rem solid #f1f1f1
+        position: absolute
+        top: .55rem
+        left: .15rem
 </style>
