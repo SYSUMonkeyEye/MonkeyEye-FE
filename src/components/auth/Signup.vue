@@ -8,27 +8,33 @@ div#signup
       md-input-container
         md-icon phone
         label 手机号
-        md-input(type='text' v-model="formData.phone")
-        span.md-error {{err.phone}}
+        md-input(type='text' v-model="$store.state.auth.formData.id")
+        span.md-error {{$store.state.auth.err.id}}
     md-list-item
       md-input-container
         md-icon code
         label 验证码
-        md-input(type='text' v-model="formData.code")
-        span.md-error {{err.code}}
+        md-input(type='text' v-model="$store.state.auth.formData.smscode")
+        span.md-error {{$store.state.auth.err.smscode}}
       md-button.md-raised.md-primary#get-code(@click.native="getCode") {{msg}}
     md-list-item
       md-input-container
         md-icon vpn_key
+        label 支付密码
+        md-input(type='payPassword' v-model="$store.state.auth.formData.payPassword")
+        span.md-error {{$store.state.auth.err.password}}
+    md-list-item
+      md-input-container
+        md-icon vpn_key
         label 密码
-        md-input(type='password' v-model="formData.password")
-        span.md-error {{err.password}}
+        md-input(type='password' v-model="$store.state.auth.formData.password")
+        span.md-error {{$store.state.auth.err.password}}
     md-list-item
       md-input-container
         md-icon vpn_key
         label 重复密码
-        md-input(type='password' v-model="formData.repeat")
-        span.md-error {{err.repeat}}
+        md-input(type='password' v-model="$store.state.auth.formData.repeat")
+        span.md-error {{$store.state.auth.err.repeat}}
     div#read-box
       md-checkbox.md-primary#check(v-model="canNext")
       p#read 已阅读并同意《猿眼电影服务协议》,愿意同步创建猿眼电影账号
@@ -42,20 +48,8 @@ export default {
     return {
       msg: '获取验证码',
       canNext: false,
-      time: 60,
-      timer: null,
-      formData: {
-        phone: '',
-        code: '',
-        password: '',
-        repeat: ''
-      },
-      err: {
-        phone: '',
-        code: '',
-        password: '',
-        repeat: ''
-      }
+      time: 10,
+      timer: null
     }
   },
   mounted () {
@@ -70,7 +64,7 @@ export default {
           this.time--
           this.msg = this.time + 's后重新获取'
           if (this.time === 0) {
-            this.time = 60
+            this.time = 10
             this.msg = '获取验证码'
             clearInterval(this.timer)
             this.timer = null
@@ -78,33 +72,30 @@ export default {
           }
         }, 1000)
         this.getCodeBox.style.backgroundColor = 'gray'
+        this.$store.dispatch('GET_SMS_CODE', this.$store.state.auth.formData.id)
       }
     },
     next () {
+      let formData = this.$store.state.auth.formData
+      let err = this.$store.state.auth.err
       if (this.canNext) {
-        for (let key in this.err) this.err[key] = ''
-        if (!this.formData.phone) {
-          this.err.phone = '手机号不能为空'
-        } else if (this.formData.phone.length !== 11) {
-          this.err.phone = '手机号格式不正确'
-        } else if (!this.formData.code) {
-          this.err.code = '验证码不能为空'
-        } else if (!this.formData.password) {
-          this.err.password = '验证码不能为空'
-        } else if (this.formData.password !== this.formData.repeat) {
-          this.err.repeat = '两次密码不一致'
+        for (let key in err) err[key] = ''
+        if (!formData.id) {
+          err.id = '手机号不能为空'
+        } else if (formData.id.length !== 11) {
+          err.id = '手机号格式不正确'
+        } else if (!formData.smscode) {
+          err.smscode = '验证码不能为空'
+        } else if (!formData.payPassword) {
+          err.password = '支付密码不能为空'
+        } else if (formData.password !== formData.repeat) {
+          err.repeat = '两次密码不一致'
         } else {
           // 提交请求
-          let err = {
-            phone: '手机号已存在',
-            code: '验证码错误'
-          }
-          if (err) {
-            this.err.phoen = err.phone
-            this.err.code = err.code
-          } else {
-            this.$router.push('/main')
-          }
+          this.$store.dispatch('SIGN_UP', formData).then(() => {
+            console.log(err)
+//            this.$router.push('/main')
+          })
         }
       }
     }

@@ -1,10 +1,9 @@
 <template lang="pug">
 div#movies
   md-tabs(md-centered, md-theme="white")
-    md-tab(md-label="正在热映")
-      div.hot-movies
-        img#playing(v-if="$store.state.movie.recommendPlaying.length > 0",
-          :src="$store.state.movie.recommendPlaying[0].poster",
+    md-tab(md-label="正在热映", @click="activeTab = 0")
+      div.hot-movies(v-if="$store.state.movie.recommendPlaying.length > 0")
+        img#playing(:src="$store.state.movie.recommendPlaying[0].poster",
           @click="goToMovieDetail($event)")
       div.movie-item(v-for="(movie, index) in $store.state.movie.playing",
         @click="$router.push('/movie-detail/' + movie.id)")
@@ -18,10 +17,12 @@ div#movies
             p {{ formatTime(movie.playingTime) }}
         md-button.md-warn.md-icon-button.md-raised(@click.native.stop="$router.push('/select-screen/' + movie.id)")
           md-icon add_shopping_cart
-    md-tab(md-label="即将上映")
-      div.hot-movies
-        img#toBePlayed(v-if="$store.state.movie.recommendToBePlayed.length > 0",
-          :src="$store.state.movie.recommendToBePlayed[0].poster",
+      div.no-data(v-if="$store.state.movie.recommendPlaying.length === 0")
+        md-icon sentiment_neutral
+        p 暂无相关资讯
+    md-tab(md-label="即将上映", @click="activeTab = 1")
+      div.hot-movies(v-if="$store.state.movie.recommendToBePlayed.length > 0")
+        img#toBePlayed(:src="$store.state.movie.recommendToBePlayed[0].poster",
           @click="goToMovieDetail($event)")
       div.movie-item(v-for="(movie, index) in $store.state.movie.toBePlayed",
         @click="$router.push('/movie-detail/' + movie.id)")
@@ -33,6 +34,9 @@ div#movies
           div
             p {{ movie.movieType }}
             p {{ formatTime(movie.playingTime) }}
+      div.no-data(v-if="$store.state.movie.recommendToBePlayed.length === 0")
+        md-icon sentiment_neutral
+        p 暂无相关资讯
 </template>
 
 <script>
@@ -42,16 +46,17 @@ export default {
   name: 'movies',
   data () {
     return {
+      activeTab: 0,
       activeSlideForTab1: 0,
       activeSlideForTab2: 0,
       sliderTimeout: null
     }
   },
   created () {
-    if (!this.$store.state.movie.playing.length || !this.$store.state.movie.toBePlayed.length) {
+    if (!this.$store.state.movie.allMovieGot) {
       this.$store.dispatch('GET_ALL_MOVIES')
     }
-    if (!this.$store.state.movie.recommendPlaying.length || !this.$store.state.movie.recommendToBePlayed.length) {
+    if (!this.$store.state.movie.recommendGot) {
       this.$store.dispatch('RECOMMEND_MOVIE')
     }
   },
@@ -60,6 +65,9 @@ export default {
       this.slide()
     }, 3000)
   },
+  beforeDestroy () {
+    this.sliderTimeout ? clearTimeout(this.sliderTimeout) : ''
+  },
   methods: {
     goToMovieDetail (event) {
       const movieId = (
@@ -67,15 +75,27 @@ export default {
         ? this.$store.state.movie.recommendPlaying[this.activeSlideForTab1].movieId
         : this.$store.state.movie.recommendToBePlayed[this.activeSlideForTab2].movieId
       )
-      clearTimeout(this.sliderTimeout)
+      this.sliderTimeout ? clearTimeout(this.sliderTimeout) : ''
       this.$router.push('/movie-detail/' + movieId)
     },
     slide () {
       this.activeSlideForTab1 = (this.activeSlideForTab1 + 1) % this.$store.state.movie.recommendPlaying.length
       this.activeSlideForTab2 = (this.activeSlideForTab2 + 1) % this.$store.state.movie.recommendToBePlayed.length
       let imgs = document.querySelectorAll('.hot-movies img')
-      imgs[0] ? imgs[0].src = this.$store.state.movie.recommendPlaying[this.activeSlideForTab1].poster : ''
-      imgs[1] ? imgs[1].src = this.$store.state.movie.recommendToBePlayed[this.activeSlideForTab2].poster : ''
+      if (this.activeTab === 0 && imgs[0]) {
+        imgs[0].style.opacity = 0
+        setTimeout(() => {
+          imgs[0].src = this.$store.state.movie.recommendPlaying[this.activeSlideForTab1].poster
+          imgs[0].style.opacity = 1
+        }, 500)
+      }
+      if (this.activeTab === 1 && imgs[1]) {
+        imgs[1].style.opacity = 0
+        setTimeout(() => {
+          imgs[1].src = this.$store.state.movie.recommendToBePlayed[this.activeSlideForTab2].poster
+          imgs[1].style.opacity = 1
+        }, 500)
+      }
       this.sliderTimeout = setTimeout(() => {
         this.slide()
       }, 3000)
@@ -92,7 +112,6 @@ export default {
   .md-tabs .md-tab
     padding: 0
     .hot-movies
-      position: relative
       width: 100%
       height: 2.5rem
       img
@@ -128,4 +147,14 @@ export default {
           color: #ff6500
         div p
           margin: 0
+    .no-data
+      text-align: center
+      margin-top: 1.5rem
+      color: #888
+      .md-icon
+        font-size: 1rem
+        height: auto
+        width: auto
+      p
+        font-size: .2rem
 </style>

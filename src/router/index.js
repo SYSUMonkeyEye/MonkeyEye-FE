@@ -5,6 +5,7 @@ Vue.use(Router)
 
 import Signin from '../components/auth/Signin'
 import Signup from '../components/auth/Signup'
+import Password from '../components/auth/Password'
 import MovieComment from '../components/comment/MovieComment'
 import Main from '../components/main/Main'
 import Movies from '../components/main/Movies'
@@ -20,12 +21,14 @@ import SelectScreen from '../components/order/SelectScreen'
 import Coupons from '../components/profile/Coupons'
 import MovieCollection from '../components/profile/MovieCollection'
 import UserInfo from '../components/profile/UserInfo'
+import ChangeInfo from '../components/profile/ChangeInfo'
 
 export default new Router({
   mode: 'history',
   routes: [
     { path: '/signin', component: Signin },
     { path: '/signup', component: Signup },
+    { path: '/password', component: Password },
     { path: '/movie-comment', component: MovieComment },
     { path: '/main',
       component: Main,
@@ -46,6 +49,7 @@ export default new Router({
     { path: '/coupons', component: Coupons },
     { path: '/movie-collection/:type', component: MovieCollection },
     { path: '/user-info', component: UserInfo },
+    {path: '/change-info', component: ChangeInfo},
     { path: '*', redirect: '/main/' }
   ]
 })

@@ -7,7 +7,9 @@ export default {
     recommendPlaying: [],
     recommendToBePlayed: [],
     searchResult: [],
-    keyword: ''
+    keyword: '',
+    allMovieGot: false,
+    recommendGot: false
   },
 
   mutations: {
@@ -15,6 +17,7 @@ export default {
     SET_ALL_MOVIES (state, movies) {
       state.toBePlayed = []
       state.playing = []
+      state.allMovieGot = true
       const now = Date.now()
       for (let i = 0; i < movies.length; ++i) {
         if (movies[i].playingTime > now) {
@@ -29,6 +32,7 @@ export default {
     SET_RECOMMEND (state, recommend) {
       state.recommendPlaying = []
       state.recommendToBePlayed = []
+      state.recommendGot = true
       const now = Date.now()
       for (let i = 0; i < recommend.length; ++i) {
         if (recommend[i].playingTime > now) {
