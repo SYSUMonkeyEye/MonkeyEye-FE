@@ -5,8 +5,8 @@ div#movie-detail
       md-button.md-icon-button
         md-icon
       h2.md-title 电影详情界面
-      md-button.md-icon-button
-        md-icon favorite
+      md-button.md-icon-button(@click="favoriteOrNot")
+        md-icon {{ hasFavorited ? 'favorite' : 'favorite_border' }}
   md-whiteframe
     div.main-info
       img.poster(:src="detail.poster")
@@ -49,6 +49,15 @@ export default {
   methods: {
     formatTime (time) {
       return formatDate(time)
+    },
+
+    // favorite 该电影或者取消 favorite
+    favoriteOrNot () {
+      if (this.hasFavorited) {
+        this.$store.dispatch('UNFAVORITE_MOVIE', this.detail.id)
+      } else {
+        this.$store.dispatch('FAVORITE_MOVIE', this.detail)
+      }
     }
   },
   data () {
@@ -62,6 +71,22 @@ export default {
         description: 'loading ...',
         rating: 0
       }
+    }
+  },
+  computed: {
+    // 判断是否已经存在 favorite 关系
+    hasFavorited () {
+      for (let i = 0; i < this.$store.state.favorite.favoriteMovies.length; ++i) {
+        if (this.$store.state.favorite.favoriteMovies[i].id === this.detail.id) {
+          return true
+        }
+      }
+      for (let i = 0; i < this.$store.state.favorite.wannaMovies.length; ++i) {
+        if (this.$store.state.favorite.wannaMovies[i].id === this.detail.id) {
+          return true
+        }
+      }
+      return false
     }
   }
 }

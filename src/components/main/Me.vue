@@ -65,6 +65,11 @@ export default {
         money: 32.80
       }
     }
+  },
+  created () {
+    if (!this.$store.state.favorite.favoritesGot) {
+      this.$store.dispatch('GET_FAVORITES')
+    }
   }
 }
 </script>
