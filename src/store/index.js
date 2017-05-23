@@ -7,13 +7,15 @@ import movie from './modules/movie'
 import screen from './modules/screen'
 import auth from './modules/auth'
 import favorite from './modules/favorite'
+import comment from './modules/comment'
 
 const store = new Vuex.Store({
   modules: {
     movie,
     screen,
     auth,
-    favorite
+    favorite,
+    comment
   }
 })
 

@@ -29,7 +29,7 @@ export default new Router({
     { path: '/signin', component: Signin },
     { path: '/signup', component: Signup },
     { path: '/password', component: Password },
-    { path: '/movie-comment', component: MovieComment },
+    { path: '/movie-comment/:movieId', component: MovieComment },
     { path: '/main',
       component: Main,
       children: [
@@ -38,7 +38,7 @@ export default new Router({
         { path: '*', redirect: 'movies' }
       ]
     },
-    { path: '/movie-detail/:id', component: MovieDetail },
+    { path: '/movie-detail/:movieId', component: MovieDetail },
     { path: '/movie-search', component: MovieSearch },
     { path: '/my-orders/:type', component: MyOrders },
     { path: '/order-detail/:orderId', component: OrderDetail },

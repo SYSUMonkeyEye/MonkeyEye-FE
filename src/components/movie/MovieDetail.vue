@@ -25,13 +25,14 @@ div#movie-detail
   md-whiteframe
     div.description {{ detail.description }}
   md-whiteframe
-    div.comment(v-for="i in 3")
+    div.comment(v-for="comment in comments")
       div.comment-header
-        img.user-avatar(src="/data/images/head-img.jpg")
+        img.user-avatar(:src="comment.avatar")
         div.rating
-          img.rating-star(src="../../assets/images/star-on.png", v-for="i in 5")
-          span 5分
-      p.comment-content 这是很长很长一段评价~
+          img.rating-star(src="../../assets/images/star-on.png", v-for="i in comment.rating")
+          img.rating-star(src="../../assets/images/star-off.png", v-for="i in (5 - comment.rating)")
+          span {{ comment.rating + '分' }}
+      p.comment-content {{ comment.content }}
   md-button.md-raised.md-primary.buy-ticket(@click.native="$router.push('/select-screen/' + detail.id)") 立即购票
 </template>
 
@@ -41,9 +42,13 @@ import { formatDate } from '../../common/utils/DateUtils'
 export default {
   name: 'movie-detail',
   created () {
-    this.$store.dispatch('GET_MOVIE_DETAIL', this.$route.params.id)
+    this.$store.dispatch('GET_MOVIE_DETAIL', this.$route.params.movieId)
     .then(detail => {
       this.detail = detail
+    })
+    this.$store.dispatch('GET_COMMENTS', this.$route.params.movieId)
+    .then(comments => {
+      this.comments = comments
     })
   },
   methods: {
@@ -70,7 +75,12 @@ export default {
         playingTime: Date.now(),
         description: 'loading ...',
         rating: 0
-      }
+      },
+      comments: [{
+        rating: 3,
+        content: '这是一段很长很长的评价',
+        avatar: '/data/images/head-img.jpg'
+      }]
     }
   },
   computed: {

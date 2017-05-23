@@ -31,9 +31,13 @@ export default {
       this.rating = Number.parseInt(event.target.id)
     },
     submit () {
-      console.log(this.rating, this.content)
-      // TODO: 提交数据到服务器
-      this.$router.replace('/main/me')
+      this.$store.dispatch('COMMENT_MOVIE', {
+        movieId: this.$route.params.movieId,
+        rating: this.rating,
+        content: this.content})
+      .then(success => {
+        success ? this.$router.replace('/main/me') : ''
+      })
     }
   }
 }
