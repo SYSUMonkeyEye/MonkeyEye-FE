@@ -15,6 +15,7 @@ div#movie-comment
       img(src="../../assets/images/star-on.png", v-for="i in rating", :id="i", @click="setRating($event)")
       img(src="../../assets/images/star-off.png", v-for="i in (5 - rating)", :id="i + rating", @click="setRating($event)")
   textarea.content(v-model="content", placeholder="分享你的观看心得吧~")
+  md-dialog-alert(md-title="Tips:", md-content="请输入评价内容！", md-ok-text="确认", ref="errDialog")
 </template>
 
 <script>
@@ -31,6 +32,10 @@ export default {
       this.rating = Number.parseInt(event.target.id)
     },
     submit () {
+      if (!this.content) {
+        this.$refs['errDialog'].open()
+        return
+      }
       this.$store.dispatch('COMMENT_MOVIE', {
         movieId: this.$route.params.movieId,
         rating: this.rating,

@@ -33,6 +33,7 @@ div#movie-detail
           img.rating-star(src="../../assets/images/star-off.png", v-for="i in (5 - comment.rating)")
           span {{ comment.rating + '分' }}
       p.comment-content {{ comment.content }}
+    div.no-comment(v-if="comments.length === 0") {{ tipText }}
   md-button.md-raised.md-primary.buy-ticket(@click.native="$router.push('/select-screen/' + detail.id)") 立即购票
 </template>
 
@@ -49,6 +50,9 @@ export default {
     this.$store.dispatch('GET_COMMENTS', this.$route.params.movieId)
     .then(comments => {
       this.comments = comments
+      if (comments.length === 0) {
+        this.tipText = '暂无相关评价信息'
+      }
     })
   },
   methods: {
@@ -80,7 +84,8 @@ export default {
         rating: 3,
         content: '这是一段很长很长的评价',
         avatar: '/data/images/head-img.jpg'
-      }]
+      }],
+      tipText: 'loading ...'
     }
   },
   computed: {
@@ -186,4 +191,9 @@ export default {
         position: absolute
         top: .55rem
         left: .15rem
+  .no-comment
+    background: white
+    color: #888
+    padding: .1rem
+    margin-bottom: .5rem
 </style>
