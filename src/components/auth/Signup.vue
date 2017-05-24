@@ -124,7 +124,9 @@ export default {
           }
           axios(Form.postData('/api/users/', data)).then(res => {
             switch (res.data.message) {
-              case '验证码非法' || '请先获取短信验证码' || '验证码错误':
+              case '验证码非法':
+              case '请先获取短信验证码':
+              case '验证码错误':
                 this.err.smscode = res.data.message
                 break
               case '手机号已被注册':
