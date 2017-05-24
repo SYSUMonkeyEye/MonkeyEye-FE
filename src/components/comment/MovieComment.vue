@@ -39,8 +39,8 @@ export default {
       this.$store.dispatch('COMMENT_MOVIE', {
         movieId: this.$route.params.movieId,
         rating: this.rating,
-        content: this.content})
-      .then(success => {
+        content: this.content
+      }).then(success => {
         success ? this.$router.replace('/main/me') : ''
       })
     }
