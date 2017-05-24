@@ -3,16 +3,16 @@ div#movie-collection
   md-toolbar
     div.md-toolbar-container
       h2.md-title {{ title }}
-  div.movie-item(v-for="(movie, index) in movieList",
-    @click="$router.push('/movie-detail/' + movie.id)")
-    img(:src="movie.poster")
+  div.movie-item(v-for="(item, index) in movieList",
+    @click="$router.push('/movie-detail/' + item.movie.id)")
+    img(:src="item.movie.poster")
     div.movie-info
       div
-        span.name {{ movie.name }}
-        span.playing-type {{ movie.playingType }}
+        span.name {{ item.movie.name }}
+        span.playing-type {{ item.movie.playingType }}
       div
-        p {{ movie.movieType }}
-        p {{ formatTime(movie.playingTime) }}
+        p {{ item.movie.movieType }}
+        p {{ formatTime(item.movie.playingTime) }}
   div.no-data(v-if="movieList.length === 0")
     md-icon sentiment_neutral
     p {{ noDataTip }}

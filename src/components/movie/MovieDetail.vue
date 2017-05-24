@@ -34,7 +34,8 @@ div#movie-detail
           span {{ comment.rating + '分' }}
       p.comment-content {{ comment.content }}
     div.no-comment(v-if="comments.length === 0") {{ tipText }}
-  md-button.md-raised.md-primary.buy-ticket(@click.native="$router.push('/select-screen/' + detail.id)") 立即购票
+  md-button.md-raised.md-primary.buy-ticket(@click.native="buyTicket") 立即购票
+  md-dialog-alert(md-title="Tips:", md-content="您还未进行登录！", md-ok-text="确认", ref="errDialog")
 </template>
 
 <script>
@@ -62,10 +63,21 @@ export default {
 
     // favorite 该电影或者取消 favorite
     favoriteOrNot () {
-      if (this.hasFavorited) {
-        this.$store.dispatch('UNFAVORITE_MOVIE', this.detail.id)
+      if (!this.$store.state.auth.user) {
+        this.$refs['errDialog'].open()
+      } else if (this.hasFavorited) {
+        this.$store.dispatch('UNFAVORITE_MOVIE', this.favoriteId)
       } else {
         this.$store.dispatch('FAVORITE_MOVIE', this.detail)
+      }
+    },
+
+    // 立即购票
+    buyTicket () {
+      if (!this.$store.state.auth.user) {
+        this.$refs['errDialog'].open()
+      } else {
+        this.$router.push('/select-screen/' + this.detail.id)
       }
     }
   },
@@ -85,19 +97,22 @@ export default {
         content: '这是一段很长很长的评价',
         avatar: '/data/images/head-img.jpg'
       }],
-      tipText: 'loading ...'
+      tipText: 'loading ...',
+      favoriteId: ''
     }
   },
   computed: {
     // 判断是否已经存在 favorite 关系
     hasFavorited () {
       for (let i = 0; i < this.$store.state.favorite.favoriteMovies.length; ++i) {
-        if (this.$store.state.favorite.favoriteMovies[i].id === this.detail.id) {
+        if (this.$store.state.favorite.favoriteMovies[i].movie.id === this.detail.id) {
+          this.favoriteId = this.$store.state.favorite.favoriteMovies[i].id
           return true
         }
       }
       for (let i = 0; i < this.$store.state.favorite.wannaMovies.length; ++i) {
-        if (this.$store.state.favorite.wannaMovies[i].id === this.detail.id) {
+        if (this.$store.state.favorite.wannaMovies[i].movie.id === this.detail.id) {
+          this.favoriteId = this.$store.state.favorite.wannaMovies[i].id
           return true
         }
       }
