@@ -6,12 +6,16 @@ Vue.use(Vuex)
 import movie from './modules/movie'
 import screen from './modules/screen'
 import auth from './modules/auth'
+import favorite from './modules/favorite'
+import comment from './modules/comment'
 
 const store = new Vuex.Store({
   modules: {
-    movie: movie,
-    screen: screen,
-    auth: auth
+    movie,
+    screen,
+    auth,
+    favorite,
+    comment
   }
 })
 

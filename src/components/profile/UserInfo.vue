@@ -2,25 +2,27 @@
 div#user-info
   md-toolbar
     div.md-toolbar-container
-      h2.md-title 用户信息界面
+      h2.md-title 用户信息
   md-whiteframe
     div.collection
       div.user-info.head(@click="change('head', '头像')")
         span 用户头像
-        img(:src="user.image")
-        md-icon keyboard_arrow_right
-      div.user-info(@click="change('username', '用户名')")
-        span 用户名
-        span.info {{user.name}}
-        md-icon keyboard_arrow_right
+        img(:src="user.avatar")
+      div.user-info(@click="change('nickname', '昵称')")
+        span 昵称
+        span.info {{user.nickname}}
+      div.user-info(@click="change('description', '个性签名')")
+        span 个性签名
+        span.info {{user.description}}  
       div.user-info(@click="change('phone', '手机号')")
         span 手机号
         span.info {{user.id}}
-        md-icon keyboard_arrow_right
-      div.user-info(@click="change('sex', '性别')")
-        span 性别
-        span.info {{user.sex}}
-        md-icon keyboard_arrow_right
+      div.user-info(@click="change('login', '登录密码')")
+        span 登录密码
+        span.info ••••••
+      div.user-info(@click="change('pay', '支付密码')")
+        span 支付密码
+        span.info ••••••
 </template>
 
 <script>
@@ -28,13 +30,7 @@ export default {
   name: 'user-info',
   data () {
     return {
-      user: {
-        image: '/data/images/head-img.jpg',
-        name: '风不定，人初静',
-        id: '15521297654',
-        sex: '男',
-        description: '风不定，人初静，明日落红应满径。'
-      }
+      user: this.$store.state.auth.user
     }
   },
   methods: {
@@ -53,10 +49,15 @@ export default {
 
 <style lang="sass">
 #user-info
+  height: 100%
+  background: #eee
   .md-toolbar .md-toolbar-container .md-title
     flex: 1
     text-align: center
+  .collection
+    margin-top: 0.15rem
   .user-info
+    background: white
     display: flex
     align-items: center
     padding: .15rem

@@ -18,10 +18,10 @@ import OrderPay from '../components/order/OrderPay'
 import Reservation from '../components/order/Reservation'
 import SelectSeat from '../components/order/SelectSeat'
 import SelectScreen from '../components/order/SelectScreen'
+import ChangeInfo from '../components/profile/ChangeInfo'
 import Coupons from '../components/profile/Coupons'
 import MovieCollection from '../components/profile/MovieCollection'
 import UserInfo from '../components/profile/UserInfo'
-import ChangeInfo from '../components/profile/ChangeInfo'
 
 export default new Router({
   mode: 'history',
@@ -29,7 +29,7 @@ export default new Router({
     { path: '/signin', component: Signin },
     { path: '/signup', component: Signup },
     { path: '/password', component: Password },
-    { path: '/movie-comment', component: MovieComment },
+    { path: '/movie-comment/:movieId', component: MovieComment },
     { path: '/main',
       component: Main,
       children: [
@@ -38,7 +38,7 @@ export default new Router({
         { path: '*', redirect: 'movies' }
       ]
     },
-    { path: '/movie-detail/:id', component: MovieDetail },
+    { path: '/movie-detail/:movieId', component: MovieDetail },
     { path: '/movie-search', component: MovieSearch },
     { path: '/my-orders/:type', component: MyOrders },
     { path: '/order-detail/:orderId', component: OrderDetail },
@@ -46,10 +46,10 @@ export default new Router({
     { path: '/reservation/:screenId', component: Reservation },
     { path: '/select-seat/:screenId', component: SelectSeat },
     { path: '/select-screen/:movieId', component: SelectScreen },
+    { path: '/change-info', component: ChangeInfo },
     { path: '/coupons', component: Coupons },
     { path: '/movie-collection/:type', component: MovieCollection },
     { path: '/user-info', component: UserInfo },
-    {path: '/change-info', component: ChangeInfo},
     { path: '*', redirect: '/main/' }
   ]
 })

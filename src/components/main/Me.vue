@@ -1,68 +1,93 @@
 <template lang="pug">
 div#me
-  md-whiteframe
+  md-whiteframe(v-if="!$store.state.auth.user")
+    div.no-user(@click="$router.push('/signin')")
+      div 点击此处进行登录
+      md-icon keyboard_arrow_right
+  md-whiteframe(v-if="!!$store.state.auth.user")
     div.user(@click="$router.push('/user-info')")
-      img(:src="user.image")
+      img(:src="$store.state.auth.user.avatar")
       div.user-info
-        div.name {{ user.name }}
-        div.description {{ user.description }}
+        div.name {{ $store.state.auth.user.nickname }}
+        div.description {{ $store.state.auth.user.description }}
       md-icon keyboard_arrow_right
   md-whiteframe
     div.coupons-and-money
-      div.coupons(@click="$router.push('/coupons')")
-        p {{ couponsAndMoney.coupons }}
+      div.coupons(@click="couponsList")
+        p {{ $store.state.auth.user.coupons || 0 }}
         p 优惠券
       div.divide-line
       div.money
-        p {{ couponsAndMoney.money }}
+        p {{ $store.state.auth.user.money || 0 }}
         p 账户余额
   md-whiteframe
     div.orders
       div.title
         span 我的订单
       div.order-type
-        div.type(@click="$router.push('/my-orders/all')")
+        div.type(@click="orderList('all')")
           md-button.md-icon-button.md-warn
             md-icon local_movies
           p 全部
-        div.type(@click="$router.push('/my-orders/unpay')")
+        div.type(@click="orderList('unpay')")
           md-button.md-icon-button.md-accent
             md-icon shopping_cart
           p 待付款
-        div.type(@click="$router.push('/my-orders/unplay')")
+        div.type(@click="orderList('unplay')")
           md-button.md-icon-button.md-primary
             md-icon slideshow
           p 未放映
-        div.type(@click="$router.push('/my-orders/played')")
+        div.type(@click="orderList('played')")
           md-button.md-icon-button
             md-icon event_available
           p 已放映
   md-whiteframe
     div.collection
-      div.collection-type(@click="$router.push('/movie-collection/favorites')")
+      div.collection-type(@click="movieCollection('favorites')")
         span 我的收藏
         md-icon keyboard_arrow_right
-      div.collection-type(@click="$router.push('/movie-collection/wanna')")
+      div.collection-type(@click="movieCollection('wanna')")
         span 期待上映
         md-icon keyboard_arrow_right
-      div.collection-type(@click="$router.push('/movie-collection/watched')")
+      div.collection-type(@click="movieCollection('watched')")
         span 观影历史
         md-icon keyboard_arrow_right
+  md-dialog-alert(md-title="Tips:", md-content="您还未进行登录！", md-ok-text="确认", ref="errDialog")
 </template>
 
 <script>
 export default {
   name: 'me',
-  data () {
-    return {
-      user: {
-        image: '/data/images/head-img.jpg',
-        name: '风不定，人初静',
-        description: '风不定，人初静，明日落红应满径。'
-      },
-      couponsAndMoney: {
-        coupons: 10,
-        money: 32.80
+  created () {
+    if (this.$store.state.auth.user && !this.$store.state.favorite.favoritesGot) {
+      this.$store.dispatch('GET_FAVORITES')
+    }
+  },
+  methods: {
+    // 查看优惠券列表
+    couponsList () {
+      if (this.$store.state.auth.user) {
+        this.$router.push('/coupons')
+      } else {
+        this.$refs['errDialog'].open()
+      }
+    },
+
+    // 查看订单列表
+    orderList (type) {
+      if (this.$store.state.auth.user) {
+        this.$router.push('/my-orders/' + type)
+      } else {
+        this.$refs['errDialog'].open()
+      }
+    },
+
+    // 收藏/想看/历史 电影列表
+    movieCollection (type) {
+      if (this.$store.state.auth.user) {
+        this.$router.push('/movie-collection/' + type)
+      } else {
+        this.$refs['errDialog'].open()
       }
     }
   }
@@ -71,12 +96,21 @@ export default {
 
 <style lang="sass">
 #me
-  .user, .coupons-and-money
+  .user, .coupons-and-money, .no-user
     background: white
     display: flex
     align-items: center
     padding: .1rem
     margin: .1rem 0
+  .no-user
+    div:first-child
+      flex-grow: 1
+      font-size: .18rem
+      font-weight: 400
+      height: .4rem
+      line-height: .4rem
+    .md-icon
+      color: #888
   .user
     img
       width: .65rem
@@ -142,4 +176,6 @@ export default {
         flex-grow: 1
         font-size: .2rem
         font-weight: 300
+      .md-icon
+        color: #888
 </style>

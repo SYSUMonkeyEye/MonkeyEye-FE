@@ -21,17 +21,26 @@ div#signin
 </template>
 
 <script>
+import axios from 'axios'
+import Form from '../../common/utils/Form'
 export default {
   name: 'signin',
   data () {
     return {
       test: '123',
-      err: this.$store.state.auth.signInErr,
-      formData: this.$store.state.auth.signInData
+      err: {
+        password: '',
+        id: ''
+      },
+      formData: {
+        id: '',
+        password: ''
+      }
     }
   },
   methods: {
     signIn () {
+      this.err.id = this.err.password = ''
       if (!this.formData.id) {
         this.err.id = '电话不能为空'
       } else if (this.formData.id.length !== 11) {
@@ -40,9 +49,18 @@ export default {
         this.err.password = '密码不能为空'
       } else {
         // 登录请求
-        this.$store.dispatch('SIGN_IN', this.formData).then(() => {
-          if (!this.err.password && !this.err.id) {
-            this.$router.push('/main/me')
+        axios(Form.postData('/api/session/', this.formData)).then(res => {
+          switch (res.data.message) {
+            case '密码错误':
+              this.err.password = '密码错误'
+              break
+            case '用户不存在':
+              this.err.id = '用户不存在'
+              break
+            default:
+              this.$store.dispatch('GET_USER').then(() => {
+                this.$router.push('/main/me')
+              })
           }
         })
       }
