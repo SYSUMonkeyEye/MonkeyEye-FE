@@ -8,33 +8,33 @@ div#signup
       md-input-container
         md-icon phone
         label 手机号
-        md-input(type='text' v-model="$store.state.auth.formData.id")
-        span.md-error {{$store.state.auth.err.id}}
+        md-input(type='text' v-model="formData.id")
+        span.md-error {{err.id}}
     md-list-item
       md-input-container
         md-icon code
         label 验证码
-        md-input(type='text' v-model="$store.state.auth.formData.smscode")
-        span.md-error {{$store.state.auth.err.smscode}}
+        md-input(type='text' v-model="formData.smscode")
+        span.md-error {{err.smscode}}
       md-button.md-raised.md-primary#get-code(@click.native="getCode") {{msg}}
     md-list-item
       md-input-container
         md-icon vpn_key
         label 支付密码
-        md-input(type='payPassword' v-model="$store.state.auth.formData.payPassword")
-        span.md-error {{$store.state.auth.err.password}}
+        md-input(type='payPassword' v-model="formData.payPassword")
+        span.md-error {{err.payPassword}}
     md-list-item
       md-input-container
         md-icon vpn_key
         label 密码
-        md-input(type='password' v-model="$store.state.auth.formData.password")
-        span.md-error {{$store.state.auth.err.password}}
+        md-input(type='password' v-model="formData.password")
+        span.md-error {{err.password}}
     md-list-item
       md-input-container
         md-icon vpn_key
         label 重复密码
-        md-input(type='password' v-model="$store.state.auth.formData.repeat")
-        span.md-error {{$store.state.auth.err.repeat}}
+        md-input(type='password' v-model="formData.repeat")
+        span.md-error {{err.repeat}}
     div#read-box
       md-checkbox.md-primary#check(v-model="canNext")
       p#read 已阅读并同意《猿眼电影服务协议》,愿意同步创建猿眼电影账号
@@ -42,6 +42,8 @@ div#signup
 </template>
 
 <script>
+import axios from 'axios'
+import Form from '../../common/utils/Form'
 export default {
   name: 'signup',
   data () {
@@ -49,7 +51,21 @@ export default {
       msg: '获取验证码',
       canNext: false,
       time: 10,
-      timer: null
+      timer: null,
+      formData: {
+        id: '',
+        smscode: '',
+        password: '',
+        repeat: '',
+        payPassword: ''
+      },
+      err: {
+        id: '',
+        smscode: '',
+        password: '',
+        payPassword: '',
+        repeat: ''
+      }
     }
   },
   mounted () {
@@ -57,7 +73,15 @@ export default {
     this.nextBox = document.getElementById('next')
   },
   methods: {
+    reset () {
+      for (let key in this.err) this.err[key] = ''
+    },
     getCode () {
+      this.reset()
+      if (this.formData.id.length !== 11) {
+        this.err.id = '手机号格式不正确'
+        return
+      }
       if (!this.timer) {
         this.msg = this.time + 's后重新获取'
         this.timer = setInterval(() => {
@@ -72,29 +96,45 @@ export default {
           }
         }, 1000)
         this.getCodeBox.style.backgroundColor = 'gray'
-        this.$store.dispatch('GET_SMS_CODE', this.$store.state.auth.formData.id)
+        axios.get('/api/smscode?mobile=' + this.formData.id).then(res => {
+          res.status === 200 ? this.formData.smscode = res.data.message : this.err.id = res.data.message
+        })
       }
     },
     next () {
-      let formData = this.$store.state.auth.formData
-      let err = this.$store.state.auth.err
       if (this.canNext) {
-        for (let key in err) err[key] = ''
-        if (!formData.id) {
-          err.id = '手机号不能为空'
-        } else if (formData.id.length !== 11) {
-          err.id = '手机号格式不正确'
-        } else if (!formData.smscode) {
-          err.smscode = '验证码不能为空'
-        } else if (!formData.payPassword) {
-          err.password = '支付密码不能为空'
-        } else if (formData.password !== formData.repeat) {
-          err.repeat = '两次密码不一致'
+        for (let key in this.err) this.err[key] = ''
+        if (!this.formData.id) {
+          this.err.id = '手机号不能为空'
+        } else if (this.formData.id.length !== 11) {
+          this.err.id = '手机号格式不正确'
+        } else if (!this.formData.smscode) {
+          this.err.smscode = '验证码不能为空'
+        } else if (!this.formData.payPassword) {
+          this.err.payPassword = '支付密码不能为空'
+        } else if (!this.formData.password) {
+          this.err.password = '密码不能为空'
+        } else if (this.formData.password !== this.formData.repeat) {
+          this.err.repeat = '两次密码不一致'
         } else {
           // 提交请求
-          this.$store.dispatch('SIGN_UP', formData).then(() => {
-            console.log(err)
-//            this.$router.push('/main')
+          var data = {}
+          for (let key in this.formData) {
+            if (key !== 'repeat') data[key] = this.formData[key]
+          }
+          axios(Form.postData('/api/users/', data)).then(res => {
+            switch (res.data.message) {
+              case '验证码非法' || '请先获取短信验证码' || '验证码错误':
+                this.err.smscode = res.data.message
+                break
+              case '手机号已被注册':
+                this.err.id = res.data.message
+                break
+              default:
+                this.$store.dispatch('GET_USER').then(() => {
+                  this.$router.push('/main/me')
+                })
+            }
           })
         }
       }
