@@ -28,7 +28,7 @@ export default {
     },
     GET_USER ({commit}) {
       return axios.get('/api/users/').then((res) => {
-        commit('SET_USER', res.data)
+        res.status === 200 ? commit('SET_USER', res.data) : ''
       })
     },
     SIGN_UP ({commit}, data) {
