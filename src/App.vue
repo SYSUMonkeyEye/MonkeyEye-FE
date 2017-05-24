@@ -5,7 +5,12 @@ div#app
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  created () {
+    if (!this.$store.state.auth.user) {
+      this.$store.dispatch('GET_USER')
+    }
+  }
 }
 </script>
 
