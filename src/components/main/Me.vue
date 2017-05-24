@@ -8,7 +8,7 @@ div#me
     div.user(@click="$router.push('/user-info')")
       img(:src="$store.state.auth.user.avatar")
       div.user-info
-        div.name {{ $store.state.auth.user.name }}
+        div.name {{ $store.state.auth.user.nickname }}
         div.description {{ $store.state.auth.user.description }}
       md-icon keyboard_arrow_right
   md-whiteframe
@@ -58,21 +58,8 @@ div#me
 <script>
 export default {
   name: 'me',
-  data () {
-    return {
-      user: {
-        image: '/data/images/head-img.jpg',
-        name: '风不定，人初静',
-        description: '风不定，人初静，明日落红应满径。'
-      },
-      couponsAndMoney: {
-        coupons: 10,
-        money: 32.80
-      }
-    }
-  },
   created () {
-    if (!this.$store.state.favorite.favoritesGot) {
+    if (this.$store.state.auth.user && !this.$store.state.favorite.favoritesGot) {
       this.$store.dispatch('GET_FAVORITES')
     }
   },
