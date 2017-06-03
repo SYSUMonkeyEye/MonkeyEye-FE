@@ -24,7 +24,9 @@ import Coupons from '../components/profile/Coupons'
 import MovieCollection from '../components/profile/MovieCollection'
 import UserInfo from '../components/profile/UserInfo'
 
-export default new Router({
+import store from '../store'
+
+const router = new Router({
   mode: 'history',
   routes: [
     { path: '/signin', component: Signin },
@@ -41,17 +43,34 @@ export default new Router({
     },
     { path: '/movie-detail/:movieId', component: MovieDetail },
     { path: '/movie-search', component: MovieSearch },
-    { path: '/my-orders/:type', component: MyOrders },
-    { path: '/order-detail/:orderId', component: OrderDetail },
-    { path: '/order-pay/:orderId', component: OrderPay },
-    { path: '/reservation/:screenId', component: Reservation },
-    { path: '/select-coupon', component: SelctCoupon },
-    { path: '/select-seat/:screenId', component: SelectSeat },
-    { path: '/select-screen/:movieId', component: SelectScreen },
-    { path: '/change-info', component: ChangeInfo },
-    { path: '/coupons', component: Coupons },
-    { path: '/movie-collection/:type', component: MovieCollection },
-    { path: '/user-info', component: UserInfo },
+    { path: '/my-orders/:type', component: MyOrders, meta: { requireAuth: true } },
+    { path: '/order-detail/:orderId', component: OrderDetail, meta: { requireAuth: true } },
+    { path: '/order-pay/:orderId', component: OrderPay, meta: { requireAuth: true } },
+    { path: '/reservation/:screenId', component: Reservation, meta: { requireAuth: true } },
+    { path: '/select-coupon', component: SelctCoupon, meta: { requireAuth: true } },
+    { path: '/select-seat/:screenId', component: SelectSeat, meta: { requireAuth: true } },
+    { path: '/select-screen/:movieId', component: SelectScreen, meta: { requireAuth: true } },
+    { path: '/change-info', component: ChangeInfo, meta: { requireAuth: true } },
+    { path: '/coupons', component: Coupons, meta: { requireAuth: true } },
+    { path: '/movie-collection/:type', component: MovieCollection, meta: { requireAuth: true } },
+    { path: '/user-info', component: UserInfo, meta: { requireAuth: true } },
     { path: '*', redirect: '/main/' }
   ]
 })
+
+// 权限检查
+router.beforeEach((to, from, next) => {
+  if (to.meta.requireAuth) {
+    if (!store.state.auth.user) {
+      next({
+        path: '/signin'
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
+
+export default router

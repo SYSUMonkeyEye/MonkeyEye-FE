@@ -2,7 +2,11 @@
 div#signin
   md-toolbar
     div.md-toolbar-container
+      md-button.md-icon-button(@click.native="$router.back()")
+        md-icon keyboard_arrow_left
       h2.md-title 账户登录
+      md-button.md-icon-button(disabled)
+        md-icon
   form#form(novalidate, @submit.stop.prevent='submit')
     md-input-container
       md-icon phone
@@ -59,7 +63,7 @@ export default {
               break
             default:
               this.$store.dispatch('GET_USER').then(() => {
-                this.$router.push('/main/me')
+                this.$router.replace('/main/me')
               })
           }
         })
