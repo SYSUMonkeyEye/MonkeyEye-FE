@@ -18,7 +18,6 @@ export default {
     let input = document.createElement('input')
     input.type = 'file'
     document.body.appendChild(input)
-    console.log('12312')
     input.onchange = (evt) => {
       let file = evt.target.files[0]
       let reader = new FileReader()
