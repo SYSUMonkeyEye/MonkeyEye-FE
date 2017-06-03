@@ -1,5 +1,7 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path')
+var apiServer = 'http://123.207.233.226:1234'
+var assetsServer = 'http://123.207.233.226:1234'
 
 module.exports = {
   build: {
@@ -22,8 +24,8 @@ module.exports = {
     assetsSubDirectory: 'data',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api': 'http://123.207.233.226:1234',
-      '/static': 'http://123.207.233.226:1234'
+      '/api': apiServer,
+      '/static': assetsServer
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
@@ -31,5 +33,7 @@ module.exports = {
     // In our experience, they generally work as expected,
     // just be aware of this issue when enabling this option.
     cssSourceMap: false
-  }
+  },
+  apiServer: apiServer,
+  assetsServer: assetsServer
 }
