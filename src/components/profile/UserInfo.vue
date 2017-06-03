@@ -27,6 +27,8 @@ div#user-info
       div.user-info(@click="change('pay', '支付密码')")
         span 支付密码
         span.info ••••••
+  md-button.md-raised.md-primary#logout(@click.native="logout") 退出登录
+  md-dialog-confirm(md-title='确定退出当前用户？', md-content-html=" " md-ok-text='确定', md-cancel-text='取消', @close='confirm', ref='dialog')
 </template>
 
 <script>
@@ -46,6 +48,12 @@ export default {
           name: name
         }
       })
+    },
+    confirm (type) {
+      return type === 'ok' ? this.$store.dispatch('LOGOUT').then(() => { this.$router.push('/main/me') }) : ''
+    },
+    logout () {
+      this.$refs.dialog.open()
     }
   }
 }
@@ -82,4 +90,8 @@ export default {
     .info
       display: flex
       justify-content: flex-end
+  #logout
+    display: block
+    margin: 0.5rem auto 0
+    width: 98%
 </style>
