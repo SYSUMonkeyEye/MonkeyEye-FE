@@ -7,9 +7,8 @@
         h2.md-title 修改{{name}}
         md-button.md-icon-button(disabled)
           md-icon
-    form.form(v-if="type == 'image'")
-      label 选择头像
-      span.md-error {{err}}
+    form.form(v-if="type == 'head'")
+      img#head(:src="file.url")
     form.form(v-else, novalidate, @submit.stop.prevent='submit')
       div(v-if="type == 'login' || type == 'pay'")
         md-input-container
@@ -33,9 +32,17 @@
           label 输入新的{{name}}
           md-input(type='text', required, v-model="val.normal")
           span.md-error {{err.normal}}
-    md-button.md-raised.md-primary#change(@click.native="change") 修改
+    div#file-btn(v-if="type == 'head'")
+      md-button.md-raised.md-primary#select(v-show="type == 'head'", @click.native="select") 选择
+      md-button.md-raised.md-primary#upload(v-show="type == 'head'", @click.native="upload") 提交
+    div(v-else)
+      md-button.md-raised.md-primary#change(@click.native="change") {{type != 'head' ? '修改' : '上传' }}
+    #loading
+      md-spinner#loading(md-indeterminate, v-if="loading && !done")
+      md-button.md-fab.md-primary#done(v-if="loading && done")
+        md-icon done
+    md-dialog-alert(:md-content="resultText", @close="closeDialog", md-ok-text="确定", ref="dialog")
 </template>
-
 <script>
 import axios from 'axios'
 import Form from '../../common/utils/Form'
@@ -43,7 +50,14 @@ export default {
   name: 'user-info',
   data () {
     return {
-      file: '',
+      file: {
+        url: this.$store.state.auth.user.avatar,
+        content: ''
+      },
+      resultText: '!',
+      status: '',
+      done: false,
+      loading: false,
       val: {
         normal: '',
         old: '',
@@ -68,8 +82,36 @@ export default {
     reset () {
       for (let key in this.err) this.err[key] = ''
     },
+    closeDialog () {
+      if (this.status === 200) {
+        this.$router.push('/main/me')
+      }
+    },
+    select () {
+      Form.upload((data) => {
+        this.file.url = data.url
+        this.file.content = data.file
+      })
+    },
+    upload () {
+      this.loading = true
+      let d1 = new Date().getTime()
+      axios.patch('/api/users/', Form.generateFrom({
+        avatar: this.file.content
+      })).then((res) => {
+        let d2 = new Date().getTime()
+        setTimeout(() => {
+          this.done = true
+          this.$store.commit('UPDATE_USER', ['avatar', this.file.url])
+          setTimeout(() => {
+            this.$router.push('/main/me')
+          }, 500)
+        }, d2 - d1 < 1000 ? 1000 : 0)
+      })
+    },
     change () {
       this.reset()
+      let d1 = new Date().getTime()
       if (this.type === 'login' || this.type === 'pay') {
         if (!this.val.old) {
           this.err.old = '旧' + this.name + '不等为空'
@@ -78,22 +120,47 @@ export default {
         } else if (this.val.new !== this.val.repeat) {
           this.err.repeat = '两次密码不一致'
         } else {
-          let password = this.type + 'Password'
-          let url = '/api/password/' + password
+          this.loading = true
+          let word = 'password'
+          if (this.type === 'pay') word = 'payPassword'
+          let url = '/api/password/' + (this.type + 'Password')
           let data = {}
-          data['new_' + password] = this.val.old
-          data[password] = this.val.new
+          data['new_' + word] = this.val.new
+          data[word] = this.val.old
           // 提交请求
-          console.log(url, data)
+          axios.patch(url, Form.generateFrom(data)).then((res) => {
+            let d2 = new Date().getTime()
+            setTimeout(() => {
+              this.done = true
+              this.result = res.data.message
+              setTimeout(() => {
+                if (this.type === 'login') this.$store.dispatch('LOGOUT')
+                this.$router.push('/main/me')
+              }, 500)
+            }, d2 - d1 < 1000 ? 1000 : 0)
+          })
         }
       } else {
-        if (!this.val.normal) this.err.normal = this.name + '不等为空'
-        var data = {}
-        data[this.type] = this.val.normal
-        axios.patch('/api/users/', Form.generateFrom(data)).then((res) => {
-          this.alert.content = res.data.message
-          this.openDialog('dialog')
-        })
+        if (!this.val.normal) {
+          this.err.normal = this.name + '不等为空'
+          return
+        } else {
+          this.loading = true
+          var data = {}
+          data[this.type] = this.val.normal
+          axios.patch('/api/users/', Form.generateFrom(data)).then((res) => {
+            let d2 = new Date().getTime()
+            setTimeout(() => {
+              this.done = true
+              this.resultText = res.message
+              this.status = res.status
+              this.$store.commit('UPDATE_USER', [this.type, this.val.normal])
+              setTimeout(() => {
+                this.$router.push('/main/me')
+              }, 500)
+            }, d2 - d1 < 1000 ? 1000 : 0)
+          })
+        }
       }
     }
   }
@@ -109,6 +176,21 @@ export default {
   .form
     width: 80%
     margin: 0 auto
+  #head
+    display: block
+    margin: 0.1rem auto
+    width: 1.6rem
+    height: 1.6rem
+    border-radius: 0.8rem
+  #file-btn
+    padding: 0.1rem
+    #select, #upload
+      width: 48%
+      display: inline-block 
+    #select
+      margin: 0 0.05rem 0 0
+    #upload
+      margin: 0 0 0 0.05rem
   #change
     display: block
     width: 90%
@@ -117,4 +199,15 @@ export default {
     padding-top: 0.1rem
     color: red
     opacity: 1 !important
+  #loading
+    width: 50px
+    height: 50px
+    position: fixed
+    left: 50%
+    transform: translateX(-50%) !important;
+    top: 50%
+    #done
+      position: absolute
+      top: 0.15rem
+      left: -0.1rem
 </style>

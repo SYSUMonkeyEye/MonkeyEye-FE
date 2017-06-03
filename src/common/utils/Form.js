@@ -13,5 +13,24 @@ export default {
       data: this.generateFrom(data),
       method: 'POST'
     }
+  },
+  upload (cb) {
+    let input = document.createElement('input')
+    input.type = 'file'
+    document.body.appendChild(input)
+    console.log('12312')
+    input.onchange = (evt) => {
+      let file = evt.target.files[0]
+      let reader = new FileReader()
+      reader.onloadend = (e) => {
+        cb({
+          url: e.target.result,
+          file: file
+        })
+      }
+      reader.readAsDataURL(file)
+    }
+    input.click()
+    input.style.display = 'none'
   }
 }

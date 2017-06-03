@@ -30,6 +30,12 @@ export default {
     },
     PAY (state, money) {
       state.user.money -= money
+    },
+    DELETE_USER (state) {
+      state.user = ''
+    },
+    UPDATE_USER (state, data) {
+      state.user[data[0]] = data[1]
     }
   },
   actions: {
@@ -47,6 +53,11 @@ export default {
     SIGN_UP ({commit}, data) {
       return axios(Form.postData('/api/users/', data)).then(res => {
         commit('SET_RESULT', res.data.message)
+      })
+    },
+    LOGOUT ({commit}) {
+      return axios.delete('/api/session/').then(res => {
+        commit('DELETE_USER')
       })
     }
   }
