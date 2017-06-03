@@ -68,6 +68,7 @@ function getTime (time, offset = 0) {
 }
 
 export {
+  addZero,
   formatDate,
   daysBetween,
   getDate,

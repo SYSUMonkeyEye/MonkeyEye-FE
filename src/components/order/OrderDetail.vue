@@ -2,42 +2,114 @@
 div#order-detail
   md-toolbar
     div.md-toolbar-container
-      md-button.md-icon-button(@click.native="$router.back()")
+      md-button.md-icon-button(@click.native="back()")
         md-icon keyboard_arrow_left
       h2.md-title 订单详情
-  div.movie-info-container.group
-    div.movie-poster
-      img(:src="movie.poster")
+  div.group.timer-container(v-show="!isValid")
+    md-icon.md-warn error_outline
+    div.info
+      span 该订单已失效或不存在，
+      span.time {{ countDown }}s
+      span 后跳转至个人订单页面
+  div.group.movie-detail-container(v-show="isValid")
     div.movie-detail
-      div.name 拆弹专家 粤语2D
-      div.time 2017年5月8日 18:20
-      div.place 广州金逸珠江国际影城 7号厅
-      div.seats-selected
-        md-chip 17排3座
-        md-chip 17排3座
-        md-chip 17排3座
-        md-chip 17排3座
-  div.order-detail-container.group
+      div.name {{ movie.name }} {{ screen.playingType }}
+      div.time {{ screen.playingTime }} {{ screen.playingDate }}
+      div.place 广州金逸珠江国际影城 {{ screen.hallNum }}号厅
+    div.seats-selected
+      md-chip(v-for="seat in order.seat") {{ (convert2D(seat)).row }}排{{ (convert2D(seat)).column}}座
+  div.order-detail-container.group(v-show="isValid")
     div.order-status.group-item
       span 当前状态
-      span.status 支付成功
+      span.status(v-if="order.status") 支付成功
+      span.status(v-else) 待支付
     div.order-create-time.group-item
       span 下单时间
-      span.create-time 2017-06-08 11:00
-    div.order-actual-pay.group-item
+      span.create-time {{ order.createTime | formatDate }} {{ order.createTime | formatTime }}
+    div.order-actual-pay.group-item(v-if="order.status")
       span 实际付款
-      span.actual-price ￥29
-  div.footer
-    md-button.md-primary.md-raised(@click.native="") 去支付
+      span.actual-price ￥{{ order.payPrice }}
+  div.footer(v-show="isValid")
+    md-button.md-primary.md-raised(v-if="!order.status", @click.native="$router.push(`/order-pay/${order.id}`)") 去支付
 
 </template>
 
 <script>
+import { formatDate, getTime } from '../../common/utils/DateUtils'
+
 export default {
   name: 'order-detail',
+  data () {
+    return {
+      rows: 10,
+      columns: 12,
+      isValid: true,
+      countDown: 5
+    }
+  },
   computed: {
     movie () {
       return this.$store.state.screen.screen.movie
+    },
+    order () {
+      return this.$store.state.order.order
+    },
+    screen () {
+      return this.$store.state.screen.screen
+    }
+  },
+  created () {
+    let orderId = this.$route.params.orderId
+    this.$store.dispatch('GET_ORDER_INFO', orderId).then(() => {
+      if (this.order.id) {
+        this.$store.dispatch('GET_ONE_SCREEN', this.order.screenId)
+      } else {
+        // 订单不存在，则跳转至首页
+        this.isValid = false
+      }
+    })
+  },
+  methods: {
+    routeToAfterSec (url) {
+      this.countDown = 5
+      let timer = setInterval(() => {
+        if (this.countDown > 0) {
+          this.countDown--
+        } else {
+          clearInterval(timer)
+          this.$router.push(url)
+        }
+      }, 1000)
+    },
+    convert2D (num) {
+      let row = Math.floor((num - 1) / this.columns) + 1
+      let column = (num - 1) % this.columns + 1
+      return {
+        row,
+        column
+      }
+    },
+    back () {
+      if (this.order.status) {
+        this.$router.push('/main/me')
+      } else {
+        this.$router.back()
+      }
+    }
+  },
+  watch: {
+    isValid (isValid) {
+      if (!isValid) {
+        this.routeToAfterSec('/my-orders/all')
+      }
+    }
+  },
+  filters: {
+    formatDate (timestamp) {
+      return formatDate(timestamp)
+    },
+    formatTime (timestamp) {
+      return getTime(timestamp)
     }
   }
 }
@@ -49,6 +121,7 @@ export default {
 @import "../../common/sass/footer"
 
 $inline-border-color: #eeeeee
+$primary-color: #e53935
 
 #order-detail
   height: 100%
@@ -59,29 +132,38 @@ $inline-border-color: #eeeeee
     .group-item
       @include group-item
 
-  .movie-info-container
+  .timer-container
+    margin-top: 0
+    padding: .16rem
     display: flex
-    padding: .14rem .08rem
-    .movie-poster
-      img
-        width: .8rem
-    .movie-detail
+    align-items: center
+    .info
       flex: 1
-      padding-left: .1rem
+      padding-left: .12rem
+    .time
+      color: $primary-color
+
+  .movie-detail-container
+    .movie-detail
+      display: flex
+      align-items: center
+      flex-direction: column
+      border-bottom: .01rem dashed #cccccc
       .name
-        margin-bottom: .08rem
+        padding-top: .08rem
         font-size: .16rem
         color: #e53935
       .time
-        margin-bottom: .08rem
-      .seats-selected
-        padding: .08rem 0 0
-        .md-chip
-          @include chip
-          margin: 0 .06rem 0 0
-          padding: .05rem .08rem
-          &:last-child
-            margin: 0
+        padding-top: .06rem
+      .place
+        padding: .06rem 0 .10rem
+
+    .seats-selected
+      display: flex
+      justify-content: center
+      padding: .1rem 0
+      .md-chip
+        @include chip
 
   .order-detail-container
     .status, .create-time, .actual-price

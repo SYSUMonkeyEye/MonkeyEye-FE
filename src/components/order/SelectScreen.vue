@@ -83,7 +83,7 @@ export default {
 <style lang="sass">
 #select-screen
   position: relative
-  height: 100%
+  min-height: 100%
   background: #eee
   .banner
     img

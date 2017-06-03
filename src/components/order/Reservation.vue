@@ -7,26 +7,18 @@ div#reservation
       h2.md-title 确认订单
   div.group.movie-detail-container
     div.movie-detail
-      div.name 拆弹专家 粤语2D
-      div.time 今天 5月8日 18:20
-      div.place 广州金逸珠江国际影城 7号厅
+      div.name {{ movie.name }} {{ screen.playingType }}
+      div.time {{ screen.playingTime }} {{ screen.playingDate }}
+      div.place 广州金逸珠江国际影城 {{ screen.hallNum }}号厅
     div.seats-selected
-      md-chip 17排3座
-      md-chip 17排3座
-      md-chip 7排3座
-      md-chip 7排3座
+      md-chip(v-for="seat in seatsSelected") {{ (convert2D(seat)).row }}排{{ (convert2D(seat)).column}}座
   div.pay-info-container.group
     div.group-item
       span 手机
-      span.user-phone.group-item-right 15521146027
+      span.user-phone.group-item-right {{ user.id }}
     div.group-item
       span 票价总计
-      span.total-price.group-item-right ￥39
-    div.group-item.available-coupon-container
-      span 可用优惠券
-      div.group-item-right.available-coupon
-        span.coupon-count 3张可用
-        md-icon keyboard_arrow_right
+      span.total-price.group-item-right ￥{{ totalPrice }}
   div.group.notice-container
     div.notice-title 购票需知
     div.notice-content
@@ -37,14 +29,71 @@ div#reservation
           span.service 《猿眼电影服务协议》
           |。
   div.footer
-    div.actual-price 实际支付：
-      span.price ￥29
-    md-button.md-primary.md-raised(@click.native="$router.push(`/order-pay/1`)") 立即下单
+    md-button.md-primary.md-raised(@click.native="createOrder") 立即下单
+  md-dialog#order-error-dialog(ref="orderErrorDialog")
+    md-dialog-title 下单失败
+    md-dialog-content {{ errorMessage }}
+    md-dialog-actions
+      md-button.md-primary(@click.native="closeDialog('orderErrorDialog')") 确定
+
 </template>
 
 <script>
 export default {
-  name: 'reservation'
+  name: 'reservation',
+  computed: {
+    movie () {
+      return this.$store.state.screen.screen.movie
+    },
+    screen () {
+      return this.$store.state.screen.screen
+    },
+    seatsSelected () {
+      return this.$store.state.screen.seatsSelected
+    },
+    totalPrice () {
+      return this.seatsSelected.length * this.screen.price
+    },
+    user () {
+      return this.$store.state.auth.user
+    }
+  },
+  data () {
+    return {
+      rows: 10,
+      columns: 12,
+      errorMessage: ''
+    }
+  },
+  methods: {
+    convert2D (num) {
+      let row = Math.floor((num - 1) / this.columns) + 1
+      let column = (num - 1) % this.columns + 1
+      return {
+        row,
+        column
+      }
+    },
+    createOrder () {
+      this.$store.dispatch('CREATE_ORDER', {
+        screenId: this.$route.params.screenId,
+        seat: this.seatsSelected.join(',')
+      }).then((res) => {
+        if (res.status === 200) {
+          this.$store.commit('RESET_COUPON_SELECTED')
+          this.$store.dispatch('GET_ADD_ORDER', res.data.id)
+
+          this.$router.push(`/order-pay/${res.data.id}`)
+        } else {
+          this.errorMessage = res.data.message
+          this.$refs.orderErrorDialog.open()
+        }
+      })
+    },
+    closeDialog (ref) {
+      this.$refs[ref].close()
+    }
+  }
 }
 </script>
 
@@ -86,27 +135,20 @@ $inline-border-color: #eeeeee
         @include chip
 
   .pay-info-container
-    .available-coupon-container
-      span
-        height: .24rem
-        line-height: .24rem
 
     .group-item
       @include group-item
       .group-item-right
         flex: 1
         text-align: right
-      .user-phone, .available-coupon
+      .user-phone
         color: #666666
       .total-price
         color: #e53935
-      .coupon-count
-        display: inline-block
-        vertical-align: top
 
   .notice-container
     padding: .16rem
-    margin-bottom: 1.2rem
+    margin-bottom: .7rem
     .notice-title
       font-size: .16rem
       padding-bottom: .1rem
@@ -121,13 +163,10 @@ $inline-border-color: #eeeeee
 
   .footer
     @include footer
-    background: #ffffff
-    .actual-price
-      line-height: .22rem
-      margin: 0 0 .1rem
-    .price
-      font-size: .20rem
-      color: #e53935
     button
       @include footer-btn
+
+#order-error-dialog
+  .md-dialog-content
+    padding-bottom: 0
 </style>
