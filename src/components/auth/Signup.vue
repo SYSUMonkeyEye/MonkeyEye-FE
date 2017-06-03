@@ -100,7 +100,7 @@ export default {
           }
         }, 1000)
         this.getCodeBox.style.backgroundColor = 'gray'
-        axios.get('/api/smscode?mobile=' + this.formData.id).then(res => {
+        axios.get('/api/smscode/?mobile=' + this.formData.id).then(res => {
           res.status === 200 ? this.formData.smscode = res.data.message : this.err.id = res.data.message
         })
       }

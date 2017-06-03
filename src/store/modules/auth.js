@@ -40,7 +40,7 @@ export default {
   },
   actions: {
     GET_SMS_CODE ({commit}, mobile) {
-      return axios.get('/api/smscode?mobile=' + mobile).then(res => {
+      return axios.get('/api/smscode/?mobile=' + mobile).then(res => {
         res.status === 200 ? commit('SET_SMS_CODE', res.data.message) : ''
       })
     },
