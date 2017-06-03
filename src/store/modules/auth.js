@@ -2,11 +2,11 @@ import axios from 'axios'
 import Form from '../../common/utils/Form'
 
 /* eslint-disable no-undef */
-let user = localStorage.getItem('user') || ''
+let user = JSON.parse(localStorage.getItem('user')) || ''
 
 export default {
   state: {
-    user: JSON.parse(user)
+    user: user || ''
   },
   mutations: {
     SET_SMS_CODE (state, smscode) {
@@ -19,7 +19,11 @@ export default {
     SET_USER (state, user) {
       state.user = user
       /* eslint-disable no-undef */
-      localStorage.setItem('user', JSON.stringify(user))
+      if (user !== '') {
+        localStorage.setItem('user', JSON.stringify(user))
+      } else {
+        localStorage.removeItem('user')
+      }
     },
     RE_SET (state) {
       state.signInErr.err.id = state.signInErr.err.phone = ''
