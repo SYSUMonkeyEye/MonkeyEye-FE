@@ -50,7 +50,7 @@ export default {
 
   actions: {
     GET_ALL_SCREENS ({ commit }, movieId) {
-      return axios.get('/api/screens', {
+      return axios.get('/api/screens/', {
         params: {
           movieId: movieId
         }

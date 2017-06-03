@@ -59,7 +59,7 @@ export default {
   actions: {
     // 获取电影列表
     GET_ALL_MOVIES ({ commit }) {
-      return axios.get('/api/movies').then(res => {
+      return axios.get('/api/movies/').then(res => {
         res.status === 200 ? commit('SET_ALL_MOVIES', res.data) : ''
       })
     },

@@ -20,7 +20,7 @@ export default {
       formData.append('movieId', data.movieId)
       formData.append('rating', data.rating)
       formData.append('content', data.content)
-      return axios.post('/api/comments', formData).then(res => {
+      return axios.post('/api/comments/', formData).then(res => {
         return res.status === 200
       })
     }
