@@ -15,7 +15,7 @@ div#reservation
   div.pay-info-container.group
     div.group-item
       span 手机
-      span.user-phone.group-item-right 15521146027
+      span.user-phone.group-item-right {{ user.id }}
     div.group-item
       span 票价总计
       span.total-price.group-item-right ￥{{ totalPrice }}
@@ -29,7 +29,13 @@ div#reservation
           span.service 《猿眼电影服务协议》
           |。
   div.footer
-    md-button.md-primary.md-raised(@click.native="$router.push(`/order-pay/1`)") 立即下单
+    md-button.md-primary.md-raised(@click.native="createOrder") 立即下单
+  md-dialog#order-error-dialog(ref="orderErrorDialog")
+    md-dialog-title 下单失败
+    md-dialog-content {{ errorMessage }}
+    md-dialog-actions
+      md-button.md-primary(@click.native="closeDialog('orderErrorDialog')") 确定
+
 </template>
 
 <script>
@@ -47,12 +53,16 @@ export default {
     },
     totalPrice () {
       return this.seatsSelected.length * this.screen.price
+    },
+    user () {
+      return this.$store.state.auth.user
     }
   },
   data () {
     return {
       rows: 10,
-      columns: 12
+      columns: 12,
+      errorMessage: ''
     }
   },
   methods: {
@@ -63,6 +73,25 @@ export default {
         row,
         column
       }
+    },
+    createOrder () {
+      this.$store.dispatch('CREATE_ORDER', {
+        screenId: this.$route.params.screenId,
+        seat: this.seatsSelected.join(',')
+      }).then((res) => {
+        if (res.status === 200) {
+          this.$store.commit('RESET_COUPON_SELECTED')
+          this.$store.dispatch('GET_ADD_ORDER', res.data.id)
+
+          this.$router.push(`/order-pay/${res.data.id}`)
+        } else {
+          this.errorMessage = res.data.message
+          this.$refs.orderErrorDialog.open()
+        }
+      })
+    },
+    closeDialog (ref) {
+      this.$refs[ref].close()
     }
   }
 }
@@ -119,7 +148,7 @@ $inline-border-color: #eeeeee
 
   .notice-container
     padding: .16rem
-    margin-bottom: 1.2rem
+    margin-bottom: .7rem
     .notice-title
       font-size: .16rem
       padding-bottom: .1rem
@@ -136,4 +165,8 @@ $inline-border-color: #eeeeee
     @include footer
     button
       @include footer-btn
+
+#order-error-dialog
+  .md-dialog-content
+    padding-bottom: 0
 </style>

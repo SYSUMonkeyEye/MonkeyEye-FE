@@ -18,12 +18,15 @@ export default {
     },
     RE_SET (state) {
       state.signInErr.err.id = state.signInErr.err.phone = ''
+    },
+    PAY (state, money) {
+      state.user.money -= money
     }
   },
   actions: {
     GET_SMS_CODE ({commit}, mobile) {
       return axios.get('/api/smscode?mobile=' + mobile).then(res => {
-        res.status >= 200 ? commit('SET_SMS_CODE', res.data.message) : ''
+        res.status === 200 ? commit('SET_SMS_CODE', res.data.message) : ''
       })
     },
     GET_USER ({commit}) {

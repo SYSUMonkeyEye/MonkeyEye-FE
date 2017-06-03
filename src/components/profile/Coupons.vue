@@ -2,10 +2,14 @@
 div#coupons
   md-toolbar
     div.md-toolbar-container
+      md-button.md-icon-button(@click.native="$router.back()")
+        md-icon keyboard_arrow_left
       h2.md-title 优惠券
-  div.phone-viewport
-    md-list.custom-list.md-triple-line
-      Coupons(v-for="list in lists", :item="list")
+      md-button.md-icon-button(disabled)
+        md-icon
+  div.coupons-tainer
+    md-list.md-triple-line
+      Coupons(v-for="coupon in coupons", :coupon="coupon")
 </template>
 
 <script>
@@ -15,26 +19,13 @@ export default {
   components: {
     Coupons: Coupons
   },
-  data () {
-    return {
-      lists: [
-        {
-          time: '2017-05-19', discount: 4, full: 32
-        },
-        {
-          time: '2017-05-20', discount: 5, full: 34
-        },
-        {
-          time: '2017-05-21', discount: 6, full: 36
-        },
-        {
-          time: '2017-05-22', discount: 7, full: 40
-        },
-        {
-          time: '2017-05-25', discount: 8, full: 42
-        }
-      ]
+  computed: {
+    coupons () {
+      return this.$store.state.coupon.coupons
     }
+  },
+  created () {
+    this.$store.dispatch('GET_COUPONS')
   }
 }
 </script>

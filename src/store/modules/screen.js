@@ -35,8 +35,8 @@ export default {
 
       const dateMap = ['今天', '明天', '后天']
 
-      screen.playingTime = dateMap[days] + DateUtils.getDate(days)
-      screen.playingDate = DateUtils.getTime(screen.time)
+      screen.playingDate = dateMap[days] + DateUtils.getDate(days)
+      screen.playingTime = DateUtils.getTime(screen.time)
 
       state.screen = screen
     },
@@ -60,7 +60,7 @@ export default {
         }
       })
     },
-    GET_ONE_SCREEN ({ commit, dispatch }, screenId) {
+    GET_ONE_SCREEN ({ commit }, screenId) {
       return axios.get(`/api/screens/${screenId}`).then(res => {
         if (res.status === 200) {
           commit('SET_MOVIE_SCREEN', res.data)

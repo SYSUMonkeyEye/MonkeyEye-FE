@@ -14,11 +14,11 @@ div#me
   md-whiteframe
     div.coupons-and-money
       div.coupons(@click="couponsList")
-        p {{ $store.state.auth.user.coupons || 0 }}
+        p {{ $store.state.coupon.coupons.length || 0 }} 张
         p 优惠券
       div.divide-line
       div.money
-        p {{ $store.state.auth.user.money || 0 }}
+        p ￥{{ $store.state.auth.user.money || 0 }}
         p 账户余额
   md-whiteframe
     div.orders
@@ -62,6 +62,7 @@ export default {
     if (this.$store.state.auth.user && !this.$store.state.favorite.favoritesGot) {
       this.$store.dispatch('GET_FAVORITES')
     }
+    this.$store.dispatch('GET_COUPONS')
   },
   methods: {
     // 查看优惠券列表

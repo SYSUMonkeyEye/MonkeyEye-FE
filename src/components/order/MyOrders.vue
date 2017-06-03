@@ -8,81 +8,136 @@ div#my-orders
       md-button.md-icon-button(disabled)
         md-icon
   div.orders-container
-    ul.orders-list
-      li.order-item
-        .type-container
+    md-list.orders-list(v-if="orders && orders.length")
+      md-list-item.order-item(v-for="order in orders", @click.native="$router.push(`/order-detail/${order.id}`)")
+        .type-container(v-if="order._status === 'played'")
           md-icon.md-warn.md-size-2x event_available
           span.type 已放映
-        .info-container
-          span.name 一条狗的使命
-          span.ticket-count 2张
-          .time 2017-06-01 17:00
-        .btn-container
-          md-button.md-raised.md-primary 写影评
-      li.order-item
-        .type-container
+        .type-container(v-else-if="order._status === 'unplay'")
           md-icon.md-primary.md-size-2x slideshow
           span.type 未放映
-        .info-container
-          span.name 一条狗的使命
-          span.ticket-count 2张
-          .time 2017-06-01 17:00
-      li.order-item
-        .type-container
+        .type-container(v-else-if="order._status === 'unpay'")
           md-icon.md-accent.md-size-2x shopping_cart
           span.type 待付款
         .info-container
-          span.name 一条狗的使命
-          span.ticket-count 2张
-          .time 2017-06-01 17:00
-        .btn-container
-          md-button.md-raised.md-primary 去支付
+          span.name {{ order.name }}
+          span.ticket-count {{ order.seat.length }}张
+          .time {{ order.screenTime | formatDate }} {{ order.screenTime | formatTime }}
+        .btn-container(v-if="order._status === 'played'")
+          md-button.md-raised.md-primary(@click.native.stop="$router.push(`/movie-comment/${order.movieId}`)") 写影评
+        .btn-container(v-else-if="order._status === 'unpay'")
+          md-button.md-raised.md-primary(@click.native.stop="$router.push(`/order-pay/${order.id}`)") 去支付
+    div.no-order(v-else) 暂无任何
+      span {{ typeMap[type]}}
+      | 的订单
 
 </template>
 
 <script>
+import { formatDate, getTime } from '../../common/utils/DateUtils'
+
 export default {
-  name: 'my-orders'
+  name: 'my-orders',
+  data () {
+    return {
+      type: '',
+      typeMap: {
+        'unplay': '未放映',
+        'played': '已放映',
+        'unpay': '未支付'
+      }
+    }
+  },
+  created () {
+    this.type = this.$route.params.type
+    this.$store.dispatch('GET_ALL_ORDERS')
+  },
+  computed: {
+    orders () {
+      if (this.type === 'all') {
+        return this.validOrders
+      }
+
+      return this.validOrders.filter((order) => {
+        return order._status === this.type
+      })
+    },
+    validOrders () {
+      this.$store.commit('REMOVE_UNVALID_ORDERS')
+      return this.$store.state.order.orders
+    }
+  },
+  filters: {
+    formatDate (timestamp) {
+      return formatDate(timestamp)
+    },
+    formatTime (timestamp) {
+      return getTime(timestamp)
+    }
+  }
 }
 </script>
 
 <style lang="sass">
 #my-orders
-  height: 100%
+  position: relative
+  min-height: 100%
   background: #eeeeee
-  .md-toolbar .md-toolbar-container .md-title
-    flex: 1
-    text-align: center
+  .md-toolbar
+    position: fixed
+    width: 100%
+    top: 0
+    .md-toolbar-container .md-title
+      flex: 1
+      text-align: center
   .orders-container
+    padding-top: .64rem
     .orders-list
       margin: 0
       padding: 0
+      background: transparent
       .order-item
-        display: flex
-        align-items: center
-        margin-top: .12rem
-        padding: .16rem
+        margin-top: .1rem
+        padding-top: .12rem
+        padding-bottom: .12rem
         background: #ffffff
-        list-style: none
-        .type-container
-          flex: 0 0 .5rem
+      .md-list-item-container
+        justify-content: flex-start
+      .type-container
+        display: flex
+        flex-direction: column
+        .type
+          height: .14rem
+          line-height: .14rem
           text-align: center
-          .type
-            color: #888888
-        .info-container
-          flex: 1
-          padding-left: .2rem
-          span
-            display: inline-block
-            font-size: .18rem
-          .name
-            color: #f44336
-            margin-right: .05rem
-          .ticket-count
-            color: #888888
-          .time
-            margin-top: .05rem
-            color: #888888
+          font-size: .14rem
+          color: #888888
+      .info-container
+        flex: 1
+        padding-left: .2rem
+        span
+          display: inline-block
+          font-size: .18rem
+          height: .18rem
+          line-height: .18rem
+        .name
+          color: #f44336
+          margin-right: .1rem
+        .ticket-count
+          color: #888888
+        .time
+          height: .18rem
+          line-height: .18rem
+          color: #888888
+
+    .no-order
+      padding: .12rem .16rem
+      margin-top: .1rem
+      text-align: center
+      background: #ffffff
+
+      span
+        color: #e53935
 
 
 </style>

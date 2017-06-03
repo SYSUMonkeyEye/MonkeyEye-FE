@@ -13,7 +13,7 @@ div#user-info
         span.info {{user.nickname}}
       div.user-info(@click="change('description', '个性签名')")
         span 个性签名
-        span.info {{user.description}}  
+        span.info {{user.description}}
       div.user-info(@click="change('phone', '手机号')")
         span 手机号
         span.info {{user.id}}
@@ -28,9 +28,9 @@ div#user-info
 <script>
 export default {
   name: 'user-info',
-  data () {
-    return {
-      user: this.$store.state.auth.user
+  computed: {
+    user () {
+      return this.$store.state.auth.user
     }
   },
   methods: {
