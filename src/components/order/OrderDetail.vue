@@ -5,6 +5,8 @@ div#order-detail
       md-button.md-icon-button(@click.native="back()")
         md-icon keyboard_arrow_left
       h2.md-title 订单详情
+      md-button.md-icon-button(disabled)
+        md-icon
   div.group.timer-container(v-show="!isValid")
     md-icon.md-warn error_outline
     div.info

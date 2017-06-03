@@ -5,6 +5,8 @@ div#order-pay
       md-button.md-icon-button(@click.native="$router.replace('/main/me')")
         md-icon keyboard_arrow_left
       h2.md-title 订单支付
+      md-button.md-icon-button(disabled)
+        md-icon
   div.group.timer-container
     md-icon.icon-payment(v-show="isValid && !isPay") watch_later
     md-icon.md-warn(v-show="!isValid") error_outline

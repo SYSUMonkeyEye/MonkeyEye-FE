@@ -2,7 +2,11 @@
 div#user-info
   md-toolbar
     div.md-toolbar-container
+      md-button.md-icon-button(@click.native="$router.back()")
+        md-icon keyboard_arrow_left
       h2.md-title 用户信息
+      md-button.md-icon-button(disabled)
+        md-icon
   md-whiteframe
     div.collection
       div.user-info.head(@click="change('head', '头像')")

@@ -2,7 +2,11 @@
   div#change-info
     md-toolbar
       div.md-toolbar-container
+        md-button.md-icon-button(@click.native="$router.back()")
+          md-icon keyboard_arrow_left
         h2.md-title 修改{{name}}
+        md-button.md-icon-button(disabled)
+          md-icon
     form.form(v-if="type == 'image'")
       label 选择头像
       span.md-error {{err}}
@@ -13,22 +17,22 @@
           label 输入旧{{name}}
           md-input(type='password', required, v-model="val.old")
           span.md-error {{err.old}}
-        md-input-container  
+        md-input-container
           md-icon keyboard
           label 输入新的{{name}}
           md-input(type='password', required, v-model="val.new")
           span.md-error {{err.new}}
-        md-input-container  
+        md-input-container
           md-icon keyboard
           label 重复新的{{name}}
           md-input(type='password', required, v-model="val.repeat")
           span.md-error {{err.repeat}}
-      div(v-else)    
+      div(v-else)
         md-input-container
           md-icon settings
           label 输入新的{{name}}
           md-input(type='text', required, v-model="val.normal")
-          span.md-error {{err.normal}}   
+          span.md-error {{err.normal}}
     md-button.md-raised.md-primary#change(@click.native="change") 修改
 </template>
 

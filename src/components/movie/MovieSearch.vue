@@ -2,6 +2,8 @@
 div#movie-search
   md-toolbar(md-theme="white")
     div.md-toolbar-container
+      md-button.md-icon-button(@click.native="$router.back()")
+        md-icon keyboard_arrow_left
       md-button.md-icon-button(@click.native="search")
         md-icon search
       md-input-container(md-inline)
@@ -48,6 +50,8 @@ export default {
 
 <style lang="sass">
 #movie-search
+  .md-icon-button
+    margin-right: 0
   .result-item
     display: flex
     align-items: center

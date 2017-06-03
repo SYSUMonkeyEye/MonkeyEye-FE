@@ -5,6 +5,8 @@ div#select-coupon
       md-button.md-icon-button(@click.native="$router.back()")
         md-icon keyboard_arrow_left
       h2.md-title 选择优惠券
+      md-button.md-icon-button(disabled)
+        md-icon
   div.coupons-container
     md-list.md-triple-line
       Coupon(v-for="coupon in coupons", :coupon="coupon",

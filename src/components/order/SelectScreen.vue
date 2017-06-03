@@ -5,6 +5,8 @@ div#select-screen
       md-button.md-icon-button(@click.native="$router.back()")
         md-icon keyboard_arrow_left
       h2.md-title {{ movie.name }}
+      md-button.md-icon-button(disabled)
+        md-icon
   div.banner
     img(:src="movie.poster")
   div.screens-container

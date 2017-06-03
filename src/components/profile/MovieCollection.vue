@@ -2,7 +2,11 @@
 div#movie-collection
   md-toolbar
     div.md-toolbar-container
+      md-button.md-icon-button(@click.native="$router.back()")
+        md-icon keyboard_arrow_left
       h2.md-title {{ title }}
+      md-button.md-icon-button(disabled)
+        md-icon
   div.movie-item(v-for="(item, index) in movieList",
     @click="$router.push('/movie-detail/' + item.movie.id)")
     img(:src="item.movie.poster")

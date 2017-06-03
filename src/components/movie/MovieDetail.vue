@@ -2,8 +2,8 @@
 div#movie-detail
   md-toolbar
     div.md-toolbar-container
-      md-button.md-icon-button
-        md-icon
+      md-button.md-icon-button(@click.native="$router.back()")
+        md-icon keyboard_arrow_left
       h2.md-title 电影详情界面
       md-button.md-icon-button(@click.native="favoriteOrNot")
         md-icon {{ hasFavorited ? 'favorite' : 'favorite_border' }}

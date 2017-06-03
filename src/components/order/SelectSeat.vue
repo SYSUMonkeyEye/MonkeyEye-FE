@@ -5,6 +5,8 @@ div#select-seat
       md-button.md-icon-button(@click.native="$router.back()")
         md-icon keyboard_arrow_left
       h2.md-title {{ movie.name }}
+      md-button.md-icon-button(disabled)
+        md-icon
   div.info
     span {{ screen.playingTime }}
     span {{ screen.playingDate }}

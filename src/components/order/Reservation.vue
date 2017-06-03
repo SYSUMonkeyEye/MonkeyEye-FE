@@ -5,6 +5,8 @@ div#reservation
       md-button.md-icon-button(@click.native="$router.back()")
         md-icon keyboard_arrow_left
       h2.md-title 确认订单
+      md-button.md-icon-button(disabled)
+        md-icon
   div.group.movie-detail-container
     div.movie-detail
       div.name {{ movie.name }} {{ screen.playingType }}
