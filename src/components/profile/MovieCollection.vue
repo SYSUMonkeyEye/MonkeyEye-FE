@@ -63,8 +63,6 @@ export default {
     background: white
     border-bottom: .01rem solid #e1e1e1
     position: relative
-    &:last-child
-      border-bottom: none
     img
       width: .8rem
       height: 1rem

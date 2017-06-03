@@ -62,6 +62,9 @@ export default {
     if (this.$store.state.auth.user && !this.$store.state.favorite.favoritesGot) {
       this.$store.dispatch('GET_FAVORITES')
     }
+    if (this.$store.state.auth.user && !this.$store.state.favorite.historyGot) {
+      this.$store.dispatch('GET_HISTORY_MOVIES')
+    }
     this.$store.dispatch('GET_COUPONS')
   },
   methods: {
