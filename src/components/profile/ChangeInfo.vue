@@ -8,7 +8,7 @@
         md-button.md-icon-button(disabled)
           md-icon
     form.form(v-if="type == 'head'")
-      img#head(:src="$store.state.auth.user.avatar")
+      img#head(:src="file.url")
     form.form(v-else, novalidate, @submit.stop.prevent='submit')
       div(v-if="type == 'login' || type == 'pay'")
         md-input-container
@@ -33,8 +33,8 @@
           md-input(type='text', required, v-model="val.normal")
           span.md-error {{err.normal}}
     div#file-btn(v-if="type == 'head'")
-      md-button.md-raised.md-primary#select(v-show="type == 'head'") 选择
-      md-button.md-raised.md-primary#upload(v-show="type == 'head'") 提交
+      md-button.md-raised.md-primary#select(v-show="type == 'head'", @click.native="select") 选择
+      md-button.md-raised.md-primary#upload(v-show="type == 'head'", @click.native="upload") 提交
     div(v-else)
       md-button.md-raised.md-primary#change(@click.native="change") {{type != 'head' ? '修改' : '上传' }}
     #loading
@@ -50,7 +50,10 @@ export default {
   name: 'user-info',
   data () {
     return {
-      files: '',
+      file: {
+        url: this.$store.state.auth.user.avatar,
+        content: ''
+      },
       resultText: '!',
       status: '',
       done: false,
@@ -84,6 +87,28 @@ export default {
         this.$router.push('/main/me')
       }
     },
+    select () {
+      Form.upload((data) => {
+        this.file.url = data.url
+        this.file.content = data.file
+      })
+    },
+    upload () {
+      this.loading = true
+      let d1 = new Date().getTime()
+      axios.patch('/api/users/', Form.generateFrom({
+        avatar: this.file.content
+      })).then((res) => {
+        let d2 = new Date().getTime()
+        setTimeout(() => {
+          this.done = true
+          this.$store.commit('UPDATE_USER', ['avatar', this.file.url])
+          setTimeout(() => {
+            this.$router.push('/main/me')
+          }, 500)
+        }, d2 - d1 < 1000 ? 1000 : 0)
+      })
+    },
     change () {
       this.reset()
       let d1 = new Date().getTime()
@@ -105,7 +130,6 @@ export default {
           // 提交请求
           axios.patch(url, Form.generateFrom(data)).then((res) => {
             let d2 = new Date().getTime()
-            this.done = true
             setTimeout(() => {
               this.done = true
               this.result = res.data.message

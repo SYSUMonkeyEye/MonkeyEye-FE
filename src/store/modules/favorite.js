@@ -5,7 +5,8 @@ export default {
     favoriteMovies: [],
     wannaMovies: [],
     historyMovies: [],
-    favoritesGot: false
+    favoritesGot: false,
+    historyGot: false
   },
 
   mutations: {
@@ -48,6 +49,14 @@ export default {
           return
         }
       }
+    },
+
+    // 设置观影历史
+    SET_HISTORY_MOVIES (state, movies) {
+      for (let i = 0; i < movies.length; ++i) {
+        state.historyMovies.push({ movie: movies[i] })
+      }
+      state.historyGot = true
     }
   },
 
@@ -76,6 +85,13 @@ export default {
     UNFAVORITE_MOVIE ({ commit }, favoriteId) {
       return axios.delete('/api/favorites/' + favoriteId).then(res => {
         res.status === 200 ? commit('DELETE_FAVORITE', favoriteId) : ''
+      })
+    },
+
+    // 查询观影历史
+    GET_HISTORY_MOVIES ({ commit }) {
+      return axios.get('/api/users/history').then(res => {
+        res.status === 200 ? commit('SET_HISTORY_MOVIES', res.data) : ''
       })
     }
   }

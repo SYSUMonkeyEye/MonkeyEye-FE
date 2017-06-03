@@ -1,9 +1,12 @@
 import axios from 'axios'
 import Form from '../../common/utils/Form'
 
+/* eslint-disable no-undef */
+let user = localStorage.getItem('user') || ''
+
 export default {
   state: {
-    user: ''
+    user: JSON.parse(user)
   },
   mutations: {
     SET_SMS_CODE (state, smscode) {
@@ -15,6 +18,8 @@ export default {
     },
     SET_USER (state, user) {
       state.user = user
+      /* eslint-disable no-undef */
+      localStorage.setItem('user', JSON.stringify(user))
     },
     RE_SET (state) {
       state.signInErr.err.id = state.signInErr.err.phone = ''
@@ -37,7 +42,8 @@ export default {
     },
     GET_USER ({commit}) {
       return axios.get('/api/users/').then((res) => {
-        res.status === 200 ? commit('SET_USER', res.data) : ''
+        res.status === 200 ? commit('SET_USER', res.data)
+        : commit('SET_USER', '')
       })
     },
     SIGN_UP ({commit}, data) {
