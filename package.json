@@ -11,6 +11,7 @@
     "server": "node app-server.js"
   },
   "dependencies": {
+    "MD5": "^1.3.0",
     "axios": "^0.15.3",
     "vue": "^2.1.0",
     "vue-material": "^0.7.1",
