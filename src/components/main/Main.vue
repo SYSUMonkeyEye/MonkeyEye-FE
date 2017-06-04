@@ -10,8 +10,8 @@ div#main
   transition(name="slide")
     router-view.body
   md-bottom-bar(md-shift)
-    md-bottom-bar-item(md-icon="ondemand_video", @click.native="$router.push('/main/movies')", :md-active="$route.path === '/main/movies'") 电影
-    md-bottom-bar-item(md-icon="person", @click.native="$router.push('/main/me')", :md-active="$route.path === '/main/me'") 我的
+    md-bottom-bar-item(md-icon="ondemand_video", @click.native="$router.replace('/main/movies')", :md-active="$route.path === '/main/movies'") 电影
+    md-bottom-bar-item(md-icon="person", @click.native="$router.replace('/main/me')", :md-active="$route.path === '/main/me'") 我的
 </template>
 
 <script>

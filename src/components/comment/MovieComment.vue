@@ -4,7 +4,7 @@ div#movie-comment
     div.md-toolbar-container
       md-button.md-icon-button(@click.native="$router.back()")
         md-icon keyboard_arrow_left
-      h2.md-title 速度与激情8
+      h2.md-title {{ $route.query.name }}
       md-button.md-icon-button(@click.native="submit")
         md-icon check
   div.star-rating
