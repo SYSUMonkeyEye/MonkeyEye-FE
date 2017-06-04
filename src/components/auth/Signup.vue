@@ -50,6 +50,7 @@ div#signup
 import axios from 'axios'
 import Form from '../../common/utils/Form'
 import load from './Load.vue'
+import md5 from 'MD5'
 export default {
   name: 'signup',
   components: {
@@ -135,6 +136,8 @@ export default {
           for (let key in this.formData) {
             if (key !== 'repeat') data[key] = this.formData[key]
           }
+          data.password = md5(data.password)
+          data.payPassword = md5(data.payPassword)
           axios(Form.postData('/api/users/', data)).then(res => {
             let d2 = new Date().getTime()
             setTimeout(() => {

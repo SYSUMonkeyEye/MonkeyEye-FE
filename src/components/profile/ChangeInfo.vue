@@ -44,6 +44,7 @@
 import axios from 'axios'
 import Form from '../../common/utils/Form'
 import load from '../auth/Load.vue'
+import md5 from 'MD5'
 export default {
   name: 'user-info',
   components: {
@@ -126,8 +127,9 @@ export default {
           if (this.type === 'pay') word = 'payPassword'
           let url = '/api/password/' + (this.type + 'Password')
           let data = {}
-          data['new_' + word] = this.val.new
-          data[word] = this.val.old
+          data['new_' + word] = md5(this.val.new)
+          data[word] = md5(this.val.old)
+
           // 提交请求
           axios.patch(url, Form.generateFrom(data)).then((res) => {
             let d2 = new Date().getTime()
