@@ -66,6 +66,7 @@ div#order-pay
 </template>
 
 <script>
+import md5 from 'MD5'
 import PasswordInput from './PasswordInput'
 import { addZero } from '../../common/utils/DateUtils'
 
@@ -172,7 +173,7 @@ export default {
 
       let pay = {
         orderId: orderId,
-        payPassword: password
+        payPassword: md5(password)
       }
 
       if (this.couponSelected.id) {
