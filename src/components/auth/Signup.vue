@@ -25,7 +25,7 @@ div#signup
       md-input-container
         md-icon vpn_key
         label 支付密码
-        md-input(type='payPassword' v-model="formData.payPassword")
+        md-input(type='password' v-model="formData.payPassword")
         span.md-error {{err.payPassword}}
     md-list-item
       md-input-container
@@ -43,16 +43,23 @@ div#signup
       md-checkbox.md-primary#check(v-model="canNext")
       p#read 已阅读并同意《猿眼电影服务协议》,愿意同步创建猿眼电影账号
     md-button.md-raised.md-primary(@click.native="next", :class="canNext ? '': 'inActive'")#next 下一步
+    load(:loading="loading", :done="done")
 </template>
 
 <script>
 import axios from 'axios'
 import Form from '../../common/utils/Form'
+import load from './Load.vue'
 export default {
   name: 'signup',
+  components: {
+    load: load
+  },
   data () {
     return {
       msg: '获取验证码',
+      loading: false,
+      done: false,
       canNext: false,
       time: 10,
       timer: null,
@@ -122,25 +129,35 @@ export default {
           this.err.repeat = '两次密码不一致'
         } else {
           // 提交请求
+          this.loading = true
+          let d1 = new Date().getTime()
           var data = {}
           for (let key in this.formData) {
             if (key !== 'repeat') data[key] = this.formData[key]
           }
           axios(Form.postData('/api/users/', data)).then(res => {
-            switch (res.data.message) {
-              case '验证码非法':
-              case '请先获取短信验证码':
-              case '验证码错误':
-                this.err.smscode = res.data.message
-                break
-              case '手机号已被注册':
-                this.err.id = res.data.message
-                break
-              default:
-                this.$store.dispatch('GET_USER').then(() => {
-                  this.$router.replace('/main/me')
-                })
-            }
+            let d2 = new Date().getTime()
+            setTimeout(() => {
+              switch (res.data.message) {
+                case '验证码非法':
+                case '请先获取短信验证码':
+                case '验证码错误':
+                  this.loading = false
+                  this.err.smscode = res.data.message
+                  break
+                case '手机号码已被注册':
+                  this.loading = false
+                  this.err.id = res.data.message
+                  break
+                default:
+                  this.done = true
+                  setTimeout(() => {
+                    this.$store.dispatch('GET_USER').then(() => {
+                      this.$router.replace('/main/me')
+                    })
+                  }, 500)
+              }
+            }, d2 - d1 < 1000 ? 1000 : 0)
           })
         }
       }
