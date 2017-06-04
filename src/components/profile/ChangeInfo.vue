@@ -37,17 +37,18 @@
       md-button.md-raised.md-primary#upload(v-show="type == 'head'", @click.native="upload") 提交
     div(v-else)
       md-button.md-raised.md-primary#change(@click.native="change") {{type != 'head' ? '修改' : '上传' }}
-    #loading
-      md-spinner#loading(md-indeterminate, v-if="loading && !done")
-      md-button.md-fab.md-primary#done(v-if="loading && done")
-        md-icon done
+    load(:loading="loading", :done="done")  
     md-dialog-alert(:md-content="resultText", @close="closeDialog", md-ok-text="确定", ref="dialog")
 </template>
 <script>
 import axios from 'axios'
 import Form from '../../common/utils/Form'
+import load from '../auth/Load.vue'
 export default {
   name: 'user-info',
+  components: {
+    load: load
+  },
   data () {
     return {
       file: {
@@ -131,12 +132,21 @@ export default {
           axios.patch(url, Form.generateFrom(data)).then((res) => {
             let d2 = new Date().getTime()
             setTimeout(() => {
-              this.done = true
-              this.result = res.data.message
-              setTimeout(() => {
-                if (this.type === 'login') this.$store.dispatch('LOGOUT')
-                this.$router.push('/main/me')
-              }, 500)
+              if (res.status !== 200) {
+                this.err.old = res.data.message
+                this.loading = false
+              } else {
+                this.done = true
+                setTimeout(() => {
+                  if (this.type === 'login') {
+                    this.$store.dispatch('LOGOUT').then(() => {
+                      this.$router.push('/main/me')
+                    })
+                  } else {
+                    this.$router.push('/main/me')
+                  }
+                }, 500)
+              }
             }, d2 - d1 < 1000 ? 1000 : 0)
           })
         }
@@ -199,15 +209,4 @@ export default {
     padding-top: 0.1rem
     color: red
     opacity: 1 !important
-  #loading
-    width: 50px
-    height: 50px
-    position: fixed
-    left: 50%
-    transform: translateX(-50%) !important;
-    top: 50%
-    #done
-      position: absolute
-      top: 0.15rem
-      left: -0.1rem
 </style>

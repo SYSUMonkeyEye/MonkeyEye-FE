@@ -18,7 +18,7 @@ div#user-info
       div.user-info(@click="change('description', '个性签名')")
         span 个性签名
         span.info {{user.description}}
-      div.user-info(@click="change('phone', '手机号')")
+      div.user-info
         span 手机号
         span.info {{user.id}}
       div.user-info(@click="change('login', '登录密码')")

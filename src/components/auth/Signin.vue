@@ -19,18 +19,23 @@ div#signin
       md-input(type='password', required, v-model="formData.password")
       span.md-error {{err.password}}
   md-button.md-raised.md-primary#login(@click.native="signIn") 登录
-  p.forget(@click="forget")   忘记密码
   p.sign-up(@click="signUp") 还没有账号？立即注册
-
+  load(:loading="loading", :done="done")
 </template>
 
 <script>
 import axios from 'axios'
 import Form from '../../common/utils/Form'
+import load from './Load.vue'
 export default {
   name: 'signin',
+  components: {
+    load: load
+  },
   data () {
     return {
+      loading: false,
+      done: false,
       test: '123',
       err: {
         password: '',
@@ -53,19 +58,29 @@ export default {
         this.err.password = '密码不能为空'
       } else {
         // 登录请求
+        this.loading = true
+        let d1 = new Date().getTime()
         axios(Form.postData('/api/session/', this.formData)).then(res => {
-          switch (res.data.message) {
-            case '密码错误':
-              this.err.password = '密码错误'
-              break
-            case '用户不存在':
-              this.err.id = '用户不存在'
-              break
-            default:
-              this.$store.dispatch('GET_USER').then(() => {
-                this.$router.replace('/main/me')
-              })
-          }
+          let d2 = new Date().getTime()
+          setTimeout(() => {
+            switch (res.data.message) {
+              case '密码错误':
+                this.err.password = '密码错误'
+                this.loading = false
+                break
+              case '用户不存在':
+                this.err.id = '用户不存在'
+                this.loading = false
+                break
+              default:
+                this.done = true
+                setTimeout(() => {
+                  this.$store.dispatch('GET_USER').then(() => {
+                    this.$router.replace('/main/me')
+                  })
+                }, 500)
+            }
+          }, d2 - d1 < 1000 ? 1000 : 0)
         })
       }
     },
