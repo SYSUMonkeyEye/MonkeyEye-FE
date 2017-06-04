@@ -16,11 +16,17 @@ module.exports = {
     // Before setting to `true`, make sure to:
     // npm install --save-dev compression-webpack-plugin
     productionGzip: false,
-    productionGzipExtensions: ['js', 'css']
+    productionGzipExtensions: ['js', 'css'],
+    // Run the build command with an extra argument to
+    // View the bundle analyzer report after build finishes:
+    // `npm run build --report`
+    // Set to `true` or `false` to always turn it on or off
+    bundleAnalyzerReport: process.env.npm_config_report
   },
   dev: {
     env: require('./dev.env'),
     port: 8080,
+    autoOpenBrowser: true,
     assetsSubDirectory: 'data',
     assetsPublicPath: '/',
     proxyTable: {
@@ -33,7 +39,5 @@ module.exports = {
     // In our experience, they generally work as expected,
     // just be aware of this issue when enabling this option.
     cssSourceMap: false
-  },
-  apiServer: apiServer,
-  assetsServer: assetsServer
+  }
 }
