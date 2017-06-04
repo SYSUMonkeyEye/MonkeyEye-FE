@@ -81,7 +81,9 @@ export default {
       isPay: false,
       countDown: 5,
       totalPrice: 0,
-      errorMessage: ''
+      errorMessage: '',
+      timer: null,
+      routeTimer: null
     }
   },
   computed: {
@@ -137,7 +139,7 @@ export default {
       let nowTime = new Date()
       let delta = Math.floor((endTime.getTime() - nowTime.getTime()) / 1000)
 
-      let timer = setInterval(() => {
+      this.timer = setInterval(() => {
         if (delta > 0) {
           let min = Math.floor((delta / 60) % 60)
           let sec = Math.floor(delta % 60)
@@ -147,7 +149,7 @@ export default {
           delta -= 1
         } else {
           this.isValid = false
-          clearInterval(timer)
+          clearInterval(this.timer)
         }
       }, 1000)
     },
@@ -202,14 +204,22 @@ export default {
     },
     routeToAfterSec (url) {
       this.countDown = 5
-      let timer = setInterval(() => {
+      this.routeTimer = setInterval(() => {
         if (this.countDown > 0) {
           this.countDown--
         } else {
-          clearInterval(timer)
+          clearInterval(this.routeTimer)
           this.$router.push(url)
         }
       }, 1000)
+    }
+  },
+  beforeDestroy () {
+    if (this.timer) {
+      clearInterval(this.timer)
+    }
+    if (this.routeTimer) {
+      clearInterval(this.routeTimer)
     }
   },
   watch: {

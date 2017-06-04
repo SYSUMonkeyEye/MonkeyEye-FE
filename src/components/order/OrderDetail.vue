@@ -46,7 +46,8 @@ export default {
       rows: 10,
       columns: 12,
       isValid: true,
-      countDown: 5
+      countDown: 5,
+      timer: null
     }
   },
   computed: {
@@ -71,14 +72,19 @@ export default {
       }
     })
   },
+  beforeDestroy () {
+    if (this.timer) {
+      clearInterval(this.timer)
+    }
+  },
   methods: {
     routeToAfterSec (url) {
       this.countDown = 5
-      let timer = setInterval(() => {
+      this.timer = setInterval(() => {
         if (this.countDown > 0) {
           this.countDown--
         } else {
-          clearInterval(timer)
+          clearInterval(this.timer)
           this.$router.push(url)
         }
       }, 1000)
