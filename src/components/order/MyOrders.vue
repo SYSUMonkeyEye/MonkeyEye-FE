@@ -24,7 +24,7 @@ div#my-orders
           span.ticket-count {{ order.seat.length }}张
           .time {{ order.screenTime | formatDate }} {{ order.screenTime | formatTime }}
         .btn-container(v-if="order._status === 'played'")
-          md-button.md-raised.md-primary(@click.native.stop="$router.push(`/movie-comment/${order.movieId}`)") 写影评
+          md-button.md-raised.md-primary(@click.native.stop="$router.push(`/movie-comment/${order.movieId}?name=${order.name}`)") 写影评
         .btn-container(v-else-if="order._status === 'unpay'")
           md-button.md-raised.md-primary(@click.native.stop="$router.push(`/order-pay/${order.id}`)") 去支付
     div.no-order(v-else) 暂无任何
