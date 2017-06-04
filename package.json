@@ -1,8 +1,12 @@
 {
-  "name": "MonkeyEye-FE",
+  "name": "monkeyeye-fe",
   "version": "1.0.0",
-  "description": "MonkeyEye-FE",
-  "author": "MonkeyEye-FE team",
+  "description": "MonkeyEye-FE, The MonkeyEye movie ticket purchase system front-end development repository.",
+  "author": "Chuanghuang Hong (https://github.com/hongchh)",
+  "contributors": [
+    "Mingtao Luo (https://github.com/jackandjohn)",
+    "Pingyong Chen (https://github.com/CPYcpyCPY)"
+  ],
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
@@ -10,7 +14,12 @@
     "lint": "eslint --ext .js,.vue src",
     "server": "node app-server.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SYSUMonkeyEye/MonkeyEye-FE"
+  },
   "dependencies": {
+    "MD5": "^1.3.0",
     "axios": "^0.15.3",
     "vue": "^2.1.0",
     "vue-material": "^0.7.1",
