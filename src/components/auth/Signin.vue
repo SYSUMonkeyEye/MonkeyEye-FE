@@ -27,6 +27,7 @@ div#signin
 import axios from 'axios'
 import Form from '../../common/utils/Form'
 import load from './Load.vue'
+import md5 from 'MD5'
 export default {
   name: 'signin',
   components: {
@@ -60,7 +61,11 @@ export default {
         // 登录请求
         this.loading = true
         let d1 = new Date().getTime()
-        axios(Form.postData('/api/session/', this.formData)).then(res => {
+        let data = {
+          id: this.formData.id,
+          password: md5(this.formData.password)
+        }
+        axios(Form.postData('/api/session/', data)).then(res => {
           let d2 = new Date().getTime()
           setTimeout(() => {
             switch (res.data.message) {
