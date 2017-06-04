@@ -4,7 +4,7 @@
     md-button.md-fab.md-primary#done(v-show="loading && done")
       md-icon done
 </template>
-<<script>
+<script>
 export default {
   name: 'loading',
   props: ['loading', 'done'],
@@ -13,7 +13,7 @@ export default {
   }
 }
 </script>
-<<style scoped lang="sass">
+<style scoped lang="sass">
   #loading
     width: 50px
     height: 50px
