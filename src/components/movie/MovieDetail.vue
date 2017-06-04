@@ -16,8 +16,7 @@ div#movie-detail
           span {{ detail.playingType }}
         div.rating
           span 评分:
-          img(src="../../assets/images/star-on.png", v-for="i in detail.rating")
-          img(src="../../assets/images/star-off.png", v-for="i in (5 - detail.rating)")
+          span {{ detail.rating }}
         div.type-and-time
           span {{ detail.movieType }}
           span {{ detail.duration + '分钟' }}
@@ -92,11 +91,7 @@ export default {
         description: 'loading ...',
         rating: 0
       },
-      comments: [{
-        rating: 3,
-        content: '这是一段很长很长的评价',
-        avatar: '/data/images/head-img.jpg'
-      }],
+      comments: [],
       tipText: 'loading ...',
       favoriteId: ''
     }
@@ -150,9 +145,8 @@ export default {
           float: right
       .rating
         margin-bottom: .08rem
-        img
-          width: .18rem
-          height: .18rem
+        span:last-child
+          color: #f44336
       .rating span, .type-and-time span, .playing-time
         color: #999
         margin-right: .1rem
