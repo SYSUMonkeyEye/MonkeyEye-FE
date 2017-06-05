@@ -26,7 +26,6 @@ import UserInfo from '../components/profile/UserInfo'
 import store from '../store'
 
 const router = new Router({
-  mode: 'history',
   routes: [
     { path: '/signin', component: Signin },
     { path: '/signup', component: Signup },

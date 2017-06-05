@@ -2,6 +2,7 @@
 var path = require('path')
 var apiServer = 'http://112.74.196.202:8080'
 var assetsServer = 'http://112.74.196.202:8080'
+var rootUrl = '/app'
 
 module.exports = {
   build: {
@@ -41,5 +42,6 @@ module.exports = {
     cssSourceMap: false
   },
   apiServer: apiServer,
-  assetsServer: assetsServer
+  assetsServer: assetsServer,
+  rootUrl: rootUrl
 }
