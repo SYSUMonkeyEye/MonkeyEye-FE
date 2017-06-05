@@ -11,6 +11,10 @@ npm run build
 npm run server
 ```
 
+## 成品部分界面展示
+![screenshot-0](images-for-readme/screenshot-0.png)
+![screenshot-1](images-for-readme/screenshot-1.png)
+
 ## 1、协作规范
 本仓库有2个分支，master和dev。主要在dev分支上进行开发和测试，功能完善之后再合并到master。
 ```txt
