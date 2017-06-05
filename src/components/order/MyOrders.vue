@@ -9,7 +9,8 @@ div#my-orders
         md-icon
   div.orders-container
     md-list.orders-list(v-if="orders && orders.length")
-      md-list-item.order-item(v-for="order in orders", @click.native="$router.push(`/order-detail/${order.id}`)")
+      md-list-item.order-item(v-for="order in orders", :key="order.id"
+        @click.native="$router.push(`/order-detail/${order.id}`)")
         .type-container(v-if="order._status === 'played'")
           md-icon.md-warn.md-size-2x event_available
           span.type 已放映

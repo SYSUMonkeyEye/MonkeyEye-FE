@@ -30,7 +30,7 @@ div#select-seat
         div.cell.seat.locked
         span.text 已售
   div.seats-selected
-    md-chip(v-for="seat in seatsSelected") {{ convert2D(seat).row }}排{{ convert2D(seat).column }}座
+    md-chip(v-for="(seat, i) in seatsSelected", :key="i") {{ convert2D(seat).row }}排{{ convert2D(seat).column }}座
   div.footer
     md-button.md-primary.md-raised(:disabled="isDisabled",
       @click.native="$router.push(`/reservation/${$route.params.screenId}`)") 确认选座

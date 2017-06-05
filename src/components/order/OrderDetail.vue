@@ -19,7 +19,7 @@ div#order-detail
       div.time {{ screen.playingTime }} {{ screen.playingDate }}
       div.place 广州金逸珠江国际影城 {{ screen.hallNum }}号厅
     div.seats-selected
-      md-chip(v-for="seat in order.seat") {{ (convert2D(seat)).row }}排{{ (convert2D(seat)).column}}座
+      md-chip(v-for="(seat, i) in order.seat", :key="i") {{ (convert2D(seat)).row }}排{{ (convert2D(seat)).column}}座
   div.order-detail-container.group(v-show="isValid")
     div.order-status.group-item
       span 当前状态

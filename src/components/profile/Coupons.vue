@@ -9,7 +9,7 @@ div#coupons
         md-icon
   div.coupons-tainer
     md-list.md-triple-line(v-if="coupons.length != 0")
-      Coupons(v-for="coupon in coupons", :coupon="coupon")
+      Coupons(v-for="coupon in coupons", :coupon="coupon", :key="coupon.id")
     div#noData(v-else) 暂无优惠券
 </template>
 

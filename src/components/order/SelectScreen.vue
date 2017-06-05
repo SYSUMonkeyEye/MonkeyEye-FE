@@ -12,7 +12,8 @@ div#select-screen
   div.screens-container
     md-tabs.md-transparent
       md-tab(v-for="(screensOfDay, offset) in screens",
-        :md-label="dateMap[offset] + ' ' + dates[offset]")
+        :md-label="dateMap[offset] + ' ' + dates[offset]"
+        :key="offset")
         div.no-ticket(v-show="screensOfDay.length === 0") 抱歉，当天暂时没有可出售的电影票
         div.screen-container(v-for="screen in screensOfDay")
           div.time

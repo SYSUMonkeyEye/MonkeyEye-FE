@@ -10,6 +10,7 @@ div#select-coupon
   div.coupons-container
     md-list.md-triple-line
       Coupon(v-for="coupon in coupons", :coupon="coupon",
+        :key="coupon.id"
         :isSelect="true", @couponSelected="selectCoupon")
 </template>
 
