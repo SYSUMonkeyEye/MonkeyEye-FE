@@ -26,7 +26,9 @@ div#movie-detail
   md-whiteframe
     div.comment(v-for="comment in comments")
       div.comment-header
-        img.user-avatar(:src="comment.avatar")
+        div.user-info
+          img.avatar(:src="comment.avatar")
+          span {{ comment.nickname }}
         div.rating
           img.rating-star(src="../../assets/images/star-on.png", v-for="i in comment.rating")
           img.rating-star(src="../../assets/images/star-off.png", v-for="i in (5 - comment.rating)")
@@ -173,10 +175,15 @@ export default {
     .comment-header
       display: flex
       align-items: center
-      .user-avatar
-        width: .4rem
-        height: .4rem
-        border-radius: 50%
+      .user-info
+        display: flex
+        align-items: center
+        .avatar
+          width: .4rem
+          height: .4rem
+          border-radius: 50%
+        span
+          margin-left: .1rem
       .rating
         flex-grow: 1
         text-align: right

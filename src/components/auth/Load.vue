@@ -7,10 +7,7 @@
 <script>
 export default {
   name: 'loading',
-  props: ['loading', 'done'],
-  mounted () {
-    console.log(this.loading, this.done)
-  }
+  props: ['loading', 'done']
 }
 </script>
 <style scoped lang="sass">
