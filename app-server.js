@@ -14,7 +14,7 @@ const manifest = path.join(__dirname, './dist/MonkeyEye.manifest')
 let app = express()
 
 app.use(compression())
-app.use('/app', express.static(index))
+app.use(config.rootUrl, express.static(index))
 app.use('/static/js', express.static(js))
 app.use('/static/css', express.static(css))
 app.use('/MonkeyEye.manifest', express.static(manifest))

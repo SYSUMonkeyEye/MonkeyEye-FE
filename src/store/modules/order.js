@@ -65,6 +65,9 @@ export default {
           }
         }
       }
+    },
+    INIT_ORDER_STATE (state) {
+      state.isInitial = false
     }
   },
   actions: {

@@ -10,7 +10,9 @@ div#coupons
   div.coupons-tainer
     md-list.md-triple-line(v-if="coupons.length != 0")
       Coupons(v-for="coupon in coupons", :coupon="coupon", :key="coupon.id")
-    div#noData(v-else) 暂无优惠券
+    div.no-data(v-else)
+      md-icon sentiment_neutral
+      p 暂无优惠券
 </template>
 
 <script>
@@ -36,9 +38,14 @@ export default {
   .md-toolbar .md-toolbar-container .md-title
     flex: 1
     text-align: center
-  #noData
-    color: #f44336
+  .no-data
     text-align: center
-    font-size: 0.4rem
-    margin-top: 0.5rem
+    margin-top: 1.5rem
+    color: #888
+    .md-icon
+      font-size: 1rem
+      height: auto
+      width: auto
+    p
+      font-size: .2rem
 </style>

@@ -50,7 +50,14 @@ export default {
       })
     },
     confirm (type) {
-      return type === 'ok' ? this.$store.dispatch('LOGOUT').then(() => { this.$router.push('/main/me') }) : ''
+      if (type === 'ok') {
+        this.$store.dispatch('LOGOUT').then(() => {
+          this.$router.push('/main/me')
+          this.$store.commit('INIT_FAV_STATE')
+          this.$store.commit('INIT_COUPON_STATE')
+          this.$store.commit('INIT_ORDER_STATE')
+        })
+      }
     },
     logout () {
       this.$refs.dialog.open()

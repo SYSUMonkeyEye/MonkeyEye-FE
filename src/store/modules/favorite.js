@@ -57,6 +57,12 @@ export default {
         state.historyMovies.push({ movie: movies[i] })
       }
       state.historyGot = true
+    },
+
+    // 初始化状态
+    INIT_FAV_STATE (state) {
+      state.favoritesGot = false
+      state.historyGot = false
     }
   },
 

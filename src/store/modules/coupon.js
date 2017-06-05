@@ -29,6 +29,9 @@ export default {
     },
     ADD_COUPON (state, coupon) {
       state.coupons.push(coupon)
+    },
+    INIT_COUPON_STATE (state) {
+      state.isInitial = false
     }
   },
   actions: {

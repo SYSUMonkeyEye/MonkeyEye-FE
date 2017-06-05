@@ -1,6 +1,8 @@
 # MonkeyEye-FE
 > 猿眼电影订票系统前端开发仓库
 ```bash
+# 安装依赖
+npm install
 # 项目启动（开发）
 npm run dev
 # 项目构建
