@@ -45,8 +45,11 @@ export default {
     width: 100%
     overflow: scroll
   .slide-enter-active, .slide-leave-active
-    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0)
-  .slide-enter, .slide-leave-active
+    transition: all .2s ease-out
+  .slide-enter#me, .slide-leave-active#me
+    transform: translateX(100%)
+    opacity: 0
+  .slide-leave-active#movies, .slide-enter#movies
     transform: translateX(-100%)
     opacity: 0
 </style>
