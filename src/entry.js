@@ -71,6 +71,10 @@ Vue.material.registerTheme({
   }
 })
 
+import LazyLoad from './common/utils/LazyLoad'
+
+Vue.use(LazyLoad)
+
 import App from './App'
 import router from './router'
 import store from './store'

@@ -1,5 +1,5 @@
 <template lang="pug">
-div#movies
+div#movies(ref="movies")
   md-tabs(md-centered, md-theme="white")
     md-tab(md-label="正在热映", @click="activeTab = 0")
       div.hot-movies(v-if="$store.state.movie.recommendPlaying.length > 0")
@@ -7,7 +7,7 @@ div#movies
           @click="goToMovieDetail($event)")
       div.movie-item(v-for="(movie, index) in $store.state.movie.playing",
         @click="$router.push('/movie-detail/' + movie.id)")
-        img(:src="movie.poster")
+        img(v-lazyload="movie.poster")
         div.movie-info
           div
             span.name {{ movie.name }}
@@ -64,9 +64,11 @@ export default {
     this.sliderTimeout = setTimeout(() => {
       this.slide()
     }, 3000)
+    this.$lazyload.activate(this.$refs.movies)
   },
   beforeDestroy () {
     this.sliderTimeout ? clearTimeout(this.sliderTimeout) : ''
+    this.$lazyload.destroy(this.$refs.movies)
   },
   methods: {
     goToMovieDetail (event) {
