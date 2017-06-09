@@ -18,15 +18,18 @@ npm run server
 ## 1、协作规范
 本仓库有2个分支，master和dev。主要在dev分支上进行开发和测试，功能完善之后再合并到master。
 ```txt
-|----master
-|----dev
+├─master
+└─dev
 ```
 #### 1.1、准备工作
-在github上fork本仓库到你自己的github，将你fork之后的远程仓库克隆到本地，并在你的本地仓库上添加上游仓库，即源仓库。
+在github上fork本仓库到你自己的github，将你fork之后的远程仓库克隆到本地，并在你的本地仓库上添加上游仓库，即源仓库。fork一般是fork了仓库的master分支，所以可能还需要自己去切出dev分支然后拉取源仓库dev分支上的内容。
 ```bash
 git clone https://github.com/{你的github}/MonkeyEye-FE
 # 上游的源仓库地址只需添加一次
 git remote add upstream https://github.com/SYSUMonkeyEye/MonkeyEye-FE.git
+# 切出dev分支并拉取源仓库dev分支上的内容
+git checkout -b dev
+git pull upstream dev
 ```
 
 #### 1.2.1、协作方式-1
@@ -36,9 +39,9 @@ git checkout -b mydev
 ```
 切换之后你的本地仓库上就有3个分支了，如下所示。checkout之后会自动切换到mydev分支。
 ```txt
-|----master
-|----dev
-|----mydev
+├─master
+├─dev
+└─mydev
 ```
 在mydev分支上进行开发和测试，完成相应的功能或者模块，完成之后再切回到dev分支将mydev的内容合并到dev。
 ```bash
@@ -98,7 +101,8 @@ git pull upstream dev
 │   │    ├─sass：公共样式文件
 │   │    └─utils：公共工具函数库
 │   │       ├─DateUtils.js：处理时间日期的工具函数
-│   │       └─Form.js：表单工具函数
+│   │       ├─Form.js：表单工具函数
+│   │       └─LazyLoad.js：实现图片懒加载
 │   ├─components：前端组件
 │   │    ├─auth：登录注册相关界面
 │   │    │   ├─Load.vue：加载控件
